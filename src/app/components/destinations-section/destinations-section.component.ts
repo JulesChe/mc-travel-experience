@@ -39,7 +39,7 @@ import { LanguageService } from '../../services/language.service';
             <!-- Call-to-action simple -->
             <div class="mt-8 animate-fade-in-up delay-500">
               <button class="btn-primary w-full">
-                Voir toutes nos destinations
+                {{ languageService.currentTranslations.viewAllDestinations }}
               </button>
             </div>
           </div>

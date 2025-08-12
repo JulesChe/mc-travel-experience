@@ -29,8 +29,7 @@ import { LanguageService } from '../../services/language.service';
         <!-- Tagline principal -->
         <div class="animate-fade-in-up">
           <h1 class="text-5xl md:text-7xl font-light mb-8 tracking-wide leading-tight">
-            <span class="block font-serif italic">L'art du voyage</span>
-            <span class="block mt-2">haut de gamme</span>
+            <span class="block font-serif italic">{{ languageService.currentTranslations.heroTitle }}</span>
           </h1>
         </div>
         
@@ -48,7 +47,7 @@ import { LanguageService } from '../../services/language.service';
       <!-- Indicateur de scroll simple -->
       <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
         <div class="flex flex-col items-center space-y-2">
-          <span class="text-xs uppercase tracking-wide opacity-80">Découvrir</span>
+          <span class="text-xs uppercase tracking-wide opacity-80">{{ languageService.currentTranslations.discoverScroll }}</span>
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
           </svg>

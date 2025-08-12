@@ -11,7 +11,7 @@ import { LanguageService } from '../../services/language.service';
     <!-- Barre de contact simple -->
     <div class="bg-gray-900 text-white py-2 text-center text-sm animate-fade-in-up">
       <div class="max-w-7xl mx-auto px-4">
-        <span class="font-medium">Pour toute demande : </span>
+        <span class="font-medium">{{ languageService.currentTranslations.contactBar || 'Pour toute demande :' }} </span>
         <a href="tel:+33620524796" class="text-white hover:text-gray-300 transition-colors font-semibold underline">
           +33(0) 620 524 796
         </a>
@@ -28,7 +28,9 @@ import { LanguageService } from '../../services/language.service';
             <button 
               class="season-toggle"
               (click)="toggleSeason()">
-              {{ currentSeason === 'winter' ? 'HIVER' : 'ÉTÉ' }}
+              {{ currentSeason === 'winter' ? 
+                  (languageService.currentTranslations.seasonWinter || 'HIVER') : 
+                  (languageService.currentTranslations.seasonSummer || 'ÉTÉ') }}
             </button>
           </div>
           
@@ -102,7 +104,7 @@ import { LanguageService } from '../../services/language.service';
       <!-- Navigation principale -->
       <div class="side-menu-content">
         <div class="menu-section">
-          <h3 class="menu-section-title">Navigation</h3>
+          <h3 class="menu-section-title">{{ languageService.currentTranslations.navigationSection || 'Navigation' }}</h3>
           <ul class="menu-items">
             <li>
               <a routerLink="/" 
@@ -113,7 +115,7 @@ import { LanguageService } from '../../services/language.service';
                 <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                 </svg>
-                {{ languageService.currentTranslations.menuHome || 'Accueil' }}
+                {{ languageService.currentTranslations.menuHome }}
               </a>
             </li>
             <li>
@@ -125,7 +127,7 @@ import { LanguageService } from '../../services/language.service';
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                 </svg>
-                {{ languageService.currentTranslations.menuDestinations || 'Destinations' }}
+                {{ languageService.currentTranslations.menuDestinations }}
               </a>
             </li>
             <li>
@@ -136,7 +138,7 @@ import { LanguageService } from '../../services/language.service';
                 <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
                 </svg>
-                {{ languageService.currentTranslations.menuServices || 'Services' }}
+                {{ languageService.currentTranslations.menuServices }}
               </a>
             </li>
             <li>
@@ -147,7 +149,7 @@ import { LanguageService } from '../../services/language.service';
                 <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                 </svg>
-                {{ languageService.currentTranslations.menuAccommodations || 'Hébergements' }}
+                {{ languageService.currentTranslations.menuAccommodations }}
               </a>
             </li>
             <li>
@@ -158,7 +160,7 @@ import { LanguageService } from '../../services/language.service';
                 <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                {{ languageService.currentTranslations.menuAbout || 'À propos' }}
+                {{ languageService.currentTranslations.menuAbout }}
               </a>
             </li>
           </ul>
@@ -166,7 +168,7 @@ import { LanguageService } from '../../services/language.service';
 
         <!-- Section contact -->
         <div class="menu-section">
-          <h3 class="menu-section-title">Contact</h3>
+          <h3 class="menu-section-title">{{ languageService.currentTranslations.contactSection || 'Contact' }}</h3>
           <ul class="menu-items">
             <li>
               <a routerLink="/contact" 
@@ -176,12 +178,12 @@ import { LanguageService } from '../../services/language.service';
                 <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                 </svg>
-                {{ languageService.currentTranslations.menuContact || 'Contact' }}
+                {{ languageService.currentTranslations.menuContact }}
               </a>
             </li>
             <li class="menu-contact-info">
               <div class="text-sm text-gray-500 px-4 py-2">
-                <p class="font-medium text-gray-700 mb-1">Appelez-nous</p>
+                <p class="font-medium text-gray-700 mb-1">{{ languageService.currentTranslations.callUs || 'Appelez-nous' }}</p>
                 <a href="tel:+33620524796" class="text-blue-600 hover:text-blue-800">
                   +33(0) 620 524 796
                 </a>

@@ -14,17 +14,17 @@ interface ContactForm {
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-    <section id="contact" class="py-16 bg-gray-900 text-white">
+    <section id="contact" class="pt-12 pb-16 bg-gray-900 text-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <!-- En-tête épuré -->
-        <div class="text-center mb-5 animate-fade-in-up">
+        <div class="text-center mb-12 animate-fade-in-up">
           <h2 class="text-4xl md:text-5xl font-light mb-6">
             {{ languageService.currentTranslations.contactTitle }}
           </h2>
           <div class="decorative-line bg-white"></div>
-          <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Prêt à vivre une expérience alpine d'exception ? Contactez-nous pour créer votre séjour sur mesure.
+          <p class="text-xl text-gray-300 mt-8 max-w-3xl mx-auto leading-relaxed">
+            {{ languageService.currentTranslations.contactSubtitle }}
           </p>
         </div>
         
@@ -39,20 +39,20 @@ interface ContactForm {
               
               <div class="space-y-4 text-gray-300">
                 <div>
-                  <p class="font-medium text-white mb-1">Adresse</p>
+                  <p class="font-medium text-white mb-1">{{ languageService.currentTranslations.contactAddress }}</p>
                   <p>125 Route du Fay</p>
                   <p>73120 Courchevel, France</p>
                 </div>
                 
                 <div>
-                  <p class="font-medium text-white mb-1">Téléphone</p>
+                  <p class="font-medium text-white mb-1">{{ languageService.currentTranslations.contactPhone }}</p>
                   <a href="tel:+33620524796" class="text-white hover:text-gray-300 transition-colors">
                     +33(0) 620 524 796
                   </a>
                 </div>
                 
                 <div>
-                  <p class="font-medium text-white mb-1">Email</p>
+                  <p class="font-medium text-white mb-1">{{ languageService.currentTranslations.contactEmail }}</p>
                   <a href="mailto:mc.travel73@gmail.com" class="text-white hover:text-gray-300 transition-colors">
                     mc.travel73&#64;gmail.com
                   </a>
@@ -62,11 +62,11 @@ interface ContactForm {
             
             <!-- Informations légales simples -->
             <div class="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10">
-              <h4 class="text-lg font-medium mb-4 text-white">Informations légales</h4>
+              <h4 class="text-lg font-medium mb-4 text-white">{{ languageService.currentTranslations.contactLegalTitle }}</h4>
               <div class="text-sm text-gray-400 space-y-1">
-                <p>N° ATOUT FRANCE : IM073250002</p>
-                <p>Garantie financière : APST</p>
-                <p>Assurance RCP : Hiscox</p>
+                <p>{{ languageService.currentTranslations.legalAtout }}</p>
+                <p>{{ languageService.currentTranslations.legalGuarantee }}</p>
+                <p>{{ languageService.currentTranslations.legalInsurance }}</p>
               </div>
             </div>
           </div>
@@ -74,7 +74,7 @@ interface ContactForm {
           <!-- Formulaire épuré -->
           <div class="animate-fade-in-right delay-400">
             <div class="bg-white/5 backdrop-blur-sm rounded-lg p-8 border border-white/10">
-              <h3 class="text-2xl font-semibold mb-6 text-white">Demande de devis</h3>
+              <h3 class="text-2xl font-semibold mb-6 text-white">{{ languageService.currentTranslations.contactQuoteTitle }}</h3>
               
               <form class="clean-form space-y-6" (ngSubmit)="onSubmit()" #contactForm="ngForm">
                 
@@ -88,7 +88,7 @@ interface ContactForm {
                     name="name"
                     [(ngModel)]="formData.name"
                     class="w-full px-4 py-3"
-                    placeholder="Votre nom complet"
+                    [placeholder]="languageService.currentTranslations.formNamePlaceholder"
                     required>
                 </div>
                 
@@ -102,7 +102,7 @@ interface ContactForm {
                     name="email"
                     [(ngModel)]="formData.email"
                     class="w-full px-4 py-3"
-                    placeholder="votre@email.com"
+                    [placeholder]="languageService.currentTranslations.formEmailPlaceholder"
                     required>
                 </div>
                 
@@ -116,7 +116,7 @@ interface ContactForm {
                     name="message"
                     [(ngModel)]="formData.message"
                     class="w-full px-4 py-3 resize-none"
-                    placeholder="Décrivez-nous votre projet de séjour..."
+                    [placeholder]="languageService.currentTranslations.formMessagePlaceholder"
                     required></textarea>
                 </div>
                 
@@ -148,8 +148,12 @@ export class ContactSectionComponent {
 
   onSubmit() {
     if (this.formData.name && this.formData.email && this.formData.message) {
+      const successMessage = this.languageService.currentLanguage === 'fr' 
+        ? 'Votre demande a été envoyée avec succès !'
+        : 'Your request has been sent successfully!';
+      
       console.log('Formulaire soumis:', this.formData);
-      alert('Votre demande a été envoyée avec succès !');
+      alert(successMessage);
       this.resetForm();
     }
   }

@@ -11,9 +11,18 @@ export interface Translations {
   menuAbout: string;
   menuContact: string;
   
+  // Header specific
+  contactBar: string;
+  seasonWinter: string;
+  seasonSummer: string;
+  navigationSection: string;
+  contactSection: string;
+  callUs: string;
+  
   // Hero section
   heroTitle: string;
   heroSubtitle: string;
+  discoverScroll: string;
   
   // Section 1 - Excellence
   section1Title: string;
@@ -23,6 +32,7 @@ export interface Translations {
   // Section 2 - Destinations
   section2Title: string;
   section2Text: string;
+  viewAllDestinations: string;
   destinations: Array<{
     name: string;
     description: string;
@@ -46,15 +56,29 @@ export interface Translations {
   
   // Contact
   contactTitle: string;
+  contactSubtitle: string;
+  contactAddress: string;
+  contactPhone: string;
+  contactEmail: string;
+  contactLegalTitle: string;
+  contactQuoteTitle: string;
   formName: string;
   formEmail: string;
   formMessage: string;
   formSubmit: string;
+  formNamePlaceholder: string;
+  formEmailPlaceholder: string;
+  formMessagePlaceholder: string;
   
   // Common
   discoverMore: string;
   bookNow: string;
   learnMore: string;
+  
+  // Legal info
+  legalAtout: string;
+  legalGuarantee: string;
+  legalInsurance: string;
 }
 
 @Injectable({
@@ -74,9 +98,18 @@ export class LanguageService {
       menuAbout: 'À propos',
       menuContact: 'Contact',
       
+      // Header specific
+      contactBar: 'Pour toute demande :',
+      seasonWinter: 'HIVER',
+      seasonSummer: 'ÉTÉ',
+      navigationSection: 'Navigation',
+      contactSection: 'Contact',
+      callUs: 'Appelez-nous',
+      
       // Hero section
       heroTitle: "L'art du voyage haut de gamme",
       heroSubtitle: "Plus de 20 ans d'expertise dans l'univers du ski",
+      discoverScroll: 'Découvrir',
       
       // Section 1 - Excellence
       section1Title: "Notre Excellence",
@@ -86,6 +119,7 @@ export class LanguageService {
       // Section 2 - Destinations
       section2Title: "Destinations d'Exception",
       section2Text: "Notre agence vous ouvre les portes des plus prestigieux domaines skiables d'Europe : Courchevel, Les 3 Vallées et l'Espace Killy (Val d'Isère – Tignes), pour des escapades inoubliables entre luxe, sport et élégance alpine.",
+      viewAllDestinations: "Voir toutes nos destinations",
       destinations: [
         {
           name: "COURCHEVEL",
@@ -131,10 +165,24 @@ export class LanguageService {
       
       // Contact
       contactTitle: "Nous Contacter",
+      contactSubtitle: "Prêt à vivre une expérience alpine d'exception ? Contactez-nous pour créer votre séjour sur mesure.",
+      contactAddress: "Adresse",
+      contactPhone: "Téléphone",
+      contactEmail: "Email",
+      contactLegalTitle: "Informations légales",
+      contactQuoteTitle: "Demande de devis",
       formName: "Votre nom",
       formEmail: "Votre email", 
       formMessage: "Votre message",
       formSubmit: "Envoyer",
+      formNamePlaceholder: "Votre nom complet",
+      formEmailPlaceholder: "votre@email.com",
+      formMessagePlaceholder: "Décrivez-nous votre projet de séjour...",
+      
+      // Legal info
+      legalAtout: "N° ATOUT FRANCE : IM073250002",
+      legalGuarantee: "Garantie financière : APST",
+      legalInsurance: "Assurance RCP : Hiscox",
       
       // Common
       discoverMore: "Découvrir plus",
@@ -150,9 +198,18 @@ export class LanguageService {
       menuAbout: 'About',
       menuContact: 'Contact',
       
+      // Header specific
+      contactBar: 'For any inquiry:',
+      seasonWinter: 'WINTER',
+      seasonSummer: 'SUMMER',
+      navigationSection: 'Navigation',
+      contactSection: 'Contact',
+      callUs: 'Call us',
+      
       // Hero section
       heroTitle: "The art of high-end travel",
       heroSubtitle: "More than 20 years of expertise in the ski universe",
+      discoverScroll: 'Discover',
       
       // Section 1 - Excellence
       section1Title: "Our Excellence",
@@ -162,6 +219,7 @@ export class LanguageService {
       // Section 2 - Destinations
       section2Title: "Exceptional Destinations",
       section2Text: "Our agency opens the doors to the most prestigious ski areas in Europe: Courchevel, Les 3 Vallées, and the Espace Killy (Val d'Isère – Tignes), offering unforgettable getaways that combine luxury, sport, and alpine elegance.",
+      viewAllDestinations: "View all destinations",
       destinations: [
         {
           name: "COURCHEVEL",
@@ -207,10 +265,24 @@ export class LanguageService {
       
       // Contact
       contactTitle: "Contact Us",
+      contactSubtitle: "Ready to experience an exceptional alpine adventure? Contact us to create your tailor-made stay.",
+      contactAddress: "Address",
+      contactPhone: "Phone",
+      contactEmail: "Email",
+      contactLegalTitle: "Legal Information",
+      contactQuoteTitle: "Request a Quote",
       formName: "Your name",
       formEmail: "Your email",
       formMessage: "Your message", 
       formSubmit: "Send",
+      formNamePlaceholder: "Your full name",
+      formEmailPlaceholder: "your@email.com",
+      formMessagePlaceholder: "Tell us about your travel project...",
+      
+      // Legal info
+      legalAtout: "ATOUT FRANCE No.: IM073250002",
+      legalGuarantee: "Financial guarantee: APST",
+      legalInsurance: "Liability insurance: Hiscox",
       
       // Common
       discoverMore: "Discover more",
