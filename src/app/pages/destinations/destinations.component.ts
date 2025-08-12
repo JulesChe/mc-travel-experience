@@ -210,7 +210,7 @@ export class DestinationsComponent {
       subtitle: 'Le royaume du ski sportif',
       location: 'Savoie, France',
       description: 'Val d\'Isère et Tignes forment l\'Espace Killy, un domaine légendaire qui a vu naître les plus grands champions. Entre tradition savoyarde et modernité, ces stations offrent des paysages à couper le souffle.',
-      image: 'assets/images/photo_mc.JPG',
+      image: 'assets/images/montagne_cover.jpg',
       altitude: '1 550m - 3 456m',
       skiArea: '300 km de pistes',
       highlights: [
