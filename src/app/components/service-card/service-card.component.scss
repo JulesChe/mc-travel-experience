@@ -1,209 +1,88 @@
-// components/service-card/service-card.component.scss
+// service-card.component.scss - Section Activity Card améliorée
 
-// ===== SERVICE CARD STYLES (Layout horizontal) =====
-.service-card {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-  margin-bottom: 6rem;
-}
-
-.service-card.reverse {
-  direction: rtl;
-}
-
-.service-card.reverse .service-content {
-  direction: ltr;
-}
-
-.service-image {
-  position: relative;
-}
-
-.service-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(45deg, rgba(21, 28, 50, 0.1), transparent);
-  opacity: 0;
-  transition: all 0.3s ease;
-}
-
-.enhanced-image {
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-  
-  img {
-    transition: transform 0.4s ease;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    
-    &:hover {
-      transform: scale(1.05);
-    }
-  }
-  
-  &:hover .service-overlay {
-    opacity: 1;
-  }
-}
-
-.service-badge {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  width: 4rem;
-  height: 4rem;
-  background: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #151c32;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  transform: scale(0.8);
-  transition: transform 0.3s ease;
-}
-
-.enhanced-image:hover .service-badge {
-  transform: scale(1);
-}
-
-.service-content {
-  padding: 2rem 0;
-}
-
-.service-header {
-  margin-bottom: 2rem;
-}
-
-.service-title {
-  font-size: 2.5rem;
-  font-weight: 300;
-  color: #111827;
-  margin-bottom: 0.5rem;
-  font-family: 'Times New Roman', serif;
-  line-height: 1.2;
-}
-
-.service-subtitle {
-  font-size: 1.25rem;
-  color: #6b7280;
-  font-weight: 300;
-  font-style: italic;
-  line-height: 1.4;
-}
-
-.service-description {
-  margin-bottom: 2rem;
-}
-
-.service-description p {
-  font-size: 1.125rem;
-  line-height: 1.7;
-  color: #4b5563;
-  margin: 0;
-}
-
-.service-features {
-  margin-bottom: 2rem;
-}
-
-.feature-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.75rem;
-  opacity: 0;
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.feature-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  color: #eab308;
-  margin-right: 0.75rem;
-  flex-shrink: 0;
-}
-
-.feature-item span {
-  color: #374151;
-  font-weight: 500;
-}
-
-.service-cta {
-  margin-top: 2rem;
-}
-
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.875rem 2rem;
-  background: #151c32;
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  font-size: 1rem;
-  
-  &:hover {
-    background: #1f2937;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(21, 28, 50, 0.3);
-  }
-  
-  &:active {
-    transform: translateY(0);
-  }
-}
-
-// ===== ACTIVITY CARD STYLES (Layout carte) =====
+// ===== ACTIVITY CARD STYLES - VERSION SANS COUPURE =====
 .activity-card-wrapper {
   background: white;
   border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  overflow: visible; // CHANGÉ: visible pour permettre les animations complètes
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   height: 100%;
   cursor: pointer;
+  position: relative;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  
+  // Container pour l'overflow interne
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 16px;
+    pointer-events: none;
+    z-index: 2;
+  }
   
   &:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    // Animation plus contrôlée
+    transform: translateY(-12px) scale(1.02) translateZ(0);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.15);
+    z-index: 100; // Très haut pour être au-dessus de tout
     
     .activity-image {
-      transform: scale(1.1);
+      transform: scale(1.08);
     }
     
     .activity-overlay {
       opacity: 1;
+      backdrop-filter: blur(2px);
     }
     
     .overlay-content {
       transform: translateY(0);
+      opacity: 1;
     }
+  }
+  
+  // État de focus pour l'accessibilité
+  &:focus-within {
+    outline: 2px solid #151c32;
+    outline-offset: 4px;
   }
 }
 
 .activity-image-container {
   position: relative;
   height: 240px;
-  overflow: hidden;
+  overflow: hidden; // Masque le débordement de l'image seulement
+  border-radius: 16px 16px 0 0;
+  z-index: 1;
+  
+  // Bordure subtile
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    border-radius: 16px 16px 0 0;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+    z-index: 3;
+  }
 }
 
 .activity-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: center center;
+  will-change: transform;
 }
 
 .activity-overlay {
@@ -212,45 +91,81 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(45deg, rgba(21, 28, 50, 0.9), rgba(21, 28, 50, 0.7));
+  background: linear-gradient(
+    135deg, 
+    rgba(21, 28, 50, 0.9) 0%, 
+    rgba(21, 28, 50, 0.8) 50%,
+    rgba(21, 28, 50, 0.95) 100%
+  );
   opacity: 0;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
+  border-radius: 16px 16px 0 0;
+  z-index: 2;
 }
 
 .overlay-content {
   text-align: center;
   color: white;
   transform: translateY(20px);
-  transition: transform 0.3s ease;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s;
+  max-width: 100%;
+  z-index: 3;
 }
 
 .overlay-description {
   font-size: 0.95rem;
   line-height: 1.6;
   margin: 0;
-  max-height: 120px;
+  max-height: 140px;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: 300;
 }
 
 .activity-content {
-  padding: 1.5rem;
+  padding: 1.75rem 1.5rem;
   text-align: center;
+  position: relative;
+  background: white;
+  border-radius: 0 0 16px 16px;
+  z-index: 1;
+  
+  // Ligne décorative subtile
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20%;
+    right: 20%;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(21, 28, 50, 0.1), 
+      transparent);
+  }
 }
 
 .activity-title {
   font-size: 1.5rem;
   font-weight: 300;
   color: #111827;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   font-family: 'Times New Roman', serif;
   line-height: 1.3;
+  transition: color 0.3s ease;
+  letter-spacing: 0.02em;
+  
+  .activity-card-wrapper:hover & {
+    color: #151c32;
+  }
 }
 
 .activity-subtitle {
@@ -259,85 +174,138 @@
   font-style: italic;
   margin: 0;
   line-height: 1.4;
-}
-
-// ===== ANIMATIONS =====
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  transition: color 0.3s ease;
+  font-weight: 300;
+  
+  .activity-card-wrapper:hover & {
+    color: #4b5563;
   }
 }
 
-.animate-fade-in-left {
-  animation: fadeInLeft 0.8s ease-out;
-}
-
-.animate-fade-in-right {
-  animation: fadeInRight 0.8s ease-out;
-}
-
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-// ===== RESPONSIVE DESIGN =====
+// ===== RESPONSIVE POUR ACTIVITY CARDS =====
 @media (max-width: 1024px) {
-  .service-card {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    margin-bottom: 4rem;
+  .activity-image-container {
+    height: 220px;
   }
   
-  .service-card.reverse {
-    direction: ltr;
+  .activity-content {
+    padding: 1.5rem 1.25rem;
   }
+  
+  .activity-title {
+    font-size: 1.375rem;
+  }
+}
 
-  .service-title {
-    font-size: 2rem;
+@media (max-width: 768px) {
+  .activity-card-wrapper {
+    &:hover {
+      transform: translateY(-8px) scale(1.01) translateZ(0);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    }
   }
   
   .activity-image-container {
     height: 200px;
   }
   
+  .activity-image {
+    transition-duration: 0.4s;
+  }
+  
   .activity-content {
-    padding: 1.25rem;
+    padding: 1.25rem 1rem;
+  }
+  
+  .activity-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .activity-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .overlay-description {
+    font-size: 0.875rem;
+    -webkit-line-clamp: 4;
+    max-height: 100px;
   }
 }
 
-@media (max-width: 768px) {
-  .service-title {
-    font-size: 1.75rem;
+@media (max-width: 480px) {
+  .activity-card-wrapper {
+    &:hover {
+      transform: translateY(-6px) translateZ(0);
+    }
   }
   
-  .service-subtitle {
+  .activity-image-container {
+    height: 180px;
+  }
+  
+  .activity-content {
+    padding: 1rem 0.875rem;
+  }
+  
+  .activity-title {
     font-size: 1.125rem;
   }
   
-  .service-description p {
-    font-size: 1rem;
+  .activity-subtitle {
+    font-size: 0.875rem;
+  }
+}
+
+// ===== ANIMATIONS & PERFORMANCE =====
+@media (prefers-reduced-motion: reduce) {
+  .activity-card-wrapper,
+  .activity-image,
+  .activity-overlay,
+  .overlay-content,
+  .activity-title,
+  .activity-subtitle {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .activity-card-wrapper:hover {
+    transform: none;
+    
+    .activity-image {
+      transform: none;
+    }
+  }
+}
+
+// ===== SUPPORT TACTILE =====
+@media (hover: none) and (pointer: coarse) {
+  .activity-card-wrapper {
+    &:hover {
+      transform: none;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      
+      .activity-image {
+        transform: none;
+      }
+      
+      .activity-overlay {
+        opacity: 0;
+      }
+    }
+    
+    // Activation au tap/touch
+    &:active {
+      transform: scale(0.98);
+      
+      .activity-overlay {
+        opacity: 1;
+      }
+      
+      .overlay-content {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
   }
 }

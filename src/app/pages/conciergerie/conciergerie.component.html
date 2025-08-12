@@ -41,47 +41,49 @@
     </div>
   </section>
 
-
   <!-- Activities Cards Section -->
-  <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+  <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 overflow-hidden">
     <div class="max-w-7xl mx-auto">
       
       <!-- Section Header -->
-      <div class="text-center mb-16 animate-fade-in-up">
-        <h2 class="text-4xl md:text-5xl font-light text-gray-900 mb-6">
-          {{ languageService.currentTranslations.conciergerieServicesSubtitle }}
+      <div class="text-center mb-16" style="opacity: 1;">
+        <h2 class="text-4xl md:text-5xl font-light text-gray-900 mb-6 animate-fade-in-up">
+          {{ languageService.currentTranslations.conciergerieServicesTitle || 'Nos Services Exclusifs' }}
         </h2>
         <div class="decorative-line"></div>
       </div>
 
       <!-- Cards Carousel Container -->
-      <div class="relative" *ngIf="activities.length > 0">
+      <div class="carousel-container" *ngIf="extendedActivities.length > 0">
         
-        <!-- Cards Grid -->
-        <div class="cards-container overflow-hidden">
-          <div class="cards-track flex transition-transform duration-500 ease-in-out gap-6"
-               [style.transform]="'translateX(-' + (currentSlide * slideWidth) + 'px)'">
-            
-            <div *ngFor="let activity of activities; let i = index" 
-                 class="activity-card flex-shrink-0">
+        <!-- Wrapper avec overflow pour masquer les débordements latéraux -->
+        <div class="carousel-wrapper">
+          <!-- Viewport -->
+          <div class="carousel-viewport">
+            <div class="carousel-track"
+                 [style.transform]="'translateX(' + translateX + 'px)'"
+                 [class.no-transition]="noTransition">
               
-              <!-- Service Card en mode Activity -->
-              <app-service-card 
-                [activity]="activity"
-                [showCTA]="false">
-            </app-service-card>
+              <div *ngFor="let activity of extendedActivities; let i = index" 
+                   class="carousel-card">
+                
+                <!-- Service Card en mode Activity -->
+                <app-service-card 
+                  [activity]="activity"
+                  [showCTA]="false">
+                </app-service-card>
 
+              </div>
 
             </div>
-
           </div>
         </div>
 
         <!-- Navigation Arrows -->
         <button 
           (click)="previousSlide()"
-          class="carousel-btn carousel-btn-prev"
-          [class.disabled]="currentSlide === 0"
+          class="carousel-nav carousel-nav-prev"
+          [disabled]="isTransitioning"
           [attr.aria-label]="'Diapositive précédente'">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -90,8 +92,8 @@
 
         <button 
           (click)="nextSlide()"
-          class="carousel-btn carousel-btn-next"
-          [class.disabled]="isLastSlide()"
+          class="carousel-nav carousel-nav-next"
+          [disabled]="isTransitioning"
           [attr.aria-label]="'Diapositive suivante'">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -99,12 +101,13 @@
         </button>
 
         <!-- Dots Navigation -->
-        <div class="carousel-dots" *ngIf="maxSlides > 0">
+        <div class="carousel-dots">
           <button 
             *ngFor="let dot of getDots(); let i = index"
             (click)="goToSlide(i)"
             class="carousel-dot"
-            [class.active]="currentSlide === i"
+            [class.active]="isDotActive(i)"
+            [disabled]="isTransitioning"
             [attr.aria-label]="'Aller à la diapositive ' + (i + 1)">
           </button>
         </div>

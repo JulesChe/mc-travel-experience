@@ -1,5 +1,5 @@
-// pages/conciergerie/conciergerie.component.ts
-import { Component, OnInit, OnDestroy } from '@angular/core';
+// conciergerie.component.ts
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
@@ -13,10 +13,23 @@ import { ServiceCardComponent, Activity } from '../../components/service-card/se
   styleUrls: ['./conciergerie.component.scss']
 })
 export class ConciergerieComponent implements OnInit, OnDestroy {
-  currentSlide = 0;
-  cardsPerView = 3;
-  slideWidth = 350; // Width including gap
+  // État du carrousel
+  currentIndex = 0;
+  translateX = 0;
+  isTransitioning = false;
+  noTransition = false;
+  
+  // Configuration
+  cardWidth = 320;
+  cardGap = 24;
+  cardsToShow = 3;
+  
+  // Données
+  extendedActivities: Activity[] = [];
+  
+  // Listeners
   private resizeListener?: () => void;
+  private transitionEndListener?: () => void;
   
   constructor(
     public languageService: LanguageService,
@@ -25,10 +38,16 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     window.scrollTo(0, 0);
-    this.updateCardsPerView();
+    this.updateCarouselSettings();
+    this.setupInfiniteLoop();
+    this.setInitialPosition();
     
-    // Add resize listener with proper cleanup
-    this.resizeListener = () => this.updateCardsPerView();
+    // Resize listener
+    this.resizeListener = () => {
+      this.updateCarouselSettings();
+      this.setupInfiniteLoop();
+      this.setInitialPosition();
+    };
     window.addEventListener('resize', this.resizeListener);
   }
 
@@ -39,36 +58,226 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Update cards per view based on screen size
+   * Met à jour les paramètres du carrousel selon la taille d'écran
    */
-  private updateCardsPerView(): void {
+  private updateCarouselSettings(): void {
     const width = window.innerWidth;
     
-    if (width < 640) {
-      this.cardsPerView = 1;
-      this.slideWidth = Math.min(width - 64, 280) + 24;
-    } else if (width < 1024) {
-      this.cardsPerView = 2;
-      this.slideWidth = 304; // 280px + 24px gap
-    } else if (width < 1400) {
-      this.cardsPerView = 3;
-      this.slideWidth = 326; // 320px + 6px gap
+    if (width >= 1600) {
+      this.cardsToShow = 3;
+      this.cardWidth = 340;
+      this.cardGap = 24;
+    } else if (width >= 1400) {
+      this.cardsToShow = 3;
+      this.cardWidth = 320;
+      this.cardGap = 24;
+    } else if (width >= 1200) {
+      this.cardsToShow = 3;
+      this.cardWidth = 300;
+      this.cardGap = 24;
+    } else if (width >= 1024) {
+      this.cardsToShow = 3;
+      this.cardWidth = 280;
+      this.cardGap = 20;
+    } else if (width >= 768) {
+      this.cardsToShow = 2;
+      this.cardWidth = 260;
+      this.cardGap = 16;
+    } else if (width >= 640) {
+      this.cardsToShow = 1;
+      this.cardWidth = Math.min(width - 128, 320);
+      this.cardGap = 12;
     } else {
-      this.cardsPerView = 3;
-      this.slideWidth = 326;
-    }
-    
-    // Adjust current slide if necessary
-    if (this.currentSlide > this.maxSlides) {
-      this.currentSlide = Math.max(0, this.maxSlides);
+      this.cardsToShow = 1;
+      this.cardWidth = Math.min(width - 112, 300);
+      this.cardGap = 12;
     }
   }
 
   /**
-   * Get activities data from translations
+   * Prépare les données pour la boucle infinie
+   */
+  private setupInfiniteLoop(): void {
+    const original = this.activities;
+    
+    if (original.length === 0) {
+      this.extendedActivities = [];
+      return;
+    }
+
+    // Cloner les éléments pour créer une boucle
+    const clonesNeeded = Math.max(this.cardsToShow, 3);
+    
+    // Créer des clones avant et après
+    const clonesBefore = original.slice(-clonesNeeded).map(item => ({
+      ...item,
+      id: `${item.id}_before`
+    }));
+    
+    const clonesAfter = original.slice(0, clonesNeeded).map(item => ({
+      ...item,
+      id: `${item.id}_after`
+    }));
+    
+    // Assemblage: [clones avant] + [originaux] + [clones après]
+    this.extendedActivities = [...clonesBefore, ...original, ...clonesAfter];
+  }
+
+  /**
+   * Définit la position initiale centrée
+   */
+  private setInitialPosition(): void {
+    if (this.activities.length === 0) return;
+    
+    // Nombre de clones avant
+    const clonesBeforeCount = Math.max(this.cardsToShow, 3);
+    
+    // Calculer le décalage pour centrer les cartes visibles
+    const viewportWidth = this.getViewportWidth();
+    const totalCardsWidth = this.cardsToShow * this.cardWidth + (this.cardsToShow - 1) * this.cardGap;
+    const centerOffset = (viewportWidth - totalCardsWidth) / 2;
+    
+    // Position de départ (premier élément original)
+    this.currentIndex = clonesBeforeCount;
+    this.translateX = -(this.currentIndex * (this.cardWidth + this.cardGap)) + centerOffset;
+  }
+
+  /**
+   * Obtient la largeur du viewport
+   */
+  private getViewportWidth(): number {
+    const containerWidth = window.innerWidth;
+    const margins = 96; // 6rem de marges (3rem de chaque côté)
+    const maxWidth = 1200; // max-width du viewport
+    
+    return Math.min(containerWidth - margins, maxWidth);
+  }
+
+  /**
+   * Calcule la position de translation pour un index donné
+   */
+  private calculateTranslateX(index: number): number {
+    const viewportWidth = this.getViewportWidth();
+    const totalCardsWidth = this.cardsToShow * this.cardWidth + (this.cardsToShow - 1) * this.cardGap;
+    const centerOffset = (viewportWidth - totalCardsWidth) / 2;
+    
+    return -(index * (this.cardWidth + this.cardGap)) + centerOffset;
+  }
+
+  /**
+   * Navigation vers la carte suivante
+   */
+  nextSlide(): void {
+    if (this.isTransitioning || this.activities.length === 0) return;
+    
+    this.isTransitioning = true;
+    this.currentIndex++;
+    this.translateX = this.calculateTranslateX(this.currentIndex);
+    
+    // Vérifier si on a atteint la fin (clones)
+    setTimeout(() => {
+      const clonesBeforeCount = Math.max(this.cardsToShow, 3);
+      const lastOriginalIndex = clonesBeforeCount + this.activities.length - 1;
+      
+      if (this.currentIndex > lastOriginalIndex) {
+        // Sauter au début sans animation
+        this.noTransition = true;
+        this.currentIndex = clonesBeforeCount;
+        this.translateX = this.calculateTranslateX(this.currentIndex);
+        
+        setTimeout(() => {
+          this.noTransition = false;
+        }, 10);
+      }
+      
+      this.isTransitioning = false;
+    }, 250);
+  }
+
+  /**
+   * Navigation vers la carte précédente
+   */
+  previousSlide(): void {
+    if (this.isTransitioning || this.activities.length === 0) return;
+    
+    this.isTransitioning = true;
+    this.currentIndex--;
+    this.translateX = this.calculateTranslateX(this.currentIndex);
+    
+    // Vérifier si on a atteint le début (clones)
+    setTimeout(() => {
+      const clonesBeforeCount = Math.max(this.cardsToShow, 3);
+      
+      if (this.currentIndex < clonesBeforeCount) {
+        // Sauter à la fin sans animation
+        this.noTransition = true;
+        this.currentIndex = clonesBeforeCount + this.activities.length - 1;
+        this.translateX = this.calculateTranslateX(this.currentIndex);
+        
+        setTimeout(() => {
+          this.noTransition = false;
+        }, 50);
+      }
+      
+      this.isTransitioning = false;
+    }, 500);
+  }
+
+  /**
+   * Navigation vers une carte spécifique (pour les dots)
+   */
+  goToSlide(index: number): void {
+    if (this.isTransitioning || this.activities.length === 0) return;
+    
+    const clonesBeforeCount = Math.max(this.cardsToShow, 3);
+    
+    this.isTransitioning = true;
+    this.currentIndex = clonesBeforeCount + index;
+    this.translateX = this.calculateTranslateX(this.currentIndex);
+    
+    setTimeout(() => {
+      this.isTransitioning = false;
+    }, 500);
+  }
+
+  /**
+   * Obtient l'index réel (sans les clones)
+   */
+  private getRealIndex(): number {
+    const clonesBeforeCount = Math.max(this.cardsToShow, 3);
+    return (this.currentIndex - clonesBeforeCount + this.activities.length) % this.activities.length;
+  }
+
+  /**
+   * Vérifie si un dot est actif
+   */
+  isDotActive(index: number): boolean {
+    return this.getRealIndex() === index;
+  }
+
+  /**
+   * Génère le tableau pour les dots
+   */
+  getDots(): number[] {
+    return Array(this.activities.length).fill(0).map((_, i) => i);
+  }
+
+  /**
+   * Données des activités avec fallback values
    */
   get activities(): Activity[] {
     const translations = this.languageService.currentTranslations;
+    
+    // Fallback pour les textes principaux si non définis
+    if (!translations.conciergerieTitle) {
+      console.warn('conciergerieTitle non défini dans les traductions');
+    }
+    if (!translations.conciergerieSubtitle) {
+      console.warn('conciergerieSubtitle non défini dans les traductions');
+    }
+    if (!translations.conciergerieServicesTitle) {
+      console.warn('conciergerieServicesTitle non défini dans les traductions');
+    }
     
     return [
       {
@@ -120,58 +329,11 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
         description: translations.conciergerieHusky?.description || 'Balade en traîneau à chiens',
         image: 'assets/images/montagne_cover.jpg'
       }
-    ].filter(activity => activity.title && activity.subtitle); // Filter out activities without proper translations
+    ].filter(activity => activity.title && activity.subtitle);
   }
 
   /**
-   * Get maximum number of slides
-   */
-  get maxSlides(): number {
-    return Math.max(0, this.activities.length - this.cardsPerView);
-  }
-
-  /**
-   * Navigate to next slide
-   */
-  nextSlide(): void {
-    if (this.currentSlide < this.maxSlides) {
-      this.currentSlide++;
-    }
-  }
-
-  /**
-   * Navigate to previous slide
-   */
-  previousSlide(): void {
-    if (this.currentSlide > 0) {
-      this.currentSlide--;
-    }
-  }
-
-  /**
-   * Go to specific slide
-   */
-  goToSlide(index: number): void {
-    this.currentSlide = Math.min(Math.max(0, index), this.maxSlides);
-  }
-
-  /**
-   * Check if current slide is the last one
-   */
-  isLastSlide(): boolean {
-    return this.currentSlide >= this.maxSlides;
-  }
-
-  /**
-   * Get array for dots navigation
-   */
-  getDots(): number[] {
-    const dotsCount = Math.max(1, this.maxSlides + 1);
-    return Array(dotsCount).fill(0).map((_, i) => i);
-  }
-
-  /**
-   * Navigate to contact section
+   * Navigation vers la section contact
    */
   goToContact(): void {
     this.router.navigate(['/']).then(() => {
@@ -185,13 +347,5 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
         }
       }, 100);
     });
-  }
-
-  /**
-   * Handle quote request from activity card
-   */
-  onActivityQuoteRequest(activity: Activity): void {
-    console.log('Demande de devis pour l\'activité:', activity.title);
-    this.goToContact();
   }
 }
