@@ -13,6 +13,15 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": "fr",
+        "locales": {
+          "en": {
+            "translation": "src/locale/messages.en.json",
+            "baseHref": "/en/"
+          }
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
@@ -56,6 +65,56 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "fr": {
+              "aot": true,
+              "outputPath": "dist/mc-travel-site/fr",
+              "i18nMissingTranslation": "error"
+            },
+            "en": {
+              "aot": true,
+              "outputPath": "dist/mc-travel-site/en",
+              "i18nMissingTranslation": "error",
+              "i18nLocale": "en",
+              "i18nFile": "src/locale/messages.en.json"
+            },
+            "production-fr": {
+              "buildOptimizer": true,
+              "optimization": true,
+              "vendorChunk": false,
+              "extractLicenses": true,
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": true,
+              "outputPath": "dist/mc-travel-site/fr",
+              "outputHashing": "all",
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                }
+              ]
+            },
+            "production-en": {
+              "buildOptimizer": true,
+              "optimization": true,
+              "vendorChunk": false,
+              "extractLicenses": true,
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": true,
+              "outputPath": "dist/mc-travel-site/en",
+              "outputHashing": "all",
+              "i18nLocale": "en",
+              "i18nFile": "src/locale/messages.en.json",
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -68,12 +127,21 @@
             },
             "development": {
               "buildTarget": "mc-travel-site:build:development"
+            },
+            "fr": {
+              "buildTarget": "mc-travel-site:build:fr"
+            },
+            "en": {
+              "buildTarget": "mc-travel-site:build:en"
             }
           },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n"
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "mc-travel-site:build"
+          }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -98,5 +166,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "a6108c43-b3c5-485a-8d67-ea271d61807d"
   }
 }
