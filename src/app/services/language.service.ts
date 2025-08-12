@@ -11,6 +11,7 @@ export interface Translations {
   menuAbout: string;
   menuContact: string;
   menuConciergerie: string;
+  menuProperties: string; // Ajout
   
   // Header specific
   contactBar: string;
@@ -70,6 +71,22 @@ export interface Translations {
   formNamePlaceholder: string;
   formEmailPlaceholder: string;
   formMessagePlaceholder: string;
+  
+  // Footer specific - NOUVEAU
+  footerTitle: string;
+  footerSubtitle: string;
+  footerButtonText: string;
+  footerContact: string;
+  footerLinks: string;
+  footerFollow: string;
+  footerRights: string;
+  footerPhone: string;
+  footerEmail: string;
+  footerAddress: string;
+  footerCompany: string;
+  footerPrivacy: string;
+  footerTerms: string;
+  footerLegal: string;
   
   // Conciergerie Page
   conciergerieTitle: string;
@@ -167,6 +184,7 @@ export class LanguageService {
       menuAbout: 'À propos',
       menuContact: 'Contact',
       menuConciergerie: 'Conciergerie',
+      menuProperties: 'Propriétés',
       
       // Header specific
       contactBar: 'Pour toute demande :',
@@ -248,6 +266,22 @@ export class LanguageService {
       formNamePlaceholder: "Votre nom complet",
       formEmailPlaceholder: "votre@email.com",
       formMessagePlaceholder: "Décrivez-nous votre projet de séjour...",
+      
+      // Footer specific - NOUVEAU
+      footerTitle: "Prêt à vivre une expérience unique ?",
+      footerSubtitle: "Contactez nos experts pour créer votre séjour sur mesure dans les Alpes françaises.",
+      footerButtonText: "Nous contacter",
+      footerContact: "Contact",
+      footerLinks: "Liens Rapides",
+      footerFollow: "Suivez-nous",
+      footerRights: "Tous droits réservés.",
+      footerPhone: "+33 (0)6 12 34 56 78",
+      footerEmail: "contact@tsr-experience.com",
+      footerAddress: "73120 Courchevel, France",
+      footerCompany: "TSR Experience",
+      footerPrivacy: "Politique de confidentialité",
+      footerTerms: "Conditions générales",
+      footerLegal: "Mentions légales",
       
       // Conciergerie Page
       conciergerieTitle: "Service de Conciergerie",
@@ -371,6 +405,7 @@ export class LanguageService {
       menuAbout: 'About',
       menuContact: 'Contact',
       menuConciergerie: 'Concierge',
+      menuProperties: 'Properties',
       
       // Header specific
       contactBar: 'For any inquiry:',
@@ -452,6 +487,22 @@ export class LanguageService {
       formNamePlaceholder: "Your full name",
       formEmailPlaceholder: "your@email.com",
       formMessagePlaceholder: "Tell us about your travel project...",
+      
+      // Footer specific - NEW
+      footerTitle: "Ready for a unique experience?",
+      footerSubtitle: "Contact our experts to create your tailor-made stay in the French Alps.",
+      footerButtonText: "Contact us",
+      footerContact: "Contact",
+      footerLinks: "Quick Links",
+      footerFollow: "Follow us",
+      footerRights: "All rights reserved.",
+      footerPhone: "+33 (0)6 12 34 56 78",
+      footerEmail: "contact@tsr-experience.com",
+      footerAddress: "73120 Courchevel, France",
+      footerCompany: "TSR Experience",
+      footerPrivacy: "Privacy Policy",
+      footerTerms: "Terms & Conditions",
+      footerLegal: "Legal Notice",
       
       // Conciergerie Page
       conciergerieTitle: "Concierge Service",

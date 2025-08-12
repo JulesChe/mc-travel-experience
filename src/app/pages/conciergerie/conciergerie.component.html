@@ -2,7 +2,7 @@
 <div class="min-h-screen bg-white">
   
   <!-- Hero Section -->
-  <section class="relative h-[80vh] overflow-hidden">
+  <section class="hero-section relative h-[80vh] overflow-hidden">
     <div class="absolute inset-0">
       <img 
         src="assets/images/pas libre de droit/tsr-cmbh.jpg"
@@ -42,7 +42,7 @@
   </section>
 
   <!-- Activities Cards Section -->
-  <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 overflow-hidden">
+  <section class="services-section py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 overflow-hidden">
     <div class="max-w-7xl mx-auto">
       
       <!-- Section Header -->
@@ -124,24 +124,7 @@
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <section class="py-20 bg-[#151c32] text-white">
-    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-      <div class="animate-fade-in-up">
-        <h3 class="text-4xl md:text-5xl font-light mb-6">
-          {{ languageService.currentTranslations.conciergerieCTA?.title }}
-        </h3>
-        <div class="decorative-line bg-white mb-8"></div>
-        <p class="text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-          {{ languageService.currentTranslations.conciergerieCTA?.subtitle }}
-        </p>
-        <button 
-          (click)="goToContact()" 
-          class="btn-primary bg-white text-[#151c32] hover:bg-gray-100">
-          {{ languageService.currentTranslations.conciergerieCTA?.button }}
-        </button>
-      </div>
-    </div>
-  </section>
+      <app-footer [config]="footerConfig"></app-footer>
+
 
 </div>

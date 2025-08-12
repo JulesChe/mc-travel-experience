@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
 import { ServiceCardComponent, Activity } from '../../components/service-card/service-card.component';
+import { FooterComponent, FooterConfig } from '../../components/footer/footer.component';
 
 @Component({
   selector: 'app-conciergerie',
   standalone: true,
-  imports: [CommonModule, RouterModule, ServiceCardComponent],
+  imports: [CommonModule, RouterModule, ServiceCardComponent,FooterComponent],
   templateUrl: './conciergerie.component.html',
   styleUrls: ['./conciergerie.component.scss']
 })
@@ -26,6 +27,12 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
   
   // Données
   extendedActivities: Activity[] = [];
+
+  footerConfig: FooterConfig = {
+    title: undefined, // Utilise le titre par défaut
+    subtitle: undefined, // Utilise le sous-titre par défaut
+    buttonText: undefined // Utilise le texte par défaut
+  };
   
   // Listeners
   private resizeListener?: () => void;
@@ -34,7 +41,9 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
   constructor(
     public languageService: LanguageService,
     private router: Router
-  ) {}
+  ) {
+
+  }
 
   ngOnInit() {
     window.scrollTo(0, 0);
@@ -49,7 +58,11 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
       this.setInitialPosition();
     };
     window.addEventListener('resize', this.resizeListener);
+
+
   }
+
+
 
   ngOnDestroy() {
     if (this.resizeListener) {

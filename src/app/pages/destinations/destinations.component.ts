@@ -1,8 +1,11 @@
+// destinations.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
 import { Router } from '@angular/router';
+import { FooterComponent, FooterConfig } from '../../components/footer/footer.component';
+
 
 interface Destination {
   id: string;
@@ -19,7 +22,7 @@ interface Destination {
 @Component({
   selector: 'app-destinations',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule,FooterComponent],
   
   template: `
     <!-- Page Destinations -->
@@ -38,11 +41,11 @@ interface Destination {
         <div class="relative z-10 h-full flex items-center justify-center text-center text-white px-4">
           <div class="max-w-4xl mx-auto animate-fade-in-up">
             <h1 class="text-5xl md:text-7xl font-light mb-6 tracking-wide">
-              {{ languageService.currentTranslations.section2Title }}
+              {{ languageService.currentTranslations.section2Title || 'Nos Destinations' }}
             </h1>
             <div class="decorative-line bg-white"></div>
             <p class="text-xl md:text-2xl font-light mt-8 leading-relaxed opacity-90 max-w-3xl mx-auto">
-              {{ languageService.currentTranslations.section2Text }}
+              {{ languageService.currentTranslations.section2Text || "Des stations d\'exception au cœur des Alpes" }}
             </p>
           </div>
         </div>
@@ -125,43 +128,37 @@ interface Destination {
         </div>
       </section>
 
-      <!-- Call to Action -->
-      <section class="py-20 bg-[#fff0cf]">
-        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h3 class="text-3xl md:text-4xl font-light text-gray-900 mb-6">
-            {{ languageService.currentLanguage === 'fr' ? 'Prêt pour votre prochaine aventure alpine ?' : 'Ready for your next alpine adventure?' }}
-          </h3>
-          <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            {{ languageService.currentLanguage === 'fr' ? 
-                "Contactez nos experts pour créer votre séjour sur mesure dans l\'une de ces destinations d\'exception." :
-                'Contact our experts to create your tailor-made stay in one of these exceptional destinations.' }}
-          </p>
-        <button (click)="goToContact()" class="btn-primary">
-          {{ languageService.currentTranslations.menuContact }}
-        </button>
-        </div>
-      </section>
+      <app-footer [config]="footerConfig"></app-footer>
+
 
     </div>
   `,
   styleUrls: ['./destinations.component.scss']
-  })
+})
 export class DestinationsComponent {
-  
-  constructor(public languageService: LanguageService,
+
+
+    footerConfig: FooterConfig = {
+    title: undefined, // Utilise le titre par défaut
+    subtitle: undefined, // Utilise le sous-titre par défaut
+    buttonText: undefined // Utilise le texte par défaut
+  };
+  constructor(
+    public languageService: LanguageService,
     private router: Router
   ) {}
 
+
   goToContact() {
-  this.router.navigate(['/']).then(() => {
-    setTimeout(() => {
-      const element = document.getElementById('contact');
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
-  });
-}
+    this.router.navigate(['/']).then(() => {
+      setTimeout(() => {
+        const element = document.getElementById('contact');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    });
+  }
 
   get destinationsIntro(): string {
     return this.languageService.currentLanguage === 'fr' 
