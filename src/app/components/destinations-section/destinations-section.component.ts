@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LanguageService } from '../../services/language.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-destinations-section',
@@ -38,7 +39,7 @@ import { LanguageService } from '../../services/language.service';
             
             <!-- Call-to-action simple -->
             <div class="mt-8 animate-fade-in-up delay-500">
-              <button class="btn-primary w-full">
+              <button (click)="goToDestinations()" class="btn-primary w-full">
                 {{ languageService.currentTranslations.viewAllDestinations }}
               </button>
             </div>
@@ -59,5 +60,13 @@ import { LanguageService } from '../../services/language.service';
   `
 })
 export class DestinationsSectionComponent {
-  constructor(public languageService: LanguageService) {}
+
+
+  
+goToDestinations() {
+    this.router.navigate(['/destinations'])
+}
+  constructor(public languageService: LanguageService,
+    private router: Router
+  ) {}
 }
