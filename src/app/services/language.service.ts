@@ -10,6 +10,7 @@ export interface Translations {
   menuAccommodations: string;
   menuAbout: string;
   menuContact: string;
+  menuConciergerie: string;
   
   // Header specific
   contactBar: string;
@@ -70,10 +71,78 @@ export interface Translations {
   formEmailPlaceholder: string;
   formMessagePlaceholder: string;
   
+  // Conciergerie Page
+  conciergerieTitle: string;
+  conciergerieSubtitle: string;
+  conciergerieIntro: string;
+  conciergeriePromise: string;
+  
+  // Conciergerie Services
+  conciergerieServicesTitle: string;
+  conciergerieServicesSubtitle: string;
+  
+  conciergerieHelico: {
+    title: string;
+    subtitle: string;
+    description: string;
+    features: string[];
+  };
+  
+  conciergerieChef: {
+    title: string;
+    subtitle: string;
+    description: string;
+    features: string[];
+  };
+  
+  conciergerieMoniteur: {
+    title: string;
+    subtitle: string;
+    description: string;
+    features: string[];
+  };
+  
+  conciergerieMontgolfiere: {
+    title: string;
+    subtitle: string;
+    description: string;
+    features: string[];
+  };
+  
+  conciergerieRaquette: {
+    title: string;
+    subtitle: string;
+    description: string;
+    features: string[];
+  };
+  
+  conciergerieYoga: {
+    title: string;
+    subtitle: string;
+    description: string;
+    features: string[];
+  };
+  
+  conciergerieHusky: {
+    title: string;
+    subtitle: string;
+    description: string;
+    features: string[];
+  };
+  
+  // Conciergerie CTA
+  conciergerieCTA: {
+    title: string;
+    subtitle: string;
+    button: string;
+  };
+  
   // Common
   discoverMore: string;
   bookNow: string;
   learnMore: string;
+  requestQuote: string;
+  available24h: string;
   
   // Legal info
   legalAtout: string;
@@ -97,6 +166,7 @@ export class LanguageService {
       menuAccommodations: 'Hébergements',
       menuAbout: 'À propos',
       menuContact: 'Contact',
+      menuConciergerie: 'Conciergerie',
       
       // Header specific
       contactBar: 'Pour toute demande :',
@@ -179,6 +249,107 @@ export class LanguageService {
       formEmailPlaceholder: "votre@email.com",
       formMessagePlaceholder: "Décrivez-nous votre projet de séjour...",
       
+      // Conciergerie Page
+      conciergerieTitle: "Service de Conciergerie",
+      conciergerieSubtitle: "Votre assistant personnel pour des expériences d'exception",
+      conciergerieIntro: "Notre service de conciergerie transforme vos rêves en réalité. Disponible 24h/24, notre équipe d'experts organise chaque détail de votre séjour pour créer des moments inoubliables.",
+      conciergeriePromise: "Parce que chaque moment compte, nous mettons notre savoir-faire et notre réseau d'excellence à votre service.",
+      
+      // Conciergerie Services
+      conciergerieServicesTitle: "Nos Services Exclusifs",
+      conciergerieServicesSubtitle: "Une palette d'expériences sur mesure",
+      
+      conciergerieHelico: {
+        title: "Transferts en Hélicoptère",
+        subtitle: "Voyagez avec panache",
+        description: "Découvrez les Alpes depuis les airs avec nos transferts en hélicoptère. Une approche spectaculaire qui transforme le trajet en expérience mémorable.",
+        features: [
+          "Transferts aéroport-station",
+          "Tours panoramiques des Alpes",
+          "Héliski sur glaciers",
+          "Dîners en altitude accessible uniquement par hélico"
+        ]
+      },
+      
+      conciergerieChef: {
+        title: "Chef Privé à Domicile",
+        subtitle: "Gastronomie d'exception chez vous",
+        description: "Savourez une cuisine raffinée dans l'intimité de votre chalet. Nos chefs étoilés créent des menus personnalisés avec des produits locaux d'exception.",
+        features: [
+          "Menus sur mesure selon vos goûts",
+          "Produits locaux premium",
+          "Service discret et professionnel",
+          "Spécialités savoyardes revisitées"
+        ]
+      },
+      
+      conciergerieMoniteur: {
+        title: "Moniteur de Ski Privé",
+        subtitle: "Excellence technique et sécurité",
+        description: "Perfectionnez votre technique ou découvrez les pistes secrètes avec nos moniteurs d'élite. Formation personnalisée pour tous les niveaux.",
+        features: [
+          "Cours particuliers sur mesure",
+          "Guidage hors-piste sécurisé",
+          "Initiation aux techniques de compétition",
+          "Découverte des spots secrets"
+        ]
+      },
+      
+      conciergerieMontgolfiere: {
+        title: "Vol en Montgolfière",
+        subtitle: "Émerveillement garanti",
+        description: "Survolez les sommets enneigés dans le silence majestueux d'une montgolfière. Une expérience poétique et inoubliable au lever du soleil.",
+        features: [
+          "Vols au lever ou coucher du soleil",
+          "Champagne servi en vol",
+          "Vues panoramiques uniques",
+          "Certificat de vol personnalisé"
+        ]
+      },
+      
+      conciergerieRaquette: {
+        title: "Randonnées Raquettes",
+        subtitle: "Sérénité en montagne",
+        description: "Explorez la montagne en silence sur des sentiers préservés. Nos guides naturalistes vous dévoilent les secrets de la faune alpine.",
+        features: [
+          "Guides naturalistes expérimentés",
+          "Itinéraires secrets hors des sentiers battus",
+          "Observation de la faune sauvage",
+          "Pause gourmande en refuge d'altitude"
+        ]
+      },
+      
+      conciergerieYoga: {
+        title: "Yoga & Bien-être",
+        subtitle: "Harmonie corps et esprit",
+        description: "Reconnectez-vous avec vous-même dans le cadre exceptionnel des Alpes. Séances privées avec vue sur les sommets.",
+        features: [
+          "Professeurs certifiés et expérimentés",
+          "Séances en extérieur face aux sommets",
+          "Yoga, méditation et relaxation",
+          "Matériel professionnel fourni"
+        ]
+      },
+      
+      conciergerieHusky: {
+        title: "Randonnée avec Huskies",
+        subtitle: "Aventure nordique authentique",
+        description: "Vivez l'aventure polaire au cœur des Alpes avec nos balades en traîneau à chiens. Une expérience authentique et énergisante.",
+        features: [
+          "Traîneaux traditionnels et huskies dressés",
+          "Parcours adaptés à tous les niveaux",
+          "Rencontre avec les mushers passionnés",
+          "Photos souvenirs professionnelles"
+        ]
+      },
+      
+      // Conciergerie CTA
+      conciergerieCTA: {
+        title: "Créons Ensemble Votre Expérience Parfaite",
+        subtitle: "Notre équipe de conciergerie est à votre écoute pour organiser chaque détail de votre séjour d'exception.",
+        button: "Contactez notre conciergerie"
+      },
+      
       // Legal info
       legalAtout: "N° ATOUT FRANCE : IM073250002",
       legalGuarantee: "Garantie financière : APST",
@@ -187,7 +358,9 @@ export class LanguageService {
       // Common
       discoverMore: "Découvrir plus",
       bookNow: "Réserver maintenant",
-      learnMore: "En savoir plus"
+      learnMore: "En savoir plus",
+      requestQuote: "Demander un devis",
+      available24h: "Disponible 24h/24"
     },
     en: {
       // Navigation menu
@@ -197,6 +370,7 @@ export class LanguageService {
       menuAccommodations: 'Accommodations',
       menuAbout: 'About',
       menuContact: 'Contact',
+      menuConciergerie: 'Concierge',
       
       // Header specific
       contactBar: 'For any inquiry:',
@@ -279,6 +453,107 @@ export class LanguageService {
       formEmailPlaceholder: "your@email.com",
       formMessagePlaceholder: "Tell us about your travel project...",
       
+      // Conciergerie Page
+      conciergerieTitle: "Concierge Service",
+      conciergerieSubtitle: "Your personal assistant for exceptional experiences",
+      conciergerieIntro: "Our concierge service transforms your dreams into reality. Available 24/7, our team of experts organizes every detail of your stay to create unforgettable moments.",
+      conciergeriePromise: "Because every moment counts, we put our expertise and network of excellence at your service.",
+      
+      // Conciergerie Services
+      conciergerieServicesTitle: "Our Exclusive Services",
+      conciergerieServicesSubtitle: "A palette of tailor-made experiences",
+      
+      conciergerieHelico: {
+        title: "Helicopter Transfers",
+        subtitle: "Travel in style",
+        description: "Discover the Alps from the air with our helicopter transfers. A spectacular approach that transforms the journey into a memorable experience.",
+        features: [
+          "Airport-to-resort transfers",
+          "Panoramic Alpine tours",
+          "Glacier heliskiing",
+          "Mountain dining accessible only by helicopter"
+        ]
+      },
+      
+      conciergerieChef: {
+        title: "Private Chef at Home",
+        subtitle: "Exceptional gastronomy in your chalet",
+        description: "Savor refined cuisine in the privacy of your chalet. Our Michelin-starred chefs create personalized menus with exceptional local ingredients.",
+        features: [
+          "Custom menus according to your tastes",
+          "Premium local ingredients",
+          "Discreet and professional service",
+          "Savoyard specialties revisited"
+        ]
+      },
+      
+      conciergerieMoniteur: {
+        title: "Private Ski Instructor",
+        subtitle: "Technical excellence and safety",
+        description: "Perfect your technique or discover secret slopes with our elite instructors. Personalized training for all levels.",
+        features: [
+          "Tailor-made private lessons",
+          "Secure off-piste guiding",
+          "Competition technique initiation",
+          "Discovery of secret spots"
+        ]
+      },
+      
+      conciergerieMontgolfiere: {
+        title: "Hot Air Balloon Flight",
+        subtitle: "Wonder guaranteed",
+        description: "Fly over snow-capped peaks in the majestic silence of a hot air balloon. A poetic and unforgettable experience at sunrise.",
+        features: [
+          "Sunrise or sunset flights",
+          "Champagne served in flight",
+          "Unique panoramic views",
+          "Personalized flight certificate"
+        ]
+      },
+      
+      conciergerieRaquette: {
+        title: "Snowshoe Hiking",
+        subtitle: "Serenity in the mountains",
+        description: "Explore the mountains in silence on preserved trails. Our naturalist guides reveal the secrets of alpine wildlife.",
+        features: [
+          "Experienced naturalist guides",
+          "Secret off-the-beaten-path routes",
+          "Wild wildlife observation",
+          "Gourmet break in mountain refuge"
+        ]
+      },
+      
+      conciergerieYoga: {
+        title: "Yoga & Wellness",
+        subtitle: "Harmony of body and mind",
+        description: "Reconnect with yourself in the exceptional setting of the Alps. Private sessions with views of the peaks.",
+        features: [
+          "Certified and experienced instructors",
+          "Outdoor sessions facing the summits",
+          "Yoga, meditation and relaxation",
+          "Professional equipment provided"
+        ]
+      },
+      
+      conciergerieHusky: {
+        title: "Husky Hiking",
+        subtitle: "Authentic Nordic adventure",
+        description: "Experience polar adventure in the heart of the Alps with our dog sledding walks. An authentic and energizing experience.",
+        features: [
+          "Traditional sleds and trained huskies",
+          "Routes adapted to all levels",
+          "Meet passionate mushers",
+          "Professional souvenir photos"
+        ]
+      },
+      
+      // Conciergerie CTA
+      conciergerieCTA: {
+        title: "Let's Create Your Perfect Experience Together",
+        subtitle: "Our concierge team is here to organize every detail of your exceptional stay.",
+        button: "Contact our concierge"
+      },
+      
       // Legal info
       legalAtout: "ATOUT FRANCE No.: IM073250002",
       legalGuarantee: "Financial guarantee: APST",
@@ -287,7 +562,9 @@ export class LanguageService {
       // Common
       discoverMore: "Discover more",
       bookNow: "Book now",
-      learnMore: "Learn more"
+      learnMore: "Learn more",
+      requestQuote: "Request a quote",
+      available24h: "Available 24/7"
     }
   };
 

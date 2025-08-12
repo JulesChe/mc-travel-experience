@@ -1,0 +1,144 @@
+<!-- conciergerie.component.html -->
+<div class="min-h-screen bg-white">
+  
+  <!-- Hero Section -->
+  <section class="relative h-[80vh] overflow-hidden">
+    <div class="absolute inset-0">
+      <img 
+        src="assets/images/pas libre de droit/tsr-cmbh.jpg"
+        alt="Service de conciergerie de luxe"
+        class="w-full h-full object-cover">
+      <div class="absolute inset-0 bg-black/50"></div>
+    </div>
+    
+    <div class="relative z-10 h-full flex items-center justify-center text-center text-white px-4">
+      <div class="max-w-5xl mx-auto animate-fade-in-up">
+        <div class="mb-6">
+          <span class="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm uppercase tracking-wide border border-white/20">
+            {{ languageService.currentTranslations.available24h }}
+          </span>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-light mb-6 tracking-wide">
+          {{ languageService.currentTranslations.conciergerieTitle }}
+        </h1>
+        <div class="decorative-line bg-white"></div>
+        <p class="text-xl md:text-2xl font-light mt-8 leading-relaxed opacity-90 max-w-4xl mx-auto">
+          {{ languageService.currentTranslations.conciergerieSubtitle }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+      <div class="flex flex-col items-center space-y-2">
+        <span class="text-xs uppercase tracking-wide opacity-80">
+          {{ languageService.currentTranslations.discoverScroll }}
+        </span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Activities Cards Section -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="text-center mb-16 animate-fade-in-up">
+        <h2 class="text-4xl md:text-5xl font-light text-gray-900 mb-6">
+          {{ languageService.currentTranslations.conciergerieServicesSubtitle }}
+        </h2>
+        <div class="decorative-line"></div>
+      </div>
+
+      <!-- Cards Carousel Container -->
+      <div class="relative" *ngIf="activities.length > 0">
+        
+        <!-- Cards Grid -->
+        <div class="cards-container overflow-hidden">
+          <div class="cards-track flex transition-transform duration-500 ease-in-out gap-6"
+               [style.transform]="'translateX(-' + (currentSlide * slideWidth) + 'px)'">
+            
+            <div *ngFor="let activity of activities; let i = index" 
+                 class="activity-card flex-shrink-0">
+              
+              <!-- Service Card en mode Activity -->
+              <app-service-card 
+                [activity]="activity"
+                [showCTA]="false">
+            </app-service-card>
+
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Navigation Arrows -->
+        <button 
+          (click)="previousSlide()"
+          class="carousel-btn carousel-btn-prev"
+          [class.disabled]="currentSlide === 0"
+          [attr.aria-label]="'Diapositive précédente'">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+
+        <button 
+          (click)="nextSlide()"
+          class="carousel-btn carousel-btn-next"
+          [class.disabled]="isLastSlide()"
+          [attr.aria-label]="'Diapositive suivante'">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+
+        <!-- Dots Navigation -->
+        <div class="carousel-dots" *ngIf="maxSlides > 0">
+          <button 
+            *ngFor="let dot of getDots(); let i = index"
+            (click)="goToSlide(i)"
+            class="carousel-dot"
+            [class.active]="currentSlide === i"
+            [attr.aria-label]="'Aller à la diapositive ' + (i + 1)">
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Fallback if no activities -->
+      <div *ngIf="activities.length === 0" class="text-center py-12">
+        <p class="text-lg text-gray-500">
+          {{ languageService.currentLanguage === 'fr' ? 'Aucune activité disponible pour le moment.' : 'No activities available at the moment.' }}
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 bg-[#151c32] text-white">
+    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+      <div class="animate-fade-in-up">
+        <h3 class="text-4xl md:text-5xl font-light mb-6">
+          {{ languageService.currentTranslations.conciergerieCTA?.title }}
+        </h3>
+        <div class="decorative-line bg-white mb-8"></div>
+        <p class="text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+          {{ languageService.currentTranslations.conciergerieCTA?.subtitle }}
+        </p>
+        <button 
+          (click)="goToContact()" 
+          class="btn-primary bg-white text-[#151c32] hover:bg-gray-100">
+          {{ languageService.currentTranslations.conciergerieCTA?.button }}
+        </button>
+      </div>
+    </div>
+  </section>
+
+</div>

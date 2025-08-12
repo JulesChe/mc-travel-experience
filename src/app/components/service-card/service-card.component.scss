@@ -1,0 +1,343 @@
+// components/service-card/service-card.component.scss
+
+// ===== SERVICE CARD STYLES (Layout horizontal) =====
+.service-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  margin-bottom: 6rem;
+}
+
+.service-card.reverse {
+  direction: rtl;
+}
+
+.service-card.reverse .service-content {
+  direction: ltr;
+}
+
+.service-image {
+  position: relative;
+}
+
+.service-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(21, 28, 50, 0.1), transparent);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.enhanced-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  
+  img {
+    transition: transform 0.4s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+  
+  &:hover .service-overlay {
+    opacity: 1;
+  }
+}
+
+.service-badge {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 4rem;
+  height: 4rem;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #151c32;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transform: scale(0.8);
+  transition: transform 0.3s ease;
+}
+
+.enhanced-image:hover .service-badge {
+  transform: scale(1);
+}
+
+.service-content {
+  padding: 2rem 0;
+}
+
+.service-header {
+  margin-bottom: 2rem;
+}
+
+.service-title {
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: #111827;
+  margin-bottom: 0.5rem;
+  font-family: 'Times New Roman', serif;
+  line-height: 1.2;
+}
+
+.service-subtitle {
+  font-size: 1.25rem;
+  color: #6b7280;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.service-description {
+  margin-bottom: 2rem;
+}
+
+.service-description p {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: #4b5563;
+  margin: 0;
+}
+
+.service-features {
+  margin-bottom: 2rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.feature-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #eab308;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+.feature-item span {
+  color: #374151;
+  font-weight: 500;
+}
+
+.service-cta {
+  margin-top: 2rem;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  background: #151c32;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-size: 1rem;
+  
+  &:hover {
+    background: #1f2937;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(21, 28, 50, 0.3);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// ===== ACTIVITY CARD STYLES (Layout carte) =====
+.activity-card-wrapper {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+  cursor: pointer;
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    
+    .activity-image {
+      transform: scale(1.1);
+    }
+    
+    .activity-overlay {
+      opacity: 1;
+    }
+    
+    .overlay-content {
+      transform: translateY(0);
+    }
+  }
+}
+
+.activity-image-container {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+
+.activity-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.activity-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(21, 28, 50, 0.9), rgba(21, 28, 50, 0.7));
+  opacity: 0;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.overlay-content {
+  text-align: center;
+  color: white;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.overlay-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  max-height: 120px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+
+.activity-content {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.activity-title {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #111827;
+  margin-bottom: 0.5rem;
+  font-family: 'Times New Roman', serif;
+  line-height: 1.3;
+}
+
+.activity-subtitle {
+  font-size: 1rem;
+  color: #6b7280;
+  font-style: italic;
+  margin: 0;
+  line-height: 1.4;
+}
+
+// ===== ANIMATIONS =====
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-left {
+  animation: fadeInLeft 0.8s ease-out;
+}
+
+.animate-fade-in-right {
+  animation: fadeInRight 0.8s ease-out;
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// ===== RESPONSIVE DESIGN =====
+@media (max-width: 1024px) {
+  .service-card {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+  
+  .service-card.reverse {
+    direction: ltr;
+  }
+
+  .service-title {
+    font-size: 2rem;
+  }
+  
+  .activity-image-container {
+    height: 200px;
+  }
+  
+  .activity-content {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .service-title {
+    font-size: 1.75rem;
+  }
+  
+  .service-subtitle {
+    font-size: 1.125rem;
+  }
+  
+  .service-description p {
+    font-size: 1rem;
+  }
+}

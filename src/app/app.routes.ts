@@ -12,6 +12,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/destinations/destinations.component').then(m => m.DestinationsComponent),
     title: 'Destinations - MC Travel Experiences'
   },
+{
+    path: 'conciergerie',
+    loadComponent: () => import('./pages/conciergerie/conciergerie.component').then(m => m.ConciergerieComponent),
+    title: 'Destinations - MC Travel Experiences'
+  },
   {
     path: '**',
     redirectTo: ''
