@@ -128,7 +128,7 @@ interface Destination {
         </div>
       </section>
 
-      <app-footer [config]="footerConfig"></app-footer>
+    <app-footer [showAdditionalInfo]="true"></app-footer>
 
 
     </div>
