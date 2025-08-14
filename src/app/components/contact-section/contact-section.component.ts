@@ -7,6 +7,7 @@ import { EmailService, EmailData } from '../../services/email.service';
 interface ContactForm {
   name: string;
   email: string;
+  phone: string;
   message: string;
 }
 
@@ -45,11 +46,21 @@ interface ContactForm {
                   <p>73120 Courchevel, France</p>
                 </div>
                 
-                <div>
-                  <p class="font-medium text-white mb-1">{{ languageService.currentTranslations.contactPhone }}</p>
-                  <a href="tel:+33620524796" class="text-white hover:text-gray-300 transition-colors">
-                    +33(0) 620 524 796
-                  </a>
+                <!-- Contacts Charlotte et Morgan -->
+                <div class="space-y-3">
+                  <div>
+                    <p class="font-medium text-white mb-1">Charlotte</p>
+                    <a href="tel:NUMERO_CHARLOTTE" class="text-white hover:text-gray-300 transition-colors block">
+                      +33 6 03 31 67 62
+                    </a>
+                  </div>
+                  
+                  <div>
+                    <p class="font-medium text-white mb-1">Morgan</p>
+                    <a href="tel:NUMERO_MORGAN" class="text-white hover:text-gray-300 transition-colors block">
+                      +33 6 20 52 47 96
+                    </a>
+                  </div>
                 </div>
                 
                 <div>
@@ -107,6 +118,20 @@ interface ContactForm {
                     [placeholder]="languageService.currentTranslations.formEmailPlaceholder"
                     [disabled]="isSubmitting"
                     required>
+                </div>
+                
+                <!-- Téléphone -->
+                <div class="animate-fade-in-up delay-500">
+                  <label class="block text-sm font-medium text-gray-300 mb-2">
+                    {{ languageService.currentTranslations.formPhone || 'Téléphone' }}
+                  </label>
+                  <input 
+                    type="tel" 
+                    name="phone"
+                    [(ngModel)]="formData.phone"
+                    class="w-full px-4 py-3"
+                    [placeholder]="languageService.currentTranslations.formPhonePlaceholder || '+33 6 XX XX XX XX'"
+                    [disabled]="isSubmitting">
                 </div>
                 
                 <!-- Message -->
@@ -168,6 +193,7 @@ export class ContactSectionComponent {
   formData: ContactForm = {
     name: '',
     email: '',
+    phone: '',
     message: ''
   };
 
@@ -191,6 +217,7 @@ export class ContactSectionComponent {
       const emailData: EmailData = {
         name: this.formData.name,
         email: this.formData.email,
+        phone: this.formData.phone,
         message: this.formData.message,
         subject: this.getEmailSubject()
       };
@@ -213,22 +240,6 @@ export class ContactSectionComponent {
     }
   }
 
-  openEmailClient() {
-    if (this.formData.name && this.formData.email && this.formData.message) {
-      const emailData: EmailData = {
-        name: this.formData.name,
-        email: this.formData.email,
-        message: this.formData.message,
-        subject: this.getEmailSubject()
-      };
-
-      this.emailService.openEmailClient(emailData);
-      this.showStatus('info', this.getEmailClientOpenedMessage());
-      this.resetForm();
-    } else {
-      this.showStatus('error', this.getFillFieldsMessage());
-    }
-  }
 
   private handleEmailResult(result: {success: boolean, method: string, message: string}) {
     if (result.success) {
@@ -264,6 +275,7 @@ export class ContactSectionComponent {
     this.formData = {
       name: '',
       email: '',
+      phone: '',
       message: ''
     };
   }
@@ -281,11 +293,6 @@ export class ContactSectionComponent {
       : 'Sending...';
   }
 
-  getEmailClientText(): string {
-    return this.languageService.currentLanguage === 'fr' 
-      ? '📧 Ouvrir mon client email'
-      : '📧 Open my email client';
-  }
 
   private getSuccessMessage(): string {
     return this.languageService.currentLanguage === 'fr' 

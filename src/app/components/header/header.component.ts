@@ -13,7 +13,7 @@ import { LanguageService } from '../../services/language.service';
       <div class="max-w-7xl mx-auto px-4">
         <span class="font-medium">{{ languageService.currentTranslations.contactBar || 'Pour toute demande :' }} </span>
         <a href="tel:+33620524796" class="text-white hover:text-gray-300 transition-colors font-semibold underline">
-          +33(0) 620 524 796
+          +33 6 20 52 47 96
         </a>
       </div>
     </div>
@@ -21,12 +21,12 @@ import { LanguageService } from '../../services/language.service';
     <!-- Header principal épuré -->
     <header [class]="'clean-header sticky top-0 z-40' + (isScrolled ? ' scrolled' : '')">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between py-5">
+        <div class="flex items-center justify-between py-6">
           
-          <!-- Bouton saison (gauche) -->
+          <!-- Bouton saison (gauche) - RÉDUIT -->
           <div class="flex justify-start animate-fade-in-left">
             <button 
-              class="season-toggle"
+              class="season-toggle text-sm px-3 py-1.5 font-medium transition-all duration-300 hover:scale-105"
               (click)="toggleSeason()">
               {{ currentSeason === 'winter' ? 
                   (languageService.currentTranslations.seasonWinter || 'HIVER') : 
@@ -34,13 +34,13 @@ import { LanguageService } from '../../services/language.service';
             </button>
           </div>
           
-          <!-- Logo central parfaitement centré -->
+          <!-- Logo central parfaitement centré - AGRANDI -->
           <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-fade-in-up delay-200">
             <a routerLink="/" class="block">
               <img 
                 src="assets/images/icones/Logo_finaux_Plan_de_travail_1_copie_5.png" 
                 alt="Logo MC Travel" 
-                class="h-16 md:h-18 transition-transform duration-300 hover:scale-105">
+                class="h-20 md:h-24 lg:h-28 transition-transform duration-300 hover:scale-105">
             </a>
           </div>
           
@@ -90,7 +90,7 @@ import { LanguageService } from '../../services/language.service';
           <img 
             src="assets/images/icones/Logo_finaux_Plan_de_travail_1_copie_5.png" 
             alt="Logo MC Travel" 
-            class="h-12">
+            class="h-16 md:h-18">
           <button 
             class="close-menu-btn"
             (click)="closeSideMenu()">
@@ -131,23 +131,13 @@ import { LanguageService } from '../../services/language.service';
               </a>
             </li>
             <li>
-              <a routerLink="/services" 
-                 routerLinkActive="active"
-                 class="menu-item" 
-                 (click)="closeSideMenu()">
-                <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-                </svg>
-                {{ languageService.currentTranslations.menuServices }}
-              </a>
-            </li>
-            <li>
               <a routerLink="/conciergerie" 
                  routerLinkActive="active"
                  class="menu-item" 
                  (click)="closeSideMenu()">
+                <!-- Nouveau icône pour conciergerie - service client / assistance -->
                 <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
                 </svg>
                 {{ languageService.currentTranslations.menuConciergerie }}
               </a>
@@ -161,17 +151,6 @@ import { LanguageService } from '../../services/language.service';
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                 </svg>
                 {{ languageService.currentTranslations.menuAccommodations }}
-              </a>
-            </li>
-            <li>
-              <a routerLink="/about" 
-                 routerLinkActive="active"
-                 class="menu-item" 
-                 (click)="closeSideMenu()">
-                <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                {{ languageService.currentTranslations.menuAbout }}
               </a>
             </li>
           </ul>
@@ -192,12 +171,22 @@ import { LanguageService } from '../../services/language.service';
                 {{ languageService.currentTranslations.menuContact }}
               </a>
             </li>
+            
+            <!-- Section des numéros de téléphone -->
             <li class="menu-contact-info">
-              <div class="text-sm text-gray-500 px-4 py-2">
-                <p class="font-medium text-gray-700 mb-1">{{ languageService.currentTranslations.callUs || 'Appelez-nous' }}</p>
-                <a href="tel:+33620524796" class="text-blue-600 hover:text-blue-800">
-                  +33(0) 620 524 796
-                </a>
+              <div class="text-sm text-gray-500 px-4 py-2 space-y-3">
+                <div>
+                  <p class="font-medium text-gray-700 mb-1">Charlotte</p>
+                  <a href="tel:NUMERO_CHARLOTTE" class="text-blue-600 hover:text-blue-800 block">
+                    +33 6 03 31 67 62
+                  </a>
+                </div>
+                <div>
+                  <p class="font-medium text-gray-700 mb-1">Morgan</p>
+                  <a href="tel:NUMERO_MORGAN" class="text-blue-600 hover:text-blue-800 block">
+                    +33 6 20 52 47 96
+                  </a>
+                </div>
               </div>
             </li>
           </ul>

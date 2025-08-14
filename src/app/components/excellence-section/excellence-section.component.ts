@@ -25,13 +25,24 @@ import { LanguageService } from '../../services/language.service';
         
         <div class="grid lg:grid-cols-2 gap-16 items-center">
           
-          <!-- Photo avec effets -->
+          <!-- Photo avec effets et bandeau -->
           <div class="order-2 lg:order-1 animate-fade-in-left delay-200">
             <div class="enhanced-image relative group">
               <img 
                 src="assets/images/photo_mc.JPG"
                 alt="Fondateur MC Travel"
                 class="w-full h-96 object-cover shadow-2xl">
+              
+              <!-- Bandeau signature en diagonale -->
+              <div class="absolute top-12 left-4 overflow-visible">
+                <div class="bg-gradient-to-r from-white/90 via-gray-50/90 to-white/90 backdrop-blur-sm transform -rotate-[18deg] shadow-lg border border-gray-200/50">
+                  <div class="px-8 py-4 text-center">
+                    <h3 class="text-gray-800 font-serif font-medium text-lg md:text-xl tracking-wide whitespace-nowrap" style="font-family: 'Times New Roman', serif;">
+                      {{ getBannerText() }}
+                    </h3>
+                  </div>
+                </div>
+              </div>
               
               <!-- Effet de lueur -->
               <div class="absolute inset-0 bg-gradient-to-tr from-blue-500/10 via-transparent to-yellow-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -60,4 +71,10 @@ import { LanguageService } from '../../services/language.service';
 })
 export class ExcellenceSectionComponent {
   constructor(public languageService: LanguageService) {}
+
+  getBannerText(): string {
+    return this.languageService.currentLanguage === 'fr' 
+      ? 'Votre voyage, notre signature'
+      : 'Your journey, our signature';
+  }
 }

@@ -8,6 +8,7 @@ export interface EmailData {
   email: string;
   message: string;
   subject?: string;
+  phone?: string;
 }
 
 export interface EmailResponse {

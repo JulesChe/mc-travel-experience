@@ -165,6 +165,9 @@ export interface Translations {
   legalAtout: string;
   legalGuarantee: string;
   legalInsurance: string;
+
+  formPhone: string;
+  formPhonePlaceholder: string;
 }
 
 @Injectable({
@@ -394,7 +397,10 @@ export class LanguageService {
       bookNow: "Réserver maintenant",
       learnMore: "En savoir plus",
       requestQuote: "Demander un devis",
-      available24h: "Disponible 24h/24"
+      available24h: "Disponible 24h/24",
+
+      formPhone: 'Téléphone',
+      formPhonePlaceholder: '+33 6 XX XX XX XX'
     },
     en: {
       // Navigation menu
@@ -604,6 +610,9 @@ export class LanguageService {
         subtitle: "Our concierge team is here to organize every detail of your exceptional stay.",
         button: "Contact our concierge"
       },
+
+      formPhone: 'Phone',
+      formPhonePlaceholder: '+33 6 XX XX XX XX',
       
       // Legal info
       legalAtout: "ATOUT FRANCE No.: IM073250002",
