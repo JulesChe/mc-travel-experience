@@ -17,7 +17,7 @@ import { LanguageService } from '../../services/language.service';
         loop
         playsinline
         [poster]="'assets/images/photo_mc.JPG'">
-        <source src="assets/videos/BASE M 2K.mov" type="video/mp4">
+        <source src="https://pub-3255f12a5223472980a97fe319ca6482.r2.dev/BASE M 2K.mov" type="video/mp4">
       </video>
       
       <!-- Overlay simple -->

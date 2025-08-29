@@ -13,7 +13,7 @@ import { LanguageService } from '../../services/language.service';
           <!-- Photo hélico/taxi -->
           <div>
             <img 
-              src="assets/images/pas libre de droit/tsr-cmbh.jpg"
+              src="assets/images/helico.jpg"
               alt="Hélicoptère et transferts de luxe"
               class="w-full h-96 object-cover rounded-lg shadow-xl">
           </div>

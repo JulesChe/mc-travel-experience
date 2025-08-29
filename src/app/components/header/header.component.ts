@@ -143,7 +143,7 @@ import { LanguageService } from '../../services/language.service';
               </a>
             </li>
             <li>
-              <a routerLink="/accommodations" 
+              <a routerLink="/hebergements" 
                  routerLinkActive="active"
                  class="menu-item" 
                  (click)="closeSideMenu()">

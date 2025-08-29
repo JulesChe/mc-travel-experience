@@ -298,7 +298,7 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
         title: translations.conciergerieHelico?.title || 'Hélicoptère',
         subtitle: translations.conciergerieHelico?.subtitle || 'Transport premium',
         description: translations.conciergerieHelico?.description || 'Service de transport en hélicoptère',
-        image: 'assets/images/pas libre de droit/tsr-cmbh.jpg'
+        image: 'assets/images/helico.jpg'
       },
       {
         id: 'chef',

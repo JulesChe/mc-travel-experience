@@ -15,7 +15,12 @@ export const routes: Routes = [
 {
     path: 'conciergerie',
     loadComponent: () => import('./pages/conciergerie/conciergerie.component').then(m => m.ConciergerieComponent),
-    title: 'Destinations - MC Travel Experiences'
+    title: 'Conciergerie - MC Travel Experiences'
+  },
+  {
+    path: 'hebergements',
+    loadComponent: () => import('./pages/hebergements/hebergements.component').then(m => m.HebergementsComponent),
+    title: 'Hébergements - MC Travel Experiences'
   },
   {
     path: '**',

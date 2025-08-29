@@ -546,3 +546,134 @@ h4 {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
 }
+
+
+// ===== SCROLLBAR WEBKIT (Chrome, Safari, Edge) =====
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #151c32 0%, #1e293b 100%);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #1e293b 0%, #334155 100%);
+}
+
+::-webkit-scrollbar-corner {
+  background: #f1f5f9;
+}
+
+// ===== SCROLLBAR FIREFOX =====
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #151c32 #f1f5f9;
+}
+
+// ===== SCROLLBAR POUR ZONES SPÉCIFIQUES =====
+
+// Menu latéral
+.side-menu {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(21, 28, 50, 0.3) transparent;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba(21, 28, 50, 0.3);
+    border-radius: 3px;
+    
+    &:hover {
+      background: rgba(21, 28, 50, 0.5);
+    }
+  }
+}
+
+// Carrousel (si débordement)
+.carousel-wrapper {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// ===== SCROLLBAR SUR FOND SOMBRE =====
+.bg-gray-900, 
+.footer-section,
+section[class*="bg-black"] {
+  scrollbar-color: #fff0cf #374151;
+  
+  ::-webkit-scrollbar-track {
+    background: #374151;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #fff0cf 0%, #fbbf24 100%);
+    
+    &:hover {
+      background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+    }
+  }
+}
+
+// ===== VERSION ULTRA-FINE POUR MOBILE =====
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+  }
+}
+
+// ===== SCROLLBAR INTERACTIVE AVANCÉE (OPTIONNEL) =====
+.enhanced-scrollbar {
+  &::-webkit-scrollbar {
+    width: 12px;
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    margin: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #151c32, #1e40af);
+    border-radius: 6px;
+    border: 2px solid rgba(0, 0, 0, 0.05);
+    
+    &:hover {
+      background: linear-gradient(45deg, #1e40af, #2563eb);
+      transform: scale(1.1);
+    }
+  }
+}
+
+// ===== SCROLLBAR POUR CONTENU LONG =====
+.prose, 
+.long-content {
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #151c32 0%, #6b7280 100%);
+  }
+}

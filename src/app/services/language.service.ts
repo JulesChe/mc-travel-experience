@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 export interface Translations {
+
+  
   // Navigation menu
   menuHome: string;
   menuDestinations: string;
@@ -168,6 +170,70 @@ export interface Translations {
 
   formPhone: string;
   formPhonePlaceholder: string;
+
+  // Page Hébergements - NOUVEAU
+  accommodationsPageTitle: string;
+  accommodationsPageSubtitle: string;
+  accommodationsIntro: string;
+  accommodationsTypes: string;
+  
+  // Types d'hébergements
+  chalets: {
+    title: string;
+    subtitle: string;
+    description: string;
+    features: string[];
+  };
+  
+  hotels: {
+    title: string;
+    subtitle: string;
+    description: string;
+    features: string[];
+  };
+  
+  apartments: {
+    title: string;
+    subtitle: string;
+    description: string;
+    features: string[];
+  };
+  
+  // Services hébergements
+  accommodationServices: {
+    title: string;
+    subtitle: string;
+    list: Array<{
+      name: string;
+      description: string;
+    }>;
+  };
+  
+  // CTA hébergements
+  accommodationsCTA: {
+    title: string;
+    subtitle: string;
+    button: string;
+  };
+  
+  // Stats/caractéristiques
+  accommodationsStats: {
+    capacity: string;
+    surface: string;
+    rooms: string;
+    bathrooms: string;
+    terrace: string;
+    parking: string;
+    wifi: string;
+    kitchen: string;
+  };
+
+  // Texte client hébergements - NOUVEAU
+hebergementsTitle: string;
+hebergementsText1: string;
+hebergementsText2: string;
+hebergementsText3: string;
+hebergementsText4: string;
 }
 
 @Injectable({
@@ -179,11 +245,117 @@ export class LanguageService {
 
   private translations: { [key: string]: Translations } = {
     fr: {
+
+      hebergementsTitle: 'Séjours d\'Exception en Montagne',
+      hebergementsText1: 'MCTE est spécialisée dans la sélection et la promotion de chalets privés et hôtels haut de gamme au cœur des plus belles stations alpines.',
+      hebergementsText2: 'Nous vous proposons des hébergements d\'exception, alliant luxe, confort et authenticité, avec une offre de services personnalisés : chef privé, concierge, transferts premium, activités sur mesure…',
+      hebergementsText3: 'Que ce soit pour des vacances en famille, une escapade romantique ou un séjour d\'entreprise, nous créons des expériences uniques à la montagne, pensées dans les moindres détails.',
+      hebergementsText4: 'Votre évasion commence ici.',
+
+    // Page Hébergements - NOUVEAU
+    accommodationsPageTitle: 'Hébergements d\'Exception',
+    accommodationsPageSubtitle: 'Chalets privés et hôtels de prestige au cœur des Alpes',
+    accommodationsIntro: 'Découvrez notre sélection exclusive d\'hébergements haut de gamme, alliant luxe, confort et authenticité alpine. Chaque propriété est soigneusement choisie pour offrir une expérience unique à nos clients les plus exigeants.',
+    accommodationsTypes: 'Nos Types d\'Hébergements',
+
+    // Types d'hébergements
+    chalets: {
+      title: 'Chalets Privés de Luxe',
+      subtitle: 'L\'authenticité alpine revisitée',
+      description: 'Nos chalets privés incarnent l\'art de vivre à la montagne. Alliant charme traditionnel et équipements modernes, ils offrent intimité et prestations hôtelières dans un cadre d\'exception.',
+      features: [
+        'Architecture authentique et matériaux nobles',
+        'Service de conciergerie privé 24h/7j',
+        'Chef privé et personnel de maison disponible',
+        'Spa privatif avec sauna et jacuzzi',
+        'Cave à vins et espaces de réception',
+        'Accès ski-in/ski-out pour certaines propriétés'
+      ]
+    },
+
+    hotels: {
+      title: 'Hôtels & Palaces 5 Étoiles',
+      subtitle: 'Le raffinement à son apogée',
+      description: 'Partenaires des plus prestigieux établissements alpins, nous vous ouvrons les portes des palaces mythiques où excellence du service et raffinement se conjuguent pour créer des séjours inoubliables.',
+      features: [
+        'Suites et chambres avec vue panoramique',
+        'Spas de renommée mondiale',
+        'Restaurants gastronomiques étoilés',
+        'Service voiturier et conciergerie',
+        'Piscines intérieures et extérieures chauffées',
+        'Salons privés et espaces VIP'
+      ]
+    },
+
+    apartments: {
+      title: 'Résidences de Standing',
+      subtitle: 'L\'indépendance avec les services',
+      description: 'Pour ceux qui privilégient l\'indépendance sans renoncer au confort, nos résidences de standing offrent des appartements spacieux avec services hôteliers à la carte.',
+      features: [
+        'Appartements spacieux et lumineux',
+        'Cuisines équipées haut de gamme',
+        'Services hôteliers optionnels',
+        'Espaces wellness et fitness',
+        'Réception et conciergerie',
+        'Terrasses avec vue montagne'
+      ]
+    },
+
+    // Services hébergements
+    accommodationServices: {
+      title: 'Services Inclus',
+      subtitle: 'Pour un séjour sans contrainte',
+      list: [
+        {
+          name: 'Transferts Premium',
+          description: 'Navettes privées, véhicules de luxe ou hélicoptère selon vos préférences'
+        },
+        {
+          name: 'Conciergerie Dédiée',
+          description: 'Une équipe à votre service pour organiser chaque détail de votre séjour'
+        },
+        {
+          name: 'Restauration sur Mesure',
+          description: 'Chef privé, livraisons gastronomiques ou réservations dans les meilleurs restaurants'
+        },
+        {
+          name: 'Activités Exclusives',
+          description: 'Ski privé, wellness, excursions et expériences uniques'
+        },
+        {
+          name: 'Services Quotidiens',
+          description: 'Ménage, linge, maintenance et assistance technique'
+        },
+        {
+          name: 'Équipements de Ski',
+          description: 'Location et livraison de matériel haut de gamme directement sur site'
+        }
+      ]
+    },
+
+    // CTA hébergements
+    accommodationsCTA: {
+      title: 'Trouvez Votre Hébergement Idéal',
+      subtitle: 'Nos experts vous accompagnent dans le choix de l\'hébergement parfait pour votre séjour d\'exception.',
+      button: 'Consulter nos disponibilités'
+    },
+
+    // Stats/caractéristiques
+    accommodationsStats: {
+      capacity: 'Capacité',
+      surface: 'Surface',
+      rooms: 'Chambres',
+      bathrooms: 'Salles de bain',
+      terrace: 'Terrasse',
+      parking: 'Parking privé',
+      wifi: 'WiFi haut débit',
+      kitchen: 'Cuisine équipée'
+    },
       // Navigation menu
       menuHome: 'Accueil',
       menuDestinations: 'Destinations',
       menuServices: 'Services',
-      menuAccommodations: 'Hébergements',
+      menuAccommodations: 'Chalets & Hôtels',
       menuAbout: 'À propos',
       menuContact: 'Contact',
       menuConciergerie: 'Conciergerie',
@@ -403,11 +575,116 @@ export class LanguageService {
       formPhonePlaceholder: '+33 6 XX XX XX XX'
     },
     en: {
+
+      hebergementsTitle: 'Exceptional Mountain Stays',
+      hebergementsText1: 'We are specialized in curating and promoting luxury chalets and high-end hotels in the most prestigious Alpine resorts.',
+      hebergementsText2: 'We offer a selection of exclusive accommodations combining comfort, elegance, and authenticity, with a full range of personalized services: private chef, concierge, premium transfers, and tailor-made activities.',
+      hebergementsText3: 'Whether you\'re planning a family vacation, a romantic getaway, or a corporate retreat, we design unique, unforgettable mountain experiences, crafted down to the last detail.',
+      hebergementsText4: 'Your alpine escape starts here.',
+      // Page Hébergements - NOUVEAU
+      accommodationsPageTitle: 'Exceptional Accommodations',
+      accommodationsPageSubtitle: 'Private chalets and luxury hotels in the heart of the Alps',
+      accommodationsIntro: 'Discover our exclusive selection of high-end accommodations, combining luxury, comfort and Alpine authenticity. Each property is carefully chosen to offer a unique experience to our most discerning clients.',
+      accommodationsTypes: 'Our Accommodation Types',
+
+      // Types d'hébergements
+      chalets: {
+        title: 'Luxury Private Chalets',
+        subtitle: 'Alpine authenticity reimagined',
+        description: 'Our private chalets embody the art of mountain living. Combining traditional charm with modern amenities, they offer privacy and hotel services in an exceptional setting.',
+        features: [
+          'Authentic architecture and noble materials',
+          '24/7 private concierge service',
+          'Private chef and housekeeping staff available',
+          'Private spa with sauna and jacuzzi',
+          'Wine cellar and reception areas',
+          'Ski-in/ski-out access for selected properties'
+        ]
+      },
+
+      hotels: {
+        title: '5-Star Hotels & Palaces',
+        subtitle: 'Refinement at its peak',
+        description: 'Partners of the most prestigious Alpine establishments, we open the doors to legendary palaces where service excellence and refinement combine to create unforgettable stays.',
+        features: [
+          'Suites and rooms with panoramic views',
+          'World-renowned spas',
+          'Michelin-starred restaurants',
+          'Valet service and concierge',
+          'Indoor and outdoor heated pools',
+          'Private lounges and VIP areas'
+        ]
+      },
+
+      apartments: {
+        title: 'Luxury Residences',
+        subtitle: 'Independence with services',
+        description: 'For those who prefer independence without giving up comfort, our luxury residences offer spacious apartments with à la carte hotel services.',
+        features: [
+          'Spacious and bright apartments',
+          'High-end equipped kitchens',
+          'Optional hotel services',
+          'Wellness and fitness facilities',
+          'Reception and concierge',
+          'Terraces with mountain views'
+        ]
+      },
+
+      // Services hébergements
+      accommodationServices: {
+        title: 'Included Services',
+        subtitle: 'For a stay without constraints',
+        list: [
+          {
+            name: 'Premium Transfers',
+            description: 'Private shuttles, luxury vehicles or helicopter according to your preferences'
+          },
+          {
+            name: 'Dedicated Concierge',
+            description: 'A team at your service to organize every detail of your stay'
+          },
+          {
+            name: 'Custom Catering',
+            description: 'Private chef, gourmet deliveries or reservations at the best restaurants'
+          },
+          {
+            name: 'Exclusive Activities',
+            description: 'Private skiing, wellness, excursions and unique experiences'
+          },
+          {
+            name: 'Daily Services',
+            description: 'Housekeeping, linen, maintenance and technical assistance'
+          },
+          {
+            name: 'Ski Equipment',
+            description: 'Rental and delivery of high-end equipment directly on site'
+          }
+        ]
+      },
+
+      // CTA hébergements
+      accommodationsCTA: {
+        title: 'Find Your Ideal Accommodation',
+        subtitle: 'Our experts will guide you in choosing the perfect accommodation for your exceptional stay.',
+        button: 'Check availability'
+      },
+
+      // Stats/caractéristiques
+      accommodationsStats: {
+        capacity: 'Capacity',
+        surface: 'Surface area',
+        rooms: 'Bedrooms',
+        bathrooms: 'Bathrooms',
+        terrace: 'Terrace',
+        parking: 'Private parking',
+        wifi: 'High-speed WiFi',
+        kitchen: 'Equipped kitchen'
+      },
       // Navigation menu
       menuHome: 'Home',
       menuDestinations: 'Destinations',
       menuServices: 'Services',
-      menuAccommodations: 'Accommodations',
+      menuAccommodations: 'Chalets & Hotels',
       menuAbout: 'About',
       menuContact: 'Contact',
       menuConciergerie: 'Concierge',
