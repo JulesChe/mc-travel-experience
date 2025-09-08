@@ -25,18 +25,18 @@ export interface FooterConfig {
             <h3 class="footer-title">
               {{ displayTitle }}
             </h3>
-            
+
             <!-- Decorative Line -->
             <div class="footer-decorative-line"></div>
-            
+
             <!-- Subtitle -->
             <p class="footer-subtitle">
               {{ displaySubtitle }}
             </p>
-            
+
             <!-- CTA Button -->
-            <button 
-              (click)="handleButtonClick()" 
+            <button
+              (click)="handleButtonClick()"
               class="footer-btn-primary">
               <span class="btn-text">{{ displayButtonText }}</span>
               <div class="btn-shine"></div>
@@ -49,7 +49,7 @@ export interface FooterConfig {
       <div class="footer-info" *ngIf="showAdditionalInfo">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="footer-grid">
-            
+
             <!-- Contact Info -->
             <div class="footer-column">
               <h4 class="footer-column-title">
@@ -60,7 +60,13 @@ export interface FooterConfig {
                   <svg class="contact-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                   </svg>
-                  +33 (0)6 20 52 47 96
+                  Charlotte : +33 6 20 52 47 96
+                </p>
+                <p class="footer-contact-item">
+                  <svg class="contact-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                  </svg>
+                  Morgan : +33 6 03 31 67 62
                 </p>
                 <p class="footer-contact-item">
                   <svg class="contact-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -77,17 +83,17 @@ export interface FooterConfig {
                 {{ languageService.currentTranslations.footerLinks || 'Liens Rapides' }}
               </h4>
               <div class="footer-links-list">
-                <a (click)="navigateTo('/destinations')" 
+                <a (click)="navigateTo('/destinations')"
                    class="footer-link">
                   <span class="link-arrow">→</span>
                   {{ languageService.currentTranslations.menuDestinations || 'Destinations' }}
                 </a>
-                <a (click)="navigateTo('/conciergerie')" 
+                <a (click)="navigateTo('/conciergerie')"
                    class="footer-link">
                   <span class="link-arrow">→</span>
                   {{ languageService.currentTranslations.menuConciergerie || 'Conciergerie' }}
                 </a>
-                <a (click)="navigateTo('/properties')" 
+                <a (click)="navigateTo('/properties')"
                    class="footer-link">
                   <span class="link-arrow">→</span>
                   {{ languageService.currentTranslations.menuProperties || 'Propriétés' }}
@@ -124,7 +130,7 @@ export interface FooterConfig {
           <!-- Copyright -->
           <div class="footer-copyright">
             <p class="footer-copyright-text">
-              © {{ currentYear }} MCTE Travel Agency. 
+              © {{ currentYear }} MCTE Travel Agency.
               {{ languageService.currentTranslations.footerRights || 'Tous droits réservés.' }}
             </p>
           </div>
@@ -137,7 +143,7 @@ export interface FooterConfig {
 export class FooterComponent {
   @Input() config?: FooterConfig;
   @Input() showAdditionalInfo: boolean = false;
-  
+
   currentYear = new Date().getFullYear();
 
   constructor(
@@ -147,15 +153,15 @@ export class FooterComponent {
 
   get displayTitle(): string {
     if (this.config?.title) return this.config.title;
-    
-    return this.languageService.currentLanguage === 'fr' 
-      ? 'Prêt à vivre une expérience unique ?' 
+
+    return this.languageService.currentLanguage === 'fr'
+      ? 'Prêt à vivre une expérience unique ?'
       : 'Ready for a unique experience?';
   }
 
   get displaySubtitle(): string {
     if (this.config?.subtitle) return this.config.subtitle;
-    
+
     return this.languageService.currentLanguage === 'fr'
       ? 'Contactez nos experts pour créer votre séjour sur mesure dans les Alpes françaises.'
       : 'Contact our experts to create your tailor-made stay in the French Alps.';
@@ -163,7 +169,7 @@ export class FooterComponent {
 
   get displayButtonText(): string {
     if (this.config?.buttonText) return this.config.buttonText;
-    
+
     return this.languageService.currentTranslations.menuContact || 'Nous contacter';
   }
 
@@ -180,7 +186,7 @@ export class FooterComponent {
       setTimeout(() => {
         const element = document.getElementById('contact');
         if (element) {
-          element.scrollIntoView({ 
+          element.scrollIntoView({
             behavior: 'smooth',
             block: 'start'
           });
