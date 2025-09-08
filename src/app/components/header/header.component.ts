@@ -1,7 +1,10 @@
-import { Component, HostListener } from '@angular/core';
+// components/header/header.component.ts
+import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
+import { SeasonService, Season } from '../../services/season.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -23,18 +26,32 @@ import { LanguageService } from '../../services/language.service';
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between py-6">
           
-          <!-- Bouton saison (gauche) - RÉDUIT -->
+          <!-- Bouton saison (gauche) -->
           <div class="flex justify-start animate-fade-in-left">
             <button 
               class="season-toggle text-sm px-3 py-1.5 font-medium transition-all duration-300 hover:scale-105"
+              [class.winter-active]="currentSeason === 'winter'"
+              [class.summer-active]="currentSeason === 'summer'"
               (click)="toggleSeason()">
-              {{ currentSeason === 'winter' ? 
-                  (languageService.currentTranslations.seasonWinter || 'HIVER') : 
-                  (languageService.currentTranslations.seasonSummer || 'ÉTÉ') }}
+              <span class="flex items-center space-x-2">
+                <!-- Icône Hiver -->
+                <svg *ngIf="currentSeason === 'winter'" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 2l1.5 1.5L10 5 8.5 3.5 10 2zm0 16l1.5-1.5L10 15l-1.5 1.5L10 18zM2 10l1.5 1.5L5 10 3.5 8.5 2 10zm16 0l-1.5 1.5L15 10l1.5-1.5L18 10zM5.636 5.636l1.06-1.06L8.11 6.05 7.05 7.11 5.636 5.636zm8.728 8.728l1.06-1.06-1.414-1.415-1.06 1.06 1.414 1.415zM14.364 5.636l-1.06-1.06L11.89 6.05l1.06 1.06 1.414-1.424zm-8.728 8.728l-1.06-1.06 1.414-1.415 1.06 1.06-1.414 1.415z"/>
+                </svg>
+                <!-- Icône Été -->
+                <svg *ngIf="currentSeason === 'summer'" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
+                </svg>
+                <span>
+                  {{ currentSeason === 'winter' ? 
+                    (languageService.currentTranslations.seasonWinter || 'HIVER') : 
+                    (languageService.currentTranslations.seasonSummer || 'ÉTÉ') }}
+                </span>
+              </span>
             </button>
           </div>
           
-          <!-- Logo central parfaitement centré - AGRANDI -->
+          <!-- Logo central parfaitement centré -->
           <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-fade-in-up delay-200">
             <a routerLink="/" class="block">
               <img 
@@ -135,7 +152,6 @@ import { LanguageService } from '../../services/language.service';
                  routerLinkActive="active"
                  class="menu-item" 
                  (click)="closeSideMenu()">
-                <!-- Nouveau icône pour conciergerie - service client / assistance -->
                 <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
                 </svg>
@@ -177,13 +193,13 @@ import { LanguageService } from '../../services/language.service';
               <div class="text-sm text-gray-500 px-4 py-2 space-y-3">
                 <div>
                   <p class="font-medium text-gray-700 mb-1">Charlotte</p>
-                  <a href="tel:NUMERO_CHARLOTTE" class="text-blue-600 hover:text-blue-800 block">
+                  <a href="tel:+33603316762" class="text-blue-600 hover:text-blue-800 block">
                     +33 6 03 31 67 62
                   </a>
                 </div>
                 <div>
                   <p class="font-medium text-gray-700 mb-1">Morgan</p>
-                  <a href="tel:NUMERO_MORGAN" class="text-blue-600 hover:text-blue-800 block">
+                  <a href="tel:+33620524796" class="text-blue-600 hover:text-blue-800 block">
                     +33 6 20 52 47 96
                   </a>
                 </div>
@@ -193,17 +209,46 @@ import { LanguageService } from '../../services/language.service';
         </div>
       </div>
     </nav>
-  `
+  `,
+  styles: [`
+    /* Styles du bouton saison améliorés */
+    .season-toggle {
+      @apply bg-white border-2 border-gray-300 rounded-full;
+    }
+    
+    .season-toggle.winter-active {
+      @apply bg-blue-100 border-blue-500 text-blue-700;
+    }
+    
+    .season-toggle.summer-active {
+      @apply bg-yellow-100 border-yellow-500 text-yellow-700;
+    }
+  `]
 })
-export class HeaderComponent {
-  currentSeason: 'winter' | 'summer' = 'winter';
+export class HeaderComponent implements OnInit, OnDestroy {
+  currentSeason: Season = 'winter';
   isScrolled = false;
   isSideMenuOpen = false;
+  private seasonSubscription?: Subscription;
 
   constructor(
     public languageService: LanguageService,
+    public seasonService: SeasonService,
     private router: Router
   ) {}
+
+  ngOnInit() {
+    // S'abonner aux changements de saison
+    this.seasonSubscription = this.seasonService.currentSeason$.subscribe(season => {
+      this.currentSeason = season;
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.seasonSubscription) {
+      this.seasonSubscription.unsubscribe();
+    }
+  }
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
@@ -218,12 +263,11 @@ export class HeaderComponent {
   }
 
   toggleSeason() {
-    this.currentSeason = this.currentSeason === 'winter' ? 'summer' : 'winter';
+    this.seasonService.toggleSeason();
   }
 
   toggleSideMenu() {
     this.isSideMenuOpen = !this.isSideMenuOpen;
-    // Prevent body scroll when menu is open
     document.body.style.overflow = this.isSideMenuOpen ? 'hidden' : '';
   }
 
