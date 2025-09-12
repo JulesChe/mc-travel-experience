@@ -73,8 +73,6 @@ export class ExcellenceSectionComponent {
   constructor(public languageService: LanguageService) {}
 
   getBannerText(): string {
-    return this.languageService.currentLanguage === 'fr' 
-      ? 'Votre voyage, notre signature'
-      : 'Your journey, our signature';
+    return this.languageService.currentTranslations.excellenceBanner;
   }
 }

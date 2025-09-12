@@ -1,10 +1,11 @@
 // components/header/header.component.ts
 import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
 import { SeasonService, Season } from '../../services/season.service';
 import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -26,24 +27,25 @@ import { Subscription } from 'rxjs';
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between py-6">
           
-          <!-- Bouton saison (gauche) -->
+          <!-- Bouton saison (gauche) - Affiché seulement sur la home page -->
           <div class="flex justify-start animate-fade-in-left">
             <button 
+              *ngIf="isHomePage"
               class="season-toggle text-sm px-3 py-1.5 font-medium transition-all duration-300 hover:scale-105"
-              [class.winter-active]="currentSeason === 'winter'"
-              [class.summer-active]="currentSeason === 'summer'"
+              [class.winter-active]="currentSeason === 'summer'"
+              [class.summer-active]="currentSeason === 'winter'"
               (click)="toggleSeason()">
               <span class="flex items-center space-x-2">
-                <!-- Icône Hiver -->
-                <svg *ngIf="currentSeason === 'winter'" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <!-- Icône Hiver (affiché quand on est en mode été pour basculer vers hiver) -->
+                <svg *ngIf="currentSeason === 'summer'" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 2l1.5 1.5L10 5 8.5 3.5 10 2zm0 16l1.5-1.5L10 15l-1.5 1.5L10 18zM2 10l1.5 1.5L5 10 3.5 8.5 2 10zm16 0l-1.5 1.5L15 10l1.5-1.5L18 10zM5.636 5.636l1.06-1.06L8.11 6.05 7.05 7.11 5.636 5.636zm8.728 8.728l1.06-1.06-1.414-1.415-1.06 1.06 1.414 1.415zM14.364 5.636l-1.06-1.06L11.89 6.05l1.06 1.06 1.414-1.424zm-8.728 8.728l-1.06-1.06 1.414-1.415 1.06 1.06-1.414 1.415z"/>
                 </svg>
-                <!-- Icône Été -->
-                <svg *ngIf="currentSeason === 'summer'" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <!-- Icône Été (affiché quand on est en mode hiver pour basculer vers été) -->
+                <svg *ngIf="currentSeason === 'winter'" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
                 </svg>
                 <span>
-                  {{ currentSeason === 'winter' ? 
+                  {{ currentSeason === 'summer' ? 
                     (languageService.currentTranslations.seasonWinter || 'HIVER') : 
                     (languageService.currentTranslations.seasonSummer || 'ÉTÉ') }}
                 </span>
@@ -213,15 +215,21 @@ import { Subscription } from 'rxjs';
   styles: [`
     /* Styles du bouton saison améliorés */
     .season-toggle {
-      @apply bg-white border-2 border-gray-300 rounded-full;
+      background: white;
+      border: 2px solid #d1d5db;
+      border-radius: 9999px;
     }
     
     .season-toggle.winter-active {
-      @apply bg-blue-100 border-blue-500 text-blue-700;
+      background: #dbeafe;
+      border-color: #3b82f6;
+      color: #1d4ed8;
     }
     
     .season-toggle.summer-active {
-      @apply bg-yellow-100 border-yellow-500 text-yellow-700;
+      background: #fef3c7;
+      border-color: #eab308;
+      color: #a16207;
     }
   `]
 })
@@ -229,7 +237,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentSeason: Season = 'winter';
   isScrolled = false;
   isSideMenuOpen = false;
+  isHomePage = true; // Par défaut sur la home page
   private seasonSubscription?: Subscription;
+  private routerSubscription?: Subscription;
 
   constructor(
     public languageService: LanguageService,
@@ -242,11 +252,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.seasonSubscription = this.seasonService.currentSeason$.subscribe(season => {
       this.currentSeason = season;
     });
+    
+    // S'abonner aux changements de route pour détecter la home page
+    this.routerSubscription = this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.isHomePage = event.url === '/' || event.url === '';
+      });
+    
+    // Vérifier la route initiale
+    this.isHomePage = this.router.url === '/' || this.router.url === '';
   }
 
   ngOnDestroy() {
     if (this.seasonSubscription) {
       this.seasonSubscription.unsubscribe();
+    }
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
     }
   }
 

@@ -417,9 +417,6 @@ h4 {
 
 // ===== SÉLECTEURS SPÉCIAUX =====
 .season-toggle {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
-  border: 1px solid rgba(21, 28, 50, 0.15);
-  color: var(--primary-blue);
   font-weight: 600;
   padding: 0.75rem 1.5rem;
   border-radius: 25px;
@@ -431,11 +428,31 @@ h4 {
   box-shadow: 0 2px 12px rgba(21, 28, 50, 0.08);
   
   &:hover {
-    background: linear-gradient(135deg, var(--primary-blue) 0%, #1e40af 100%);
-    color: white;
-    border-color: var(--primary-blue);
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(21, 28, 50, 0.25);
+  }
+  
+  // Styles spécifiques par saison
+  &.winter-active {
+    background: #dbeafe !important;
+    border: 2px solid #3b82f6 !important;
+    color: #1d4ed8 !important;
+    
+    &:hover {
+      background: #bfdbfe !important;
+      border-color: #2563eb !important;
+    }
+  }
+  
+  &.summer-active {
+    background: #fef3c7 !important;
+    border: 2px solid #eab308 !important;
+    color: #a16207 !important;
+    
+    &:hover {
+      background: #fde68a !important;
+      border-color: #d97706 !important;
+    }
   }
 }
 

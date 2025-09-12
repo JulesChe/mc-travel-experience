@@ -288,33 +288,22 @@ export class ContactSectionComponent {
   }
 
   getSubmittingText(): string {
-    return this.languageService.currentLanguage === 'fr' 
-      ? 'Envoi en cours...'
-      : 'Sending...';
+    return this.languageService.currentTranslations.submittingText;
   }
 
-
   private getSuccessMessage(): string {
-    return this.languageService.currentLanguage === 'fr' 
-      ? 'Votre message a été envoyé avec succès à MC Travel !'
-      : 'Your message has been successfully sent to MC Travel!';
+    return this.languageService.currentTranslations.successMessage;
   }
 
   private getErrorMessage(): string {
-    return this.languageService.currentLanguage === 'fr' 
-      ? 'Une erreur est survenue. Utilisez le bouton email ci-dessous.'
-      : 'An error occurred. Please use the email button below.';
+    return this.languageService.currentTranslations.errorMessage;
   }
 
   private getEmailClientOpenedMessage(): string {
-    return this.languageService.currentLanguage === 'fr' 
-      ? 'Votre client email s\'ouvre avec le message pré-rempli.'
-      : 'Your email client opens with the pre-filled message.';
+    return this.languageService.currentTranslations.emailClientMessage;
   }
 
   private getFillFieldsMessage(): string {
-    return this.languageService.currentLanguage === 'fr' 
-      ? 'Veuillez remplir tous les champs obligatoires.'
-      : 'Please fill in all required fields.';
+    return this.languageService.currentTranslations.validationMessage;
   }
 }

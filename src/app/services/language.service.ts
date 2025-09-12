@@ -142,12 +142,13 @@ export interface Translations {
     features: string[];
   };
   
-  conciergerieHusky: {
+  conciergerieS3V: {
     title: string;
     subtitle: string;
     description: string;
     features: string[];
   };
+  
   
   // Conciergerie CTA
   conciergerieCTA: {
@@ -234,6 +235,34 @@ hebergementsText1: string;
 hebergementsText2: string;
 hebergementsText3: string;
 hebergementsText4: string;
+
+// Contenus été - NOUVEAU
+summerDestinationsTitle: string;
+summerDestinationsSubtitle: string;
+summerAccommodationsTitle: string;
+summerAccommodationsSubtitle: string;
+summerActivitiesTitle: string;
+summerActivitiesSubtitle: string;
+
+// Messages et textes supplémentaires
+excellenceBanner: string;
+submittingText: string;
+successMessage: string;
+errorMessage: string;
+emailClientMessage: string;
+validationMessage: string;
+footerCTATitle: string;
+footerCTASubtitle: string;
+
+// Navigation été
+summerNavDestinations: string;
+summerNavAccommodations: string;
+summerNavActivities: string;
+
+// Page destinations
+destinationsIntro: string;
+altitudeLabel: string;
+skiAreaLabel: string;
 }
 
 @Injectable({
@@ -251,6 +280,34 @@ export class LanguageService {
       hebergementsText2: 'Nous vous proposons des hébergements d\'exception, alliant luxe, confort et authenticité, avec une offre de services personnalisés : chef privé, concierge, transferts premium, activités sur mesure…',
       hebergementsText3: 'Que ce soit pour des vacances en famille, une escapade romantique ou un séjour d\'entreprise, nous créons des expériences uniques à la montagne, pensées dans les moindres détails.',
       hebergementsText4: 'Votre évasion commence ici.',
+
+      // Contenus été
+      summerDestinationsTitle: 'Destinations d\'Été',
+      summerDestinationsSubtitle: 'Explorez nos destinations estivales soigneusement sélectionnées',
+      summerAccommodationsTitle: 'Hébergements d\'Exception',
+      summerAccommodationsSubtitle: 'Des lieux uniques pour des séjours mémorables',
+      summerActivitiesTitle: 'Activités Estivales',
+      summerActivitiesSubtitle: 'Des expériences uniques pour tous les goûts',
+
+      // Messages et textes supplémentaires
+      excellenceBanner: 'Votre voyage, notre signature',
+      submittingText: 'Envoi en cours...',
+      successMessage: 'Votre message a été envoyé avec succès à MC Travel !',
+      errorMessage: 'Une erreur est survenue. Utilisez le bouton email ci-dessous.',
+      emailClientMessage: 'Votre client email s\'ouvre avec le message pré-rempli.',
+      validationMessage: 'Veuillez remplir tous les champs obligatoires.',
+      footerCTATitle: 'Prêt à vivre une expérience unique ?',
+      footerCTASubtitle: 'Contactez nos experts pour créer votre séjour sur mesure dans les Alpes françaises.',
+
+      // Navigation été
+      summerNavDestinations: 'Destinations',
+      summerNavAccommodations: 'Hébergements',
+      summerNavActivities: 'Activités',
+
+      // Page destinations
+      destinationsIntro: "Découvrez nos destinations d'exception au cœur des Alpes françaises. Chaque station offre une expérience unique entre tradition alpine et luxe moderne.",
+      altitudeLabel: 'Altitude',
+      skiAreaLabel: 'Domaine skiable',
 
     // Page Hébergements - NOUVEAU
     accommodationsPageTitle: 'Hébergements d\'Exception',
@@ -453,7 +510,7 @@ export class LanguageService {
       footerPhone: "+33 (0)6 12 34 56 78",
       footerEmail: "contact@tsr-experience.com",
       footerAddress: "73120 Courchevel, France",
-      footerCompany: "TSR Experience",
+      footerCompany: "MC Travel Experiences",
       footerPrivacy: "Politique de confidentialité",
       footerTerms: "Conditions générales",
       footerLegal: "Mentions légales",
@@ -540,17 +597,18 @@ export class LanguageService {
         ]
       },
       
-      conciergerieHusky: {
-        title: "Randonnée avec Huskies",
-        subtitle: "Aventure nordique authentique",
-        description: "Vivez l'aventure polaire au cœur des Alpes avec nos balades en traîneau à chiens. Une expérience authentique et énergisante.",
+      conciergerieS3V: {
+        title: "Forfaits Ski S3V",
+        subtitle: "Les 3 Vallées à prix préférentiel",
+        description: "Profitez de tarifs exclusifs sur les forfaits du plus grand domaine skiable du monde. Vente directe avec avantages conciergerie.",
         features: [
-          "Traîneaux traditionnels et huskies dressés",
-          "Parcours adaptés à tous les niveaux",
-          "Rencontre avec les mushers passionnés",
-          "Photos souvenirs professionnelles"
+          "Tarifs préférentiels négociés",
+          "Forfaits multi-jours disponibles",
+          "Livraison directe à votre hébergement",
+          "Support conciergerie 24h/24"
         ]
       },
+      
       
       // Conciergerie CTA
       conciergerieCTA: {
@@ -581,6 +639,34 @@ export class LanguageService {
       hebergementsText2: 'We offer a selection of exclusive accommodations combining comfort, elegance, and authenticity, with a full range of personalized services: private chef, concierge, premium transfers, and tailor-made activities.',
       hebergementsText3: 'Whether you\'re planning a family vacation, a romantic getaway, or a corporate retreat, we design unique, unforgettable mountain experiences, crafted down to the last detail.',
       hebergementsText4: 'Your alpine escape starts here.',
+
+      // Summer content
+      summerDestinationsTitle: 'Summer Destinations',
+      summerDestinationsSubtitle: 'Explore our carefully selected summer destinations',
+      summerAccommodationsTitle: 'Exceptional Accommodations',
+      summerAccommodationsSubtitle: 'Unique places for memorable stays',
+      summerActivitiesTitle: 'Summer Activities',
+      summerActivitiesSubtitle: 'Unique experiences for all tastes',
+
+      // Additional messages and texts
+      excellenceBanner: 'Your journey, our signature',
+      submittingText: 'Sending...',
+      successMessage: 'Your message has been successfully sent to MC Travel!',
+      errorMessage: 'An error occurred. Please use the email button below.',
+      emailClientMessage: 'Your email client opens with the pre-filled message.',
+      validationMessage: 'Please fill in all required fields.',
+      footerCTATitle: 'Ready for a unique experience?',
+      footerCTASubtitle: 'Contact our experts to create your tailor-made stay in the French Alps.',
+
+      // Summer navigation
+      summerNavDestinations: 'Destinations',
+      summerNavAccommodations: 'Accommodations',
+      summerNavActivities: 'Activities',
+
+      // Destinations page
+      destinationsIntro: "Discover our exceptional destinations in the heart of the French Alps. Each resort offers a unique experience between Alpine tradition and modern luxury.",
+      altitudeLabel: 'Altitude',
+      skiAreaLabel: 'Ski Area',
       // Page Hébergements - NOUVEAU
       accommodationsPageTitle: 'Exceptional Accommodations',
       accommodationsPageSubtitle: 'Private chalets and luxury hotels in the heart of the Alps',
@@ -782,7 +868,7 @@ export class LanguageService {
       footerPhone: "+33 (0)6 12 34 56 78",
       footerEmail: "contact@tsr-experience.com",
       footerAddress: "73120 Courchevel, France",
-      footerCompany: "TSR Experience",
+      footerCompany: "MC Travel Experiences",
       footerPrivacy: "Privacy Policy",
       footerTerms: "Terms & Conditions",
       footerLegal: "Legal Notice",
@@ -869,17 +955,18 @@ export class LanguageService {
         ]
       },
       
-      conciergerieHusky: {
-        title: "Husky Hiking",
-        subtitle: "Authentic Nordic adventure",
-        description: "Experience polar adventure in the heart of the Alps with our dog sledding walks. An authentic and energizing experience.",
+      conciergerieS3V: {
+        title: "S3V Ski Passes",
+        subtitle: "3 Valleys at preferential rates",
+        description: "Enjoy exclusive rates on passes for the world's largest ski area. Direct sales with concierge benefits.",
         features: [
-          "Traditional sleds and trained huskies",
-          "Routes adapted to all levels",
-          "Meet passionate mushers",
-          "Professional souvenir photos"
+          "Preferential negotiated rates",
+          "Multi-day passes available",
+          "Direct delivery to your accommodation",
+          "24/7 concierge support"
         ]
       },
+      
       
       // Conciergerie CTA
       conciergerieCTA: {

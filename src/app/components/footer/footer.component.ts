@@ -153,18 +153,12 @@ export class FooterComponent {
 
   get displayTitle(): string {
     if (this.config?.title) return this.config.title;
-
-    return this.languageService.currentLanguage === 'fr'
-      ? 'Prêt à vivre une expérience unique ?'
-      : 'Ready for a unique experience?';
+    return this.languageService.currentTranslations.footerCTATitle;
   }
 
   get displaySubtitle(): string {
     if (this.config?.subtitle) return this.config.subtitle;
-
-    return this.languageService.currentLanguage === 'fr'
-      ? 'Contactez nos experts pour créer votre séjour sur mesure dans les Alpes françaises.'
-      : 'Contact our experts to create your tailor-made stay in the French Alps.';
+    return this.languageService.currentTranslations.footerCTASubtitle;
   }
 
   get displayButtonText(): string {

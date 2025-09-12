@@ -1,10 +1,11 @@
 // destinations.component.ts
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
 import { Router } from '@angular/router';
 import { FooterComponent, FooterConfig } from '../../components/footer/footer.component';
+import { Subscription } from 'rxjs';
 
 
 interface Destination {
@@ -58,7 +59,7 @@ interface Destination {
           <!-- Introduction -->
           <div class="text-center mb-16 animate-fade-in-up">
             <p class="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              {{ destinationsIntro }}
+              {{ languageService.currentTranslations.destinationsIntro }}
             </p>
           </div>
 
@@ -105,7 +106,7 @@ interface Destination {
                 <div class="grid grid-cols-2 gap-6 mb-8">
                   <div class="stat-item">
                     <div class="text-sm uppercase tracking-wide text-gray-500 mb-1">
-                      {{ languageService.currentLanguage === 'fr' ? 'Altitude' : 'Altitude' }}
+                      {{ languageService.currentTranslations.altitudeLabel }}
                     </div>
                     <div class="text-lg font-semibold text-gray-900">
                       {{ destination.altitude }}
@@ -113,7 +114,7 @@ interface Destination {
                   </div>
                   <div class="stat-item">
                     <div class="text-sm uppercase tracking-wide text-gray-500 mb-1">
-                      {{ languageService.currentLanguage === 'fr' ? 'Domaine skiable' : 'Ski Area' }}
+                      {{ languageService.currentTranslations.skiAreaLabel }}
                     </div>
                     <div class="text-lg font-semibold text-gray-900">
                       {{ destination.skiArea }}
@@ -135,18 +136,36 @@ interface Destination {
   `,
   styleUrls: ['./destinations.component.scss']
 })
-export class DestinationsComponent {
+export class DestinationsComponent implements OnInit, OnDestroy {
+  private languageSubscription!: Subscription;
 
-
-    footerConfig: FooterConfig = {
+  footerConfig: FooterConfig = {
     title: undefined, // Utilise le titre par défaut
     subtitle: undefined, // Utilise le sous-titre par défaut
     buttonText: undefined // Utilise le texte par défaut
   };
+
   constructor(
     public languageService: LanguageService,
     private router: Router
   ) {}
+
+  ngOnInit() {
+    // S'abonner aux changements de langue
+    this.languageSubscription = this.languageService.currentLanguage$.subscribe(() => {
+      // Forcer la mise à jour des destinations
+      this.updateDestinations();
+    });
+    
+    // Initialiser les destinations
+    this.updateDestinations();
+  }
+
+  ngOnDestroy() {
+    if (this.languageSubscription) {
+      this.languageSubscription.unsubscribe();
+    }
+  }
 
 
   goToContact() {
@@ -160,63 +179,91 @@ export class DestinationsComponent {
     });
   }
 
-  get destinationsIntro(): string {
-    return this.languageService.currentLanguage === 'fr' 
-      ? "Découvrez nos destinations d'exception au cœur des Alpes françaises. Chaque station offre une expérience unique entre tradition alpine et luxe moderne."
-      : "Discover our exceptional destinations in the heart of the French Alps. Each resort offers a unique experience between Alpine tradition and modern luxury.";
+  updateDestinations() {
+    this.destinations = this.getDestinationsForLanguage();
   }
 
-  destinations: Destination[] = [
-    {
-      id: 'courchevel',
-      name: 'COURCHEVEL',
-      subtitle: 'L\'élégance à la française',
-      location: 'Savoie, France',
-      description: 'Station mythique des Alpes françaises, Courchevel incarne le raffinement et l\'art de vivre à la montagne. Avec ses pistes parfaitement entretenues et ses établissements de prestige, elle offre une expérience ski haut de gamme incomparable.',
-      image: 'assets/images/montagne_cover.jpg',
-      altitude: '1 850m - 3 230m',
-      skiArea: '150 km de pistes',
-      highlights: [
-        'Restaurants étoilés Michelin',
-        'Boutiques de luxe',
-        'Héliski accessible',
-        'Spas et bien-être',
-        'Architecture alpine authentique'
-      ]
-    },
-    {
-      id: 'les-3-vallees',
-      name: 'LES 3 VALLÉES',
-      subtitle: 'Le plus grand domaine skiable du monde',
-      location: 'Savoie, France',
-      description: 'Avec 600 kilomètres de pistes reliées, Les 3 Vallées offrent un terrain de jeu infini aux amoureux de glisse. De Courchevel à Val Thorens en passant par Méribel, chaque vallée a sa personnalité unique.',
-      image: 'assets/images/pas libre de droit/espace_killy_2.jpg',
-      altitude: '1 300m - 3 230m',
-      skiArea: '600 km de pistes',
-      highlights: [
-        '8 stations interconnectées',
-        'Glacier accessible toute l\'année',
-        'Snowparks de renommée mondiale',
-        'Restaurants d\'altitude exceptionnels',
-        'Ski de printemps jusqu\'en mai'
-      ]
-    },
-    {
-      id: 'espace-killy',
-      name: 'ESPACE KILLY',
-      subtitle: 'Le royaume du ski sportif',
-      location: 'Savoie, France',
-      description: 'Val d\'Isère et Tignes forment l\'Espace Killy, un domaine légendaire qui a vu naître les plus grands champions. Entre tradition savoyarde et modernité, ces stations offrent des paysages à couper le souffle.',
-      image: 'assets/images/montagne_cover.jpg',
-      altitude: '1 550m - 3 456m',
-      skiArea: '300 km de pistes',
-      highlights: [
-        'Glacier de la Grande Motte',
-        'Ski d\'été possible',
-        'Pistes olympiques',
-        'Freeride exceptionnel',
-        'Vie nocturne animée'
-      ]
-    }
-  ];
+  private getDestinationsForLanguage(): Destination[] {
+    const isFr = this.languageService.currentLanguage === 'fr';
+    
+    return [
+      {
+        id: 'courchevel',
+        name: 'COURCHEVEL',
+        subtitle: isFr ? 'L\'élégance à la française' : 'French elegance',
+        location: 'Savoie, France',
+        description: isFr 
+          ? 'Station mythique des Alpes françaises, Courchevel incarne le raffinement et l\'art de vivre à la montagne. Avec ses pistes parfaitement entretenues et ses établissements de prestige, elle offre une expérience ski haut de gamme incomparable.'
+          : 'Legendary resort of the French Alps, Courchevel embodies refinement and the art of mountain living. With its perfectly groomed slopes and prestigious establishments, it offers an incomparable high-end ski experience.',
+        image: 'assets/images/montagne_cover.jpg',
+        altitude: '1 850m - 3 230m',
+        skiArea: isFr ? '150 km de pistes' : '150 km of slopes',
+        highlights: isFr ? [
+          'Restaurants étoilés Michelin',
+          'Boutiques de luxe',
+          'Héliski accessible',
+          'Spas et bien-être',
+          'Architecture alpine authentique'
+        ] : [
+          'Michelin-starred restaurants',
+          'Luxury boutiques',
+          'Accessible heliskiing',
+          'Spas and wellness',
+          'Authentic Alpine architecture'
+        ]
+      },
+      {
+        id: 'les-3-vallees',
+        name: 'LES 3 VALLÉES',
+        subtitle: isFr ? 'Le plus grand domaine skiable du monde' : 'The world\'s largest ski area',
+        location: 'Savoie, France',
+        description: isFr
+          ? 'Avec 600 kilomètres de pistes reliées, Les 3 Vallées offrent un terrain de jeu infini aux amoureux de glisse. De Courchevel à Val Thorens en passant par Méribel, chaque vallée a sa personnalité unique.'
+          : 'With 600 kilometers of connected slopes, Les 3 Vallées offers an infinite playground for ski lovers. From Courchevel to Val Thorens via Méribel, each valley has its unique personality.',
+        image: 'assets/images/pas libre de droit/espace_killy_2.jpg',
+        altitude: '1 300m - 3 230m',
+        skiArea: isFr ? '600 km de pistes' : '600 km of slopes',
+        highlights: isFr ? [
+          '8 stations interconnectées',
+          'Glacier accessible toute l\'année',
+          'Snowparks de renommée mondiale',
+          'Restaurants d\'altitude exceptionnels',
+          'Ski de printemps jusqu\'en mai'
+        ] : [
+          '8 interconnected resorts',
+          'Year-round glacier access',
+          'World-renowned snow parks',
+          'Exceptional mountain restaurants',
+          'Spring skiing until May'
+        ]
+      },
+      {
+        id: 'espace-killy',
+        name: 'ESPACE KILLY',
+        subtitle: isFr ? 'Le royaume du ski sportif' : 'The kingdom of sport skiing',
+        location: 'Savoie, France',
+        description: isFr
+          ? 'Val d\'Isère et Tignes forment l\'Espace Killy, un domaine légendaire qui a vu naître les plus grands champions. Entre tradition savoyarde et modernité, ces stations offrent des paysages à couper le souffle.'
+          : 'Val d\'Isère and Tignes form the Espace Killy, a legendary domain that has seen the birth of the greatest champions. Between Savoyard tradition and modernity, these resorts offer breathtaking landscapes.',
+        image: 'assets/images/montagne_cover.jpg',
+        altitude: '1 550m - 3 456m',
+        skiArea: isFr ? '300 km de pistes' : '300 km of slopes',
+        highlights: isFr ? [
+          'Glacier de la Grande Motte',
+          'Ski d\'été possible',
+          'Pistes olympiques',
+          'Freeride exceptionnel',
+          'Vie nocturne animée'
+        ] : [
+          'Grande Motte Glacier',
+          'Summer skiing possible',
+          'Olympic slopes',
+          'Exceptional freeride',
+          'Lively nightlife'
+        ]
+      }
+    ];
+  }
+
+  destinations: Destination[] = [];
 }

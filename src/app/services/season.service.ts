@@ -57,15 +57,13 @@ export class SeasonService {
   public currentSeason$ = this.currentSeasonSubject.asObservable();
   
   constructor() {
-    // Récupérer la saison sauvegardée ou déterminer automatiquement
+    // Récupérer la saison sauvegardée ou utiliser hiver par défaut
     const savedSeason = localStorage.getItem('selectedSeason') as Season;
     if (savedSeason) {
       this.currentSeasonSubject.next(savedSeason);
     } else {
-      // Déterminer automatiquement selon le mois
-      const month = new Date().getMonth();
-      const isWinter = month >= 10 || month <= 3; // Nov-Avril = hiver
-      this.currentSeasonSubject.next(isWinter ? 'winter' : 'summer');
+      // Par défaut, toujours commencer en mode hiver
+      this.currentSeasonSubject.next('winter');
     }
   }
   
@@ -99,36 +97,20 @@ export class SeasonService {
       
       destinations: [
         {
-          id: 'montagne',
-          name: 'Montagne',
-          subtitle: 'Respirez l\'air pur des sommets',
-          description: 'Les Alpes en été révèlent leur beauté verdoyante. Randonnées, lacs cristallins et panoramas à couper le souffle.',
-          image: 'assets/images/montagne_cover.jpg',
-          highlights: ['Randonnées guidées', 'Lacs d\'altitude', 'Refuges authentiques', 'Faune et flore alpines']
+          id: 'entre-lac-et-montagnes',
+          name: 'Entre lac et montagnes',
+          subtitle: 'Des Alpes aux lacs cristallins',
+          description: 'De Courchevel à Chamonix, entre l\'ascension de l\'Aiguille du Midi et la douceur du lac d\'Annecy, partez à la découverte des plus beaux joyaux alpins. Et pour prolonger l\'aventure, franchissez la frontière jusqu\'à Sestrières en Italie, où la montagne se vit à l\'heure de la dolce vita.',
+          image: 'assets/images/helico.jpg',
+          highlights: ['Aiguille du Midi', 'Lac d\'Annecy', 'Mont-Blanc', 'Sestrières Italie', 'Dolce vita alpine']
         },
         {
           id: 'bourgogne',
-          name: 'Bourgogne',
-          subtitle: 'Art de vivre et gastronomie',
-          description: 'Explorez la Bourgogne à travers des expériences uniques : VTT dans les vignobles, gastronomie étoilée, rallyes de voitures anciennes, dégustations œnologiques et moments de détente au spa.',
+          name: 'La Bourgogne',
+          subtitle: 'Des sentiers aux vignobles',
+          description: 'Explorez la Bourgogne en VTT à travers vignes et villages, avant de savourer ses Grands Crus et sa gastronomie authentique. Sport, plaisir et art de vivre pour une expérience inoubliable.',
           image: 'assets/images/pas libre de droit/espace_killy_2.jpg',
-          highlights: ['Trip VTT', 'Gastronomie', 'Vieilles voitures', 'Œnologie', 'Spa']
-        },
-        {
-          id: 'bordeaux',
-          name: 'Bordeaux',
-          subtitle: 'Vignobles et élégance',
-          description: 'Découvrez les grands crus classés, les châteaux prestigieux et l\'art de vivre bordelais dans un cadre d\'exception.',
-          image: 'assets/images/montagne_cover.jpg',
-          highlights: ['Châteaux viticoles', 'Dégustations privées', 'Golf', 'Croisières sur la Garonne']
-        },
-        {
-          id: 'annecy-chamonix',
-          name: 'Annecy & Chamonix',
-          subtitle: 'Entre lac et montagne',
-          description: 'Le charme d\'Annecy et la majesté de Chamonix. Une combinaison parfaite entre activités nautiques et alpines.',
-          image: 'assets/images/helico.jpg',
-          highlights: ['Lac d\'Annecy', 'Mont-Blanc', 'Sports nautiques', 'Alpinisme']
+          highlights: ['VTT dans les vignes', 'Grands Crus', 'Gastronomie authentique', 'Villages bourguignons', 'Art de vivre']
         }
       ],
       
@@ -213,36 +195,20 @@ export class SeasonService {
       
       destinations: [
         {
-          id: 'mountain',
-          name: 'Mountain',
-          subtitle: 'Breathe the pure mountain air',
-          description: 'The Alps in summer reveal their lush beauty. Hiking, crystal-clear lakes and breathtaking panoramas.',
-          image: 'assets/images/montagne_cover.jpg',
-          highlights: ['Guided hikes', 'High-altitude lakes', 'Authentic refuges', 'Alpine flora and fauna']
-        },
-        {
-          id: 'burgundy',
-          name: 'Burgundy',
-          subtitle: 'Art of living and gastronomy',
-          description: 'Explore Burgundy through unique experiences: mountain biking through vineyards, starred gastronomy, vintage car rallies, wine tastings and spa relaxation.',
-          image: 'assets/images/pas libre de droit/espace_killy_2.jpg',
-          highlights: ['Mountain biking', 'Gastronomy', 'Vintage cars', 'Wine tasting', 'Spa']
-        },
-        {
-          id: 'bordeaux',
-          name: 'Bordeaux',
-          subtitle: 'Vineyards and elegance',
-          description: 'Discover the great classified growths, prestigious châteaux and the Bordeaux art of living in an exceptional setting.',
-          image: 'assets/images/montagne_cover.jpg',
-          highlights: ['Wine châteaux', 'Private tastings', 'Golf', 'Garonne cruises']
-        },
-        {
-          id: 'annecy-chamonix',
-          name: 'Annecy & Chamonix',
-          subtitle: 'Between lake and mountain',
-          description: 'The charm of Annecy and the majesty of Chamonix. A perfect combination of water and alpine activities.',
+          id: 'entre-lac-et-montagnes',
+          name: 'Between lake and mountains',
+          subtitle: 'From Alps to crystal lakes',
+          description: 'From Courchevel to Chamonix, between the ascent of the Aiguille du Midi and the gentle shores of Lake Annecy, discover the finest jewels of the Alps. And to extend the adventure, cross the border to Sestrières in Italy, where the mountains embrace the dolce vita.',
           image: 'assets/images/helico.jpg',
-          highlights: ['Lake Annecy', 'Mont Blanc', 'Water sports', 'Mountaineering']
+          highlights: ['Aiguille du Midi', 'Lake Annecy', 'Mont Blanc', 'Sestrières Italy', 'Alpine dolce vita']
+        },
+        {
+          id: 'bourgogne',
+          name: 'Burgundy Getaway',
+          subtitle: 'From trails to vineyards',
+          description: 'Ride through Burgundy\'s vineyards and villages by MTB, then indulge in its finest wines and authentic cuisine. Adventure, pleasure, and art de vivre await you in this new experience!',
+          image: 'assets/images/pas libre de droit/espace_killy_2.jpg',
+          highlights: ['MTB through vineyards', 'Grand Cru wines', 'Authentic gastronomy', 'Burgundy villages', 'Art de vivre']
         }
       ],
       

@@ -98,12 +98,12 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
       this.cardGap = 16;
     } else if (width >= 640) {
       this.cardsToShow = 1;
-      this.cardWidth = Math.min(width - 128, 320);
-      this.cardGap = 12;
+      this.cardWidth = Math.min(width - 96, 320);
+      this.cardGap = 16;
     } else {
       this.cardsToShow = 1;
-      this.cardWidth = Math.min(width - 112, 300);
-      this.cardGap = 12;
+      this.cardWidth = Math.min(width - 64, 300);
+      this.cardGap = 16;
     }
   }
 
@@ -336,12 +336,12 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
         image: 'assets/images/pas libre de droit/espace_killy_2.jpg'
       },
       {
-        id: 'husky',
-        title: translations.conciergerieHusky?.title || 'Chiens de traîneau',
-        subtitle: translations.conciergerieHusky?.subtitle || 'Aventure nordique',
-        description: translations.conciergerieHusky?.description || 'Balade en traîneau à chiens',
-        image: 'assets/images/montagne_cover.jpg'
-      }
+        id: 's3v',
+        title: translations.conciergerieS3V?.title || 'Forfaits Ski S3V',
+        subtitle: translations.conciergerieS3V?.subtitle || 'Les 3 Vallées à prix préférentiel',
+        description: translations.conciergerieS3V?.description || 'Profitez de tarifs exclusifs sur les forfaits du plus grand domaine skiable du monde',
+        image: 'assets/images/helico.jpg'
+      },
     ].filter(activity => activity.title && activity.subtitle);
   }
 
