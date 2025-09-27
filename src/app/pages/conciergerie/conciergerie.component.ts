@@ -19,12 +19,12 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
   translateX = 0;
   isTransitioning = false;
   noTransition = false;
-  
+
   // Configuration
   cardWidth = 320;
   cardGap = 24;
   cardsToShow = 3;
-  
+
   // Données
   extendedActivities: Activity[] = [];
 
@@ -33,11 +33,11 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
     subtitle: undefined, // Utilise le sous-titre par défaut
     buttonText: undefined // Utilise le texte par défaut
   };
-  
+
   // Listeners
   private resizeListener?: () => void;
   private transitionEndListener?: () => void;
-  
+
   constructor(
     public languageService: LanguageService,
     private router: Router
@@ -50,7 +50,7 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
     this.updateCarouselSettings();
     this.setupInfiniteLoop();
     this.setInitialPosition();
-    
+
     // Resize listener
     this.resizeListener = () => {
       this.updateCarouselSettings();
@@ -75,7 +75,7 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
    */
   private updateCarouselSettings(): void {
     const width = window.innerWidth;
-    
+
     if (width >= 1600) {
       this.cardsToShow = 3;
       this.cardWidth = 340;
@@ -112,7 +112,7 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
    */
   private setupInfiniteLoop(): void {
     const original = this.activities;
-    
+
     if (original.length === 0) {
       this.extendedActivities = [];
       return;
@@ -120,18 +120,18 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
 
     // Cloner les éléments pour créer une boucle
     const clonesNeeded = Math.max(this.cardsToShow, 3);
-    
+
     // Créer des clones avant et après
     const clonesBefore = original.slice(-clonesNeeded).map(item => ({
       ...item,
       id: `${item.id}_before`
     }));
-    
+
     const clonesAfter = original.slice(0, clonesNeeded).map(item => ({
       ...item,
       id: `${item.id}_after`
     }));
-    
+
     // Assemblage: [clones avant] + [originaux] + [clones après]
     this.extendedActivities = [...clonesBefore, ...original, ...clonesAfter];
   }
@@ -141,15 +141,15 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
    */
   private setInitialPosition(): void {
     if (this.activities.length === 0) return;
-    
+
     // Nombre de clones avant
     const clonesBeforeCount = Math.max(this.cardsToShow, 3);
-    
+
     // Calculer le décalage pour centrer les cartes visibles
     const viewportWidth = this.getViewportWidth();
     const totalCardsWidth = this.cardsToShow * this.cardWidth + (this.cardsToShow - 1) * this.cardGap;
     const centerOffset = (viewportWidth - totalCardsWidth) / 2;
-    
+
     // Position de départ (premier élément original)
     this.currentIndex = clonesBeforeCount;
     this.translateX = -(this.currentIndex * (this.cardWidth + this.cardGap)) + centerOffset;
@@ -162,7 +162,7 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
     const containerWidth = window.innerWidth;
     const margins = 96; // 6rem de marges (3rem de chaque côté)
     const maxWidth = 1200; // max-width du viewport
-    
+
     return Math.min(containerWidth - margins, maxWidth);
   }
 
@@ -173,7 +173,7 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
     const viewportWidth = this.getViewportWidth();
     const totalCardsWidth = this.cardsToShow * this.cardWidth + (this.cardsToShow - 1) * this.cardGap;
     const centerOffset = (viewportWidth - totalCardsWidth) / 2;
-    
+
     return -(index * (this.cardWidth + this.cardGap)) + centerOffset;
   }
 
@@ -182,27 +182,27 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
    */
   nextSlide(): void {
     if (this.isTransitioning || this.activities.length === 0) return;
-    
+
     this.isTransitioning = true;
     this.currentIndex++;
     this.translateX = this.calculateTranslateX(this.currentIndex);
-    
+
     // Vérifier si on a atteint la fin (clones)
     setTimeout(() => {
       const clonesBeforeCount = Math.max(this.cardsToShow, 3);
       const lastOriginalIndex = clonesBeforeCount + this.activities.length - 1;
-      
+
       if (this.currentIndex > lastOriginalIndex) {
         // Sauter au début sans animation
         this.noTransition = true;
         this.currentIndex = clonesBeforeCount;
         this.translateX = this.calculateTranslateX(this.currentIndex);
-        
+
         setTimeout(() => {
           this.noTransition = false;
         }, 10);
       }
-      
+
       this.isTransitioning = false;
     }, 250);
   }
@@ -212,26 +212,26 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
    */
   previousSlide(): void {
     if (this.isTransitioning || this.activities.length === 0) return;
-    
+
     this.isTransitioning = true;
     this.currentIndex--;
     this.translateX = this.calculateTranslateX(this.currentIndex);
-    
+
     // Vérifier si on a atteint le début (clones)
     setTimeout(() => {
       const clonesBeforeCount = Math.max(this.cardsToShow, 3);
-      
+
       if (this.currentIndex < clonesBeforeCount) {
         // Sauter à la fin sans animation
         this.noTransition = true;
         this.currentIndex = clonesBeforeCount + this.activities.length - 1;
         this.translateX = this.calculateTranslateX(this.currentIndex);
-        
+
         setTimeout(() => {
           this.noTransition = false;
         }, 50);
       }
-      
+
       this.isTransitioning = false;
     }, 500);
   }
@@ -241,13 +241,13 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
    */
   goToSlide(index: number): void {
     if (this.isTransitioning || this.activities.length === 0) return;
-    
+
     const clonesBeforeCount = Math.max(this.cardsToShow, 3);
-    
+
     this.isTransitioning = true;
     this.currentIndex = clonesBeforeCount + index;
     this.translateX = this.calculateTranslateX(this.currentIndex);
-    
+
     setTimeout(() => {
       this.isTransitioning = false;
     }, 500);
@@ -280,7 +280,7 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
    */
   get activities(): Activity[] {
     const translations = this.languageService.currentTranslations;
-    
+
     // Fallback pour les textes principaux si non définis
     if (!translations.conciergerieTitle) {
       console.warn('conciergerieTitle non défini dans les traductions');
@@ -291,7 +291,7 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
     if (!translations.conciergerieServicesTitle) {
       console.warn('conciergerieServicesTitle non défini dans les traductions');
     }
-    
+
     return [
       {
         id: 'helico',
@@ -305,14 +305,14 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
         title: translations.conciergerieChef?.title || 'Chef privé',
         subtitle: translations.conciergerieChef?.subtitle || 'Cuisine gastronomique',
         description: translations.conciergerieChef?.description || 'Service de chef privé à domicile',
-        image: 'assets/images/montagne_cover.jpg'
+        image: 'assets/images/photo_off/chef_prive.jpg'
       },
       {
         id: 'moniteur',
         title: translations.conciergerieMoniteur?.title || 'Moniteur de ski',
         subtitle: translations.conciergerieMoniteur?.subtitle || 'Cours personnalisés',
         description: translations.conciergerieMoniteur?.description || 'Cours de ski avec moniteur privé',
-        image: 'assets/images/pas libre de droit/espace_killy_2.jpg'
+        image: 'assets/images/photo_off/moniteur.jpg'
       },
       {
         id: 'montgolfiere',
@@ -326,21 +326,21 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
         title: translations.conciergerieRaquette?.title || 'Raquettes',
         subtitle: translations.conciergerieRaquette?.subtitle || 'Randonnée hivernale',
         description: translations.conciergerieRaquette?.description || 'Randonnée en raquettes dans la nature',
-        image: 'assets/images/montagne_cover.jpg'
+        image: 'assets/images/photo_off/raquette.jpg'
       },
       {
         id: 'yoga',
         title: translations.conciergerieYoga?.title || 'Yoga',
         subtitle: translations.conciergerieYoga?.subtitle || 'Bien-être et relaxation',
         description: translations.conciergerieYoga?.description || 'Séances de yoga en montagne',
-        image: 'assets/images/pas libre de droit/espace_killy_2.jpg'
+        image: 'assets/images/photo_off/yoga.jpg'
       },
       {
         id: 's3v',
         title: translations.conciergerieS3V?.title || 'Forfaits Ski S3V',
         subtitle: translations.conciergerieS3V?.subtitle || 'Les 3 Vallées à prix préférentiel',
         description: translations.conciergerieS3V?.description || 'Profitez de tarifs exclusifs sur les forfaits du plus grand domaine skiable du monde',
-        image: 'assets/images/helico.jpg'
+        image: 'assets/images/photo_off/s3v.jpg'
       },
     ].filter(activity => activity.title && activity.subtitle);
   }
@@ -353,7 +353,7 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         const element = document.getElementById('contact');
         if (element) {
-          element.scrollIntoView({ 
+          element.scrollIntoView({
             behavior: 'smooth',
             block: 'start'
           });

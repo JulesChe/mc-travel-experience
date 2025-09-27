@@ -4,147 +4,147 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-MC Travel Experience is an Angular 19 application for a luxury travel agency specializing in high-end Alpine ski experiences. The site features a dual-season concept (winter/summer) with dynamic content switching and comprehensive internationalization (French/English).
+MC Travel Experiences is a luxury travel website built with Angular 19 that specializes in high-end mountain and ski experiences in the French Alps. The site features bilingual support (French/English) and focuses on luxury accommodations, concierge services, and exclusive destinations.
 
 ## Development Commands
 
-### Basic Commands
-- `npm start` - Start development server on http://localhost:4200
-- `npm run build` - Production build
-- `npm test` - Run unit tests with Karma
-- `npm run watch` - Development build with file watching
+### Development Server
 
-### Internationalization Commands
-- `npm run start:fr` - Start development server with French locale
-- `npm run start:en` - Start development server with English locale
+- `npm start` - Start development server (defaults to French locale)
+- `npm run start:fr` - Start development server in French
+- `npm run start:en` - Start development server in English
+- `npm run watch` - Build with file watching in development mode
+
+### Building
+
+- `npm run build` - Standard build (production)
 - `npm run build:fr` - Build French version
 - `npm run build:en` - Build English version
-- `npm run build:i18n` - Build both language versions
-- `npm run extract-i18n` - Extract translatable content
-- `npm run serve:prod` - Build and serve production version locally
+- `npm run build:prod-fr` - Production build for French
+- `npm run build:prod-en` - Production build for English
+- `npm run build:i18n` - Build both language versions for production
 
-## Architecture
+### Testing
 
-### Core Concepts
+- `npm test` - Run unit tests with Karma
+- No e2e test framework configured
 
-1. **Dual Season System**: The application dynamically switches between winter and summer content using the `SeasonService`. This affects hero sections, destinations, accommodations, and activities.
+### Internationalization
 
-2. **Internationalization**: Built-in Angular i18n with French as source locale and English translations. Comprehensive translation interface in `LanguageService`.
+- `npm run extract-i18n` - Extract translatable text
+- `npm run serve:prod` - Serve production build locally
 
-3. **Component-based Architecture**: Modular components for each section (hero, destinations, accommodations, services, contact, etc.).
+## Architecture & Structure
 
-### Key Services
+### Routing Architecture
 
-#### SeasonService (`src/app/services/season.service.ts`)
-- Manages winter/summer content switching
-- Persists season preference in localStorage
-- Provides season-specific content for hero sections, destinations, accommodations, and activities
-- Uses BehaviorSubject for reactive season changes
+The application uses lazy-loaded routes with the following structure:
 
-#### LanguageService (`src/app/services/language.service.ts`)
-- Centralized translation management
-- Comprehensive translation interface covering all UI text
-- BehaviorSubject-based reactive language switching
-- Extensive translations for both seasons and all page content
+- **Home** (`/`) - Homepage with all sections
+- **Destinations** (`/destinations`) - Dedicated destinations page
+- **Conciergerie** (`/conciergerie`) - Concierge services page
+- **Hébergements** (`/hebergements`) - Accommodations page
 
-### Component Structure
+All route components are lazy-loaded using Angular's `loadComponent()` for optimal performance.
 
-#### Pages
-- `home-page` - Main landing page with season-aware content
-- Pages are located in `src/app/pages/`
+### Component Architecture
 
-#### Reusable Components
-- `header` - Navigation with season toggle and language switcher
-- `hero-section` - Video background hero with season-specific content
-- `excellence-section`, `destinations-section`, `services-section`, `accommodations-section` - Content sections
-- `contact-section` - Contact form and information
-- `footer` - Site footer with links and contact info
+**Layout Components:**
 
-### Styling Architecture
+- `HeaderComponent` - Main navigation with language switcher
+- `FooterComponent` - Site footer with contact info and links
 
-#### CSS Organization
-- `src/styles.scss` - Global styles with comprehensive design system
-- Tailwind CSS integration for utility classes
-- SCSS for component-specific styles
-- CSS custom properties for consistent theming
+**Content Components:**
 
-#### Design System Features
-- Unified color palette with CSS custom properties
-- Consistent typography system
-- Comprehensive animation classes
-- Responsive design utilities
-- Accessibility considerations (reduced motion support)
+- `HeroSectionComponent` - Homepage hero with video/image
+- `ExcellenceSectionComponent` - Company excellence presentation
+- `DestinationsSectionComponent` - Featured destinations grid
+- `ServicesSectionComponent` - Services overview with cards
+- `AccommodationsSectionComponent` - Accommodations showcase
+- `ContactSectionComponent` - Contact form and information
+- `ServiceCardComponent` - Reusable service card component
 
-#### Season-Specific Styling
-- `.season-toggle` with `.winter-active` and `.summer-active` classes
-- Dynamic styling based on current season
-- Consistent brand colors: winter (blue), summer (yellow/gold)
+**Pages:**
 
-## Build Configuration
+- `HomeComponent` - Homepage aggregating all sections
+- `DestinationsComponent` - Full destinations listing
+- `ConciergerieComponent` - Concierge services details
+- `HebergementsComponent` - Accommodations details
 
-### Angular Configuration
-- Uses Angular 19 with standalone components
-- SCSS preprocessing enabled
-- i18n configured with French source locale
-- Production builds with optimization and tree-shaking
-- Bundle size limits: 500kB warning, 1MB error
+### Internationalization System
 
-### Build Targets
-- `development` - Dev build with source maps
-- `production` - Optimized production build
-- `fr`/`en` - Language-specific development builds  
-- `production-fr`/`production-en` - Language-specific production builds
+The application implements a custom bilingual system using a centralized `LanguageService`:
 
-## Key Features
+- **Default locale:** French (`fr`)
+- **Supported locales:** French (`fr`), English (`en`)
+- **Translation storage:** In-memory translations in `LanguageService`
+- **Language switching:** Reactive service with `BehaviorSubject`
+- **Angular i18n configuration:** Set up for potential future migration to Angular's native i18n
 
-### Season Toggle System
-- Header component contains season toggle button
-- Visual feedback with distinct styling for each season
-- Smooth transitions between winter and summer content
-- State persistence across browser sessions
+### Services
 
-### Responsive Design
-- Mobile-first approach
-- Comprehensive breakpoint system
-- Touch-friendly interactions
-- Optimized for both desktop and mobile experiences
+**LanguageService** (`src/app/services/language.service.ts`):
 
-### Performance Considerations
-- Lazy loading where applicable
-- Optimized images and assets
-- Bundle splitting for production
-- Service worker ready (can be enabled)
+- Manages current language state
+- Provides comprehensive translation interface
+- Includes translations for all pages and components
+- Reactive language switching with observables
 
-## Important Implementation Details
+**EmailService** (`src/app/services/email.service.ts`):
 
-### Season Content Structure
-When working with seasonal content, use the interfaces defined in `season.service.ts`:
-- `SeasonContent` for overall content structure
-- `SummerDestination`, `SummerAccommodation`, `SummerActivity` for summer-specific content
-- Winter content uses existing component structure
+- Handles contact form submissions
+- Multiple sending methods: API, Web3Forms, mailto fallback
+- Configured for `mc.travel73@gmail.com`
 
-### Translation Management
-All user-facing text should be managed through the `LanguageService`. The `Translations` interface provides type safety for all translatable content. Both French and English versions must be maintained.
+### Styling & UI
 
-### Component Communication
-- Services use BehaviorSubject for reactive data flow
-- Components subscribe to service observables for real-time updates
-- Parent-child communication via @Input/@Output where appropriate
+- **Framework:** TailwindCSS 4.x
+- **Custom fonts:** Times New Roman for serif text
+- **Style language:** SCSS for component-specific styles
+- **Theme:** Luxury/premium design with mountain imagery
+- **Responsive:** Mobile-first approach
 
-### Asset Management
-- Images stored in `public/assets/images/`
-- Videos served from external CDN (R2 Cloudflare)
-- Proper lazy loading and optimization for media assets
+### Configuration Notes
+
+- **Angular 19** with standalone components architecture
+- **TypeScript 5.7** strict configuration
+- **Build optimization:** Configured for production with chunking and budgets
+- **Assets:** Public folder structure with automatic copying
+- **Testing:** Karma + Jasmine setup
+- **Analytics:** Google Analytics configured (ID in angular.json)
 
 ## Development Guidelines
 
-### Linting and Type Checking
-The project uses standard Angular linting. Run `ng lint` for code quality checks and ensure TypeScript strict mode compliance.
-
 ### Component Creation
-Use `ng generate component component-name` with the `--style=scss` flag (configured as default). All components use standalone architecture.
 
-### Testing
-- Unit tests with Jasmine and Karma
-- Component tests should cover season switching and language changes
-- Service tests should verify state management and data flow
+When creating new components, follow the existing patterns:
+
+- Use standalone components (no modules)
+- Implement responsive design with TailwindCSS
+- Include proper TypeScript typing
+- Use the LanguageService for all text content
+- Follow the established SCSS structure
+
+### Translation Management
+
+All user-facing text must be managed through the LanguageService:
+
+- Add new keys to the `Translations` interface
+- Provide both French and English translations
+- Use reactive patterns with the language observable
+- Maintain consistency with existing translation keys
+
+### Routing
+
+- Use lazy loading for all new pages
+- Include proper page titles in route configuration
+- Follow the existing route structure pattern
+- Ensure proper navigation breadcrumbs
+
+### Email Integration
+
+The EmailService supports multiple sending methods. For production:
+
+- Implement Cloudflare Workers endpoint at `/api/send-email`
+- Or configure Web3Forms with access key
+- Mailto fallback is always available as backup
