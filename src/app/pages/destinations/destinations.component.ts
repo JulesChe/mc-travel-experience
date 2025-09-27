@@ -24,21 +24,21 @@ interface Destination {
   selector: 'app-destinations',
   standalone: true,
   imports: [CommonModule, RouterModule,FooterComponent],
-  
+
   template: `
     <!-- Page Destinations -->
     <div class="min-h-screen bg-white">
-      
+
       <!-- Hero Section -->
       <section class="relative h-[70vh] overflow-hidden">
         <div class="absolute inset-0">
-          <img 
+          <img
             src="assets/images/pas libre de droit/espace_killy_2.jpg"
             alt="Montagnes enneigées"
             class="w-full h-full object-cover">
           <div class="absolute inset-0 bg-black/40"></div>
         </div>
-        
+
         <div class="relative z-10 h-full flex items-center justify-center text-center text-white px-4">
           <div class="max-w-4xl mx-auto animate-fade-in-up">
             <h1 class="text-5xl md:text-7xl font-light mb-6 tracking-wide">
@@ -55,7 +55,7 @@ interface Destination {
       <!-- Destinations Grid -->
       <section class="py-20 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
-          
+
           <!-- Introduction -->
           <div class="text-center mb-16 animate-fade-in-up">
             <p class="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
@@ -65,15 +65,15 @@ interface Destination {
 
           <!-- Destinations Cards -->
           <div class="space-y-24">
-            <div *ngFor="let destination of destinations; let i = index" 
+            <div *ngFor="let destination of destinations; let i = index"
                  class="destination-card"
                  [class.reverse]="i % 2 === 1">
-              
+
               <!-- Image -->
               <div class="destination-image animate-fade-in-left"
                    [class.animate-fade-in-right]="i % 2 === 1">
                 <div class="enhanced-image">
-                  <img 
+                  <img
                     [src]="destination.image"
                     [alt]="destination.name"
                     class="w-full h-96 lg:h-[500px] object-cover shadow-xl">
@@ -83,7 +83,7 @@ interface Destination {
               <!-- Content -->
               <div class="destination-content animate-fade-in-right"
                    [class.animate-fade-in-left]="i % 2 === 1">
-                
+
                 <!-- Header -->
                 <div class="mb-8">
                   <div class="text-sm uppercase tracking-wider text-gray-500 mb-2">
@@ -156,7 +156,7 @@ export class DestinationsComponent implements OnInit, OnDestroy {
       // Forcer la mise à jour des destinations
       this.updateDestinations();
     });
-    
+
     // Initialiser les destinations
     this.updateDestinations();
   }
@@ -185,14 +185,14 @@ export class DestinationsComponent implements OnInit, OnDestroy {
 
   private getDestinationsForLanguage(): Destination[] {
     const isFr = this.languageService.currentLanguage === 'fr';
-    
+
     return [
       {
         id: 'courchevel',
         name: 'COURCHEVEL',
         subtitle: isFr ? 'L\'élégance à la française' : 'French elegance',
         location: 'Savoie, France',
-        description: isFr 
+        description: isFr
           ? 'Station mythique des Alpes françaises, Courchevel incarne le raffinement et l\'art de vivre à la montagne. Avec ses pistes parfaitement entretenues et ses établissements de prestige, elle offre une expérience ski haut de gamme incomparable.'
           : 'Legendary resort of the French Alps, Courchevel embodies refinement and the art of mountain living. With its perfectly groomed slopes and prestigious establishments, it offers an incomparable high-end ski experience.',
         image: 'assets/images/montagne_cover.jpg',
@@ -220,7 +220,7 @@ export class DestinationsComponent implements OnInit, OnDestroy {
         description: isFr
           ? 'Avec 600 kilomètres de pistes reliées, Les 3 Vallées offrent un terrain de jeu infini aux amoureux de glisse. De Courchevel à Val Thorens en passant par Méribel, chaque vallée a sa personnalité unique.'
           : 'With 600 kilometers of connected slopes, Les 3 Vallées offers an infinite playground for ski lovers. From Courchevel to Val Thorens via Méribel, each valley has its unique personality.',
-        image: 'assets/images/pas libre de droit/espace_killy_2.jpg',
+        image: 'assets/images/photo_off/espace_killy.jpg',
         altitude: '1 300m - 3 230m',
         skiArea: isFr ? '600 km de pistes' : '600 km of slopes',
         highlights: isFr ? [
@@ -245,7 +245,7 @@ export class DestinationsComponent implements OnInit, OnDestroy {
         description: isFr
           ? 'Val d\'Isère et Tignes forment l\'Espace Killy, un domaine légendaire qui a vu naître les plus grands champions. Entre tradition savoyarde et modernité, ces stations offrent des paysages à couper le souffle.'
           : 'Val d\'Isère and Tignes form the Espace Killy, a legendary domain that has seen the birth of the greatest champions. Between Savoyard tradition and modernity, these resorts offer breathtaking landscapes.',
-        image: 'assets/images/montagne_cover.jpg',
+        image: 'assets/images/photo_off/espace_killy.jpg',
         altitude: '1 550m - 3 456m',
         skiArea: isFr ? '300 km de pistes' : '300 km of slopes',
         highlights: isFr ? [
