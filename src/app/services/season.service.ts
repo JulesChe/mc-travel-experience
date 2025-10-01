@@ -136,7 +136,7 @@ export class SeasonService {
           name: 'Domaine Leflaive',
           location: 'Puligny-Montrachet',
           type: 'Domaine viticole',
-          image: 'assets/images/montagne_cover.jpg',
+          image: 'assets/images/photo_off/leflaive.png',
           description: 'Séjournez au cœur des grands crus de Bourgogne dans un domaine d\'exception.'
         },
         {
@@ -234,7 +234,7 @@ export class SeasonService {
           name: 'Domaine Leflaive',
           location: 'Puligny-Montrachet',
           type: 'Wine estate',
-          image: 'assets/images/montagne_cover.jpg',
+          image: 'assets/images/photo_off/leflaive.png',
           description: 'Stay in the heart of Burgundy\'s grand crus in an exceptional estate.'
         },
         {
