@@ -187,7 +187,7 @@ interface Accommodation {
               <div class="order-1 lg:order-2 animate-fade-in-right">
                 <div class="enhanced-image">
                   <img 
-                    src="assets/images/photo_off/solaise_ete.jpg"
+                    src="assets/images/photo_off/solaise_hiver.png"
                     alt="Hôtel de luxe en montagne"
                     class="w-full h-96 lg:h-[500px] object-cover shadow-xl">
                 </div>

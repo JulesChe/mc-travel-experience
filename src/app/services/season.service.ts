@@ -120,7 +120,7 @@ export class SeasonService {
           name: 'Refuge de Solaise',
           location: 'Val d\'Isère',
           type: 'Refuge d\'altitude',
-          image: 'assets/images/photo_off/solaise_hiver.png',
+          image: 'assets/images/photo_off/solaise_ete.jpg',
           description: 'Un refuge d\'exception à 2551m d\'altitude avec vue panoramique sur les Alpes.'
         },
         {
@@ -218,7 +218,7 @@ export class SeasonService {
           name: 'Solaise Refuge',
           location: 'Val d\'Isère',
           type: 'High altitude refuge',
-          image: 'assets/images/photo_off/solaise_hiver.png',
+          image: 'assets/images/photo_off/solaise_ete.jpg',
           description: 'An exceptional refuge at 2551m altitude with panoramic views of the Alps.'
         },
         {
