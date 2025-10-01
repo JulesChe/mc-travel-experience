@@ -14,29 +14,21 @@ import { FooterComponent, FooterConfig } from '../../components/footer/footer.co
   styleUrls: ['./conciergerie.component.scss']
 })
 export class ConciergerieComponent implements OnInit, OnDestroy {
-  // État du carrousel
-  currentIndex = 0;
-  translateX = 0;
-  isTransitioning = false;
-  noTransition = false;
-
-  // Configuration
-  cardWidth = 320;
-  cardGap = 24;
-  cardsToShow = 3;
-
-  // Données
-  extendedActivities: Activity[] = [];
+  @ViewChild('carouselTrack', { static: false }) carouselTrack!: ElementRef<HTMLDivElement>;
+  
+  // État du carrousel moderne
+  currentSlideIndex = 0;
+  totalSlides = 0;
+  canScrollLeft = false;
+  canScrollRight = true;
+  private intersectionObserver?: IntersectionObserver;
+  private hasUserScrolled = false;
 
   footerConfig: FooterConfig = {
-    title: undefined, // Utilise le titre par défaut
-    subtitle: undefined, // Utilise le sous-titre par défaut
-    buttonText: undefined // Utilise le texte par défaut
+    title: undefined,
+    subtitle: undefined,
+    buttonText: undefined
   };
-
-  // Listeners
-  private resizeListener?: () => void;
-  private transitionEndListener?: () => void;
 
   constructor(
     public languageService: LanguageService,
@@ -47,232 +39,215 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     window.scrollTo(0, 0);
-    this.updateCarouselSettings();
-    this.setupInfiniteLoop();
-    this.setInitialPosition();
-
-    // Resize listener
-    this.resizeListener = () => {
-      this.updateCarouselSettings();
-      this.setupInfiniteLoop();
-      this.setInitialPosition();
-    };
-    window.addEventListener('resize', this.resizeListener);
-
-
+    this.totalSlides = this.activities.length;
+    
+    // Initialiser l'état de navigation
+    this.canScrollLeft = false;
+    this.canScrollRight = this.totalSlides > 1;
+    
+    // Setup après que la vue soit initialisée
+    setTimeout(() => {
+      this.setupSlideObserver();
+    }, 100);
   }
 
 
 
   ngOnDestroy() {
-    if (this.resizeListener) {
-      window.removeEventListener('resize', this.resizeListener);
+    if (this.intersectionObserver) {
+      this.intersectionObserver.disconnect();
     }
   }
 
   /**
-   * Met à jour les paramètres du carrousel selon la taille d'écran
+   * Configure l'observer pour détecter le slide visible
    */
-  private updateCarouselSettings(): void {
+  private setupSlideObserver(): void {
+    if (!this.carouselTrack) return;
+    
+    const options = {
+      root: this.carouselTrack.nativeElement,
+      rootMargin: '0px',
+      threshold: 0.8 // Plus strict pour éviter les changements trop rapides
+    };
+
+    this.intersectionObserver = new IntersectionObserver((entries) => {
+      // Trouver le slide le plus visible
+      let mostVisibleSlide: HTMLElement | null = null;
+      let maxIntersectionRatio = 0;
+
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && entry.intersectionRatio > maxIntersectionRatio) {
+          maxIntersectionRatio = entry.intersectionRatio;
+          mostVisibleSlide = entry.target as HTMLElement;
+        }
+      });
+
+      if (mostVisibleSlide) {
+        const slideIndex = Array.from(this.carouselTrack.nativeElement.children).indexOf(mostVisibleSlide);
+        if (slideIndex !== -1 && slideIndex !== this.currentSlideIndex) {
+          this.currentSlideIndex = slideIndex;
+        }
+      }
+    }, options);
+
+    // Observer tous les slides
+    setTimeout(() => {
+      const slides = this.carouselTrack.nativeElement.querySelectorAll('.carousel-slide');
+      slides.forEach(slide => {
+        this.intersectionObserver!.observe(slide);
+      });
+    }, 100);
+    
+    // Écouter les événements de scroll
+    this.carouselTrack.nativeElement.addEventListener('scroll', () => {
+      this.updateNavigationState();
+      this.hideScrollHintOnFirstScroll();
+    }, { passive: true });
+    
+    this.updateNavigationState();
+  }
+
+  /**
+   * Met à jour l'état des boutons de navigation et le slide actuel
+   */
+  private updateNavigationState(): void {
+    if (!this.carouselTrack) return;
+    
+    // Calculer le slide actuel basé sur la position de scroll
+    this.updateCurrentSlideFromScroll();
+    
+    // Mettre à jour les boutons en fonction du slide actuel avec une tolérance
+    const container = this.carouselTrack.nativeElement;
+    const scrollLeft = container.scrollLeft;
+    const maxScrollLeft = container.scrollWidth - container.clientWidth;
+    
+    // Tolérance de 5px pour éviter les problèmes de précision
+    this.canScrollLeft = scrollLeft > 5;
+    this.canScrollRight = scrollLeft < maxScrollLeft - 5;
+  }
+
+  /**
+   * Met à jour le slide actuel basé sur la position de scroll
+   */
+  private updateCurrentSlideFromScroll(): void {
+    if (!this.carouselTrack) return;
+    
+    const container = this.carouselTrack.nativeElement;
+    const slides = container.querySelectorAll('.carousel-slide');
+    
+    if (slides.length === 0) return;
+    
+    const scrollLeft = container.scrollLeft;
+    const containerWidth = container.clientWidth;
+    
+    let closestSlideIndex = 0;
+    let minDistance = Infinity;
+    
+    slides.forEach((slide, index) => {
+      const slideElement = slide as HTMLElement;
+      const slideOffsetLeft = slideElement.offsetLeft;
+      const slideWidth = slideElement.offsetWidth;
+      
+      // Position idéale de scroll pour centrer ce slide
+      const idealScrollPosition = slideOffsetLeft - (containerWidth - slideWidth) / 2;
+      const distance = Math.abs(scrollLeft - idealScrollPosition);
+      
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestSlideIndex = index;
+      }
+    });
+    
+    if (closestSlideIndex !== this.currentSlideIndex) {
+      this.currentSlideIndex = closestSlideIndex;
+    }
+  }
+
+  /**
+   * Navigation vers le slide précédent
+   */
+  scrollToPrevious(): void {
+    if (!this.carouselTrack) return;
+    
+    const newIndex = Math.max(0, this.currentSlideIndex - 1);
+    if (newIndex !== this.currentSlideIndex) {
+      this.scrollToSlideIndex(newIndex);
+    }
+  }
+
+  /**
+   * Navigation vers le slide suivant
+   */
+  scrollToNext(): void {
+    if (!this.carouselTrack) return;
+    
+    const newIndex = Math.min(this.totalSlides - 1, this.currentSlideIndex + 1);
+    if (newIndex !== this.currentSlideIndex) {
+      this.scrollToSlideIndex(newIndex);
+    }
+  }
+
+  /**
+   * Scroll vers un slide spécifique avec alignement parfait
+   */
+  private scrollToSlideIndex(index: number): void {
+    if (!this.carouselTrack) return;
+    
+    const container = this.carouselTrack.nativeElement;
+    const slides = container.querySelectorAll('.carousel-slide');
+    
+    if (slides.length === 0 || !slides[index]) return;
+    
+    const targetSlide = slides[index] as HTMLElement;
+    
+    // Calculer la position exacte pour centrer le slide
+    const containerWidth = container.clientWidth;
+    const slideWidth = targetSlide.offsetWidth;
+    const slideOffsetLeft = targetSlide.offsetLeft;
+    
+    // Position pour centrer parfaitement le slide
+    const targetScrollLeft = slideOffsetLeft - (containerWidth - slideWidth) / 2;
+    
+    // Assurer que la position est dans les limites
+    const maxScrollLeft = container.scrollWidth - container.clientWidth;
+    const finalScrollLeft = Math.max(0, Math.min(targetScrollLeft, maxScrollLeft));
+    
+    container.scrollTo({
+      left: finalScrollLeft,
+      behavior: 'smooth'
+    });
+    
+    // Mettre à jour l'index immédiatement pour éviter les décalages
+    this.currentSlideIndex = index;
+  }
+
+  /**
+   * Navigation vers un slide spécifique (pour les dots)
+   */
+  scrollToItem(index: number): void {
+    if (!this.carouselTrack || index < 0 || index >= this.totalSlides) return;
+    
+    this.scrollToSlideIndex(index);
+  }
+
+  /**
+   * Obtient le nombre de slides visible (pour les dots)
+   */
+  getVisibleSlidesCount(): number {
     const width = window.innerWidth;
-
-    if (width >= 1600) {
-      this.cardsToShow = 3;
-      this.cardWidth = 340;
-      this.cardGap = 24;
-    } else if (width >= 1400) {
-      this.cardsToShow = 3;
-      this.cardWidth = 320;
-      this.cardGap = 24;
-    } else if (width >= 1200) {
-      this.cardsToShow = 3;
-      this.cardWidth = 300;
-      this.cardGap = 24;
-    } else if (width >= 1024) {
-      this.cardsToShow = 3;
-      this.cardWidth = 280;
-      this.cardGap = 20;
-    } else if (width >= 768) {
-      this.cardsToShow = 2;
-      this.cardWidth = 260;
-      this.cardGap = 16;
-    } else if (width >= 640) {
-      this.cardsToShow = 1;
-      this.cardWidth = Math.min(width - 96, 320);
-      this.cardGap = 16;
-    } else {
-      this.cardsToShow = 1;
-      this.cardWidth = Math.min(width - 64, 300);
-      this.cardGap = 16;
-    }
+    
+    if (width >= 1400) return 3;
+    if (width >= 1200) return 2;
+    if (width >= 768) return 2;
+    return 1;
   }
 
   /**
-   * Prépare les données pour la boucle infinie
+   * TrackBy function pour optimiser le rendu
    */
-  private setupInfiniteLoop(): void {
-    const original = this.activities;
-
-    if (original.length === 0) {
-      this.extendedActivities = [];
-      return;
-    }
-
-    // Cloner les éléments pour créer une boucle
-    const clonesNeeded = Math.max(this.cardsToShow, 3);
-
-    // Créer des clones avant et après
-    const clonesBefore = original.slice(-clonesNeeded).map(item => ({
-      ...item,
-      id: `${item.id}_before`
-    }));
-
-    const clonesAfter = original.slice(0, clonesNeeded).map(item => ({
-      ...item,
-      id: `${item.id}_after`
-    }));
-
-    // Assemblage: [clones avant] + [originaux] + [clones après]
-    this.extendedActivities = [...clonesBefore, ...original, ...clonesAfter];
-  }
-
-  /**
-   * Définit la position initiale centrée
-   */
-  private setInitialPosition(): void {
-    if (this.activities.length === 0) return;
-
-    // Nombre de clones avant
-    const clonesBeforeCount = Math.max(this.cardsToShow, 3);
-
-    // Calculer le décalage pour centrer les cartes visibles
-    const viewportWidth = this.getViewportWidth();
-    const totalCardsWidth = this.cardsToShow * this.cardWidth + (this.cardsToShow - 1) * this.cardGap;
-    const centerOffset = (viewportWidth - totalCardsWidth) / 2;
-
-    // Position de départ (premier élément original)
-    this.currentIndex = clonesBeforeCount;
-    this.translateX = -(this.currentIndex * (this.cardWidth + this.cardGap)) + centerOffset;
-  }
-
-  /**
-   * Obtient la largeur du viewport
-   */
-  private getViewportWidth(): number {
-    const containerWidth = window.innerWidth;
-    const margins = 96; // 6rem de marges (3rem de chaque côté)
-    const maxWidth = 1200; // max-width du viewport
-
-    return Math.min(containerWidth - margins, maxWidth);
-  }
-
-  /**
-   * Calcule la position de translation pour un index donné
-   */
-  private calculateTranslateX(index: number): number {
-    const viewportWidth = this.getViewportWidth();
-    const totalCardsWidth = this.cardsToShow * this.cardWidth + (this.cardsToShow - 1) * this.cardGap;
-    const centerOffset = (viewportWidth - totalCardsWidth) / 2;
-
-    return -(index * (this.cardWidth + this.cardGap)) + centerOffset;
-  }
-
-  /**
-   * Navigation vers la carte suivante
-   */
-  nextSlide(): void {
-    if (this.isTransitioning || this.activities.length === 0) return;
-
-    this.isTransitioning = true;
-    this.currentIndex++;
-    this.translateX = this.calculateTranslateX(this.currentIndex);
-
-    // Vérifier si on a atteint la fin (clones)
-    setTimeout(() => {
-      const clonesBeforeCount = Math.max(this.cardsToShow, 3);
-      const lastOriginalIndex = clonesBeforeCount + this.activities.length - 1;
-
-      if (this.currentIndex > lastOriginalIndex) {
-        // Sauter au début sans animation
-        this.noTransition = true;
-        this.currentIndex = clonesBeforeCount;
-        this.translateX = this.calculateTranslateX(this.currentIndex);
-
-        setTimeout(() => {
-          this.noTransition = false;
-        }, 10);
-      }
-
-      this.isTransitioning = false;
-    }, 250);
-  }
-
-  /**
-   * Navigation vers la carte précédente
-   */
-  previousSlide(): void {
-    if (this.isTransitioning || this.activities.length === 0) return;
-
-    this.isTransitioning = true;
-    this.currentIndex--;
-    this.translateX = this.calculateTranslateX(this.currentIndex);
-
-    // Vérifier si on a atteint le début (clones)
-    setTimeout(() => {
-      const clonesBeforeCount = Math.max(this.cardsToShow, 3);
-
-      if (this.currentIndex < clonesBeforeCount) {
-        // Sauter à la fin sans animation
-        this.noTransition = true;
-        this.currentIndex = clonesBeforeCount + this.activities.length - 1;
-        this.translateX = this.calculateTranslateX(this.currentIndex);
-
-        setTimeout(() => {
-          this.noTransition = false;
-        }, 50);
-      }
-
-      this.isTransitioning = false;
-    }, 500);
-  }
-
-  /**
-   * Navigation vers une carte spécifique (pour les dots)
-   */
-  goToSlide(index: number): void {
-    if (this.isTransitioning || this.activities.length === 0) return;
-
-    const clonesBeforeCount = Math.max(this.cardsToShow, 3);
-
-    this.isTransitioning = true;
-    this.currentIndex = clonesBeforeCount + index;
-    this.translateX = this.calculateTranslateX(this.currentIndex);
-
-    setTimeout(() => {
-      this.isTransitioning = false;
-    }, 500);
-  }
-
-  /**
-   * Obtient l'index réel (sans les clones)
-   */
-  private getRealIndex(): number {
-    const clonesBeforeCount = Math.max(this.cardsToShow, 3);
-    return (this.currentIndex - clonesBeforeCount + this.activities.length) % this.activities.length;
-  }
-
-  /**
-   * Vérifie si un dot est actif
-   */
-  isDotActive(index: number): boolean {
-    return this.getRealIndex() === index;
-  }
-
-  /**
-   * Génère le tableau pour les dots
-   */
-  getDots(): number[] {
-    return Array(this.activities.length).fill(0).map((_, i) => i);
+  trackByActivity(index: number, activity: Activity): string {
+    return activity.id;
   }
 
   /**
@@ -319,7 +294,7 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
         title: translations.conciergerieMontgolfiere?.title || 'Montgolfière',
         subtitle: translations.conciergerieMontgolfiere?.subtitle || 'Vol panoramique',
         description: translations.conciergerieMontgolfiere?.description || 'Vol en montgolfière au-dessus des Alpes',
-        image: 'assets/images/montagne_cover.jpg'
+        image: 'assets/images/photo_off/montgolfiere.jpg'
       },
       {
         id: 'raquette',
@@ -343,6 +318,19 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
         image: 'assets/images/photo_off/s3v.jpg'
       },
     ].filter(activity => activity.title && activity.subtitle);
+  }
+
+  /**
+   * Masque l'indicateur de défilement après le premier scroll utilisateur
+   */
+  private hideScrollHintOnFirstScroll(): void {
+    if (!this.hasUserScrolled) {
+      this.hasUserScrolled = true;
+      const hint = document.querySelector('.mobile-scroll-hint');
+      if (hint) {
+        hint.classList.add('hidden');
+      }
+    }
   }
 
   /**

@@ -39,242 +39,361 @@
   animation: bounce 2s infinite;
 }
 
-// ===== CAROUSEL STYLES - VERSION CORRIGÉE AVEC HOVER =====
-.carousel-container {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
+// ===== PROFESSIONAL MODERN CAROUSEL =====
+
+// Mobile scroll hint
+.mobile-scroll-hint {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: fadeInBounce 2s ease-out;
+  
+  .scroll-hint-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+  }
+  
+  // Animation subtile pour attirer l'attention
+  @keyframes fadeInBounce {
+    0% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-2px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+  
+  // Masquer après scroll
+  &.hidden {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  
+  @media (max-width: 480px) {
+    top: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    
+    .scroll-hint-content {
+      gap: 0.375rem;
+      
+      span {
+        font-size: 0.75rem;
+      }
+      
+      svg {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+  }
+}
+
+// Main wrapper
+.modern-carousel-wrapper {
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 1rem 4rem 3rem 4rem; // Ajout de padding latéral pour les flèches
+  padding: 3rem 1rem;
+  position: relative;
+  
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+  }
+}
+
+// Main container with proper arrow positioning
+.carousel-main-container {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  position: relative;
+  
+  @media (max-width: 1023px) {
+    gap: 0;
+    justify-content: center;
+  }
+}
+
+// Carousel content area
+.carousel-content {
+  flex: 1;
+  overflow: hidden;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 2rem;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    border-radius: 20px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem;
+    border-radius: 16px;
+  }
+}
+
+// Track with modern scroll-snap behavior
+.carousel-track {
+  display: flex;
+  gap: 2rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 0.5rem;
+  
+  // Hide scrollbar mais permettre le scroll
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  
+  // Performance optimisation
+  will-change: scroll-position;
   
   @media (max-width: 1200px) {
-    padding: 1rem 3rem 3rem 3rem;
+    gap: 1.5rem;
   }
   
   @media (max-width: 768px) {
-    padding: 1rem 2rem 3rem 2rem;
-  }
-  
-  @media (max-width: 640px) {
-    padding: 1rem 1rem 3rem 1rem;
+    gap: 1rem;
+    padding: 0.25rem;
   }
 }
 
-// Wrapper pour masquer les débordements latéraux uniquement
-.carousel-wrapper {
-  position: relative;
-  overflow-x: hidden; // Masque horizontal
-  overflow-y: visible; // Permet le débordement vertical pour le hover
-  padding: 3rem 0; // Espace pour les animations hover
-  margin: -3rem 0; // Compense le padding
-}
-
-.carousel-viewport {
-  position: relative;
-  overflow: visible; // Permet les animations
-  margin: 0 auto;
-  width: calc(100% - 6rem); // Espace pour les boutons
-  max-width: 1200px; // Largeur maximale du viewport
-}
-
-.carousel-track {
-  display: flex;
-  gap: 1.5rem;
-  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  will-change: transform;
-  padding: 0.5rem 0; // Petit espace pour les ombres
-  
-  // Pour désactiver la transition lors des sauts
-  &.no-transition {
-    transition: none;
-  }
-}
-
-.carousel-card {
+// Individual slides with proper sizing
+.carousel-slide {
   flex: 0 0 auto;
-  width: 320px; // Largeur fixe des cartes
+  scroll-snap-align: center;
+  width: 380px;
   position: relative;
-  z-index: 1;
-  transition: z-index 0.1s;
-  
-  // Élévation au hover avec priorité z-index
-  &:hover {
-    z-index: 50; // Bien au-dessus des autres éléments
-  }
   
   @media (max-width: 1400px) {
+    width: 360px;
+  }
+  
+  @media (max-width: 1200px) {
+    width: 340px;
+  }
+  
+  @media (max-width: 768px) {
     width: 300px;
   }
   
-  @media (max-width: 1200px) {
-    width: 280px;
-  }
-  
-  @media (max-width: 768px) {
-    width: 260px;
-  }
-  
-  @media (max-width: 640px) {
-    width: calc(100vw - 8rem);
-    min-width: 240px;
+  @media (max-width: 480px) {
+    width: calc(100vw - 3rem);
     max-width: 320px;
   }
 }
 
-// Masques dégradés latéraux pour un effet plus propre
-.carousel-wrapper::before,
-.carousel-wrapper::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 40px; // Réduit pour ne pas trop empiéter
-  z-index: 30;
-  pointer-events: none;
-}
-
-.carousel-wrapper::before {
-  left: 0;
-  background: linear-gradient(90deg, 
-    rgba(249, 250, 251, 1) 0%, 
-    rgba(249, 250, 251, 0.9) 30%, 
-    rgba(249, 250, 251, 0) 100%);
-}
-
-.carousel-wrapper::after {
-  right: 0;
-  background: linear-gradient(270deg, 
-    rgba(249, 250, 251, 1) 0%, 
-    rgba(249, 250, 251, 0.9) 30%, 
-    rgba(249, 250, 251, 0) 100%);
-}
-
-// ===== NAVIGATION BUTTONS =====
-.carousel-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: white;
-  border: none;
-  width: 3rem;
-  height: 3rem;
+// Navigation arrows with absolute positioning
+.carousel-arrow {
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  display: flex;
+  background: white;
+  border: 2px solid #e2e8f0;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.12),
+    0 2px 6px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  color: #151c32;
-  z-index: 40; // Au-dessus des masques dégradés
+  color: #64748b;
+  z-index: 100;
+  flex-shrink: 0;
   
   &:hover:not(:disabled) {
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+    transform: scale(1.1);
+    box-shadow: 
+      0 12px 32px rgba(0, 0, 0, 0.16),
+      0 4px 12px rgba(0, 0, 0, 0.12);
     background: #151c32;
     color: white;
+    border-color: #151c32;
   }
   
   &:active:not(:disabled) {
-    transform: translateY(-50%) scale(0.95);
+    transform: scale(1.05);
+    transition-duration: 0.1s;
   }
   
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: not-allowed;
+    transform: none;
+    background: #f8fafc;
+    color: #cbd5e1;
+    border-color: #f1f5f9;
   }
   
-  &.carousel-nav-prev {
-    left: -4rem; // Plus écarté du conteneur
-    
-    @media (max-width: 1200px) {
-      left: -3rem;
-    }
-    
-    @media (max-width: 768px) {
-      left: -2rem;
-    }
-    
-    @media (max-width: 640px) {
-      left: -1rem;
-    }
+  &:focus-visible {
+    outline: 3px solid #3b82f6;
+    outline-offset: 3px;
   }
   
-  &.carousel-nav-next {
-    right: -4rem; // Plus écarté du conteneur
-    
-    @media (max-width: 1200px) {
-      right: -3rem;
-    }
-    
-    @media (max-width: 768px) {
-      right: -2rem;
-    }
-    
-    @media (max-width: 640px) {
-      right: -1rem;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    width: 2.5rem;
-    height: 2.5rem;
-    
-    svg {
-      width: 1.25rem;
-      height: 1.25rem;
-    }
-  }
-  
-  @media (max-width: 640px) {
-    width: 2.25rem;
-    height: 2.25rem;
+  svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2.5;
   }
 }
 
-// ===== DOTS NAVIGATION =====
-.carousel-dots {
+.carousel-arrow-left {
+  margin-right: 1rem;
+}
+
+.carousel-arrow-right {
+  margin-left: 1rem;
+}
+
+// Dots navigation
+.carousel-dots-container {
   display: flex;
   justify-content: center;
-  margin-top: 2.5rem;
-  gap: 0.75rem;
+  margin-top: 3rem;
+  
+  @media (max-width: 768px) {
+    margin-top: 2rem;
+  }
+}
+
+.carousel-dots {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+  
+  @media (max-width: 768px) {
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
 }
 
 .carousel-dot {
-  width: 0.75rem;
-  height: 0.75rem;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background: #d1d5db;
   border: none;
+  background: rgba(21, 28, 50, 0.3);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   
-  &::after {
+  // Larger click area
+  &::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 1.5rem;
-    height: 1.5rem;
+    inset: -12px;
     border-radius: 50%;
-    background: transparent;
+  }
+  
+  &:hover:not(.active) {
+    background: rgba(21, 28, 50, 0.6);
+    transform: scale(1.25);
   }
   
   &.active {
     background: #151c32;
-    transform: scale(1.3);
+    transform: scale(1.5);
+    box-shadow: 0 0 0 3px rgba(21, 28, 50, 0.2);
   }
   
-  &:hover:not(.active):not(:disabled) {
-    background: #6b7280;
-    transform: scale(1.1);
+  &:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 4px;
   }
   
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  @media (max-width: 768px) {
+    width: 10px;
+    height: 10px;
+    
+    &.active {
+      transform: scale(1.4);
+    }
+  }
+}
+
+// Responsive behavior for mobile centering
+@media (max-width: 1023px) {
+  .carousel-main-container {
+    gap: 0;
+  }
+  
+  .carousel-track {
+    // Proper mobile centering without cutting cards
+    justify-content: flex-start;
+    
+    @media (max-width: 768px) {
+      padding-left: calc(50vw - 150px);
+      padding-right: calc(50vw - 150px);
+      
+      // Ensure first card is properly visible
+      &::before {
+        content: '';
+        flex-shrink: 0;
+        width: 1px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      padding-left: 1rem;
+      padding-right: 1rem;
+      
+      &::before {
+        display: none;
+      }
+    }
+  }
+}
+
+// Performance optimizations
+.carousel-track {
+  will-change: scroll-position;
+}
+
+.carousel-slide {
+  will-change: transform;
+}
+
+// Accessibility
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track {
+    scroll-behavior: auto;
+  }
+  
+  .carousel-arrow,
+  .carousel-dot {
+    transition: none !important;
   }
 }
 

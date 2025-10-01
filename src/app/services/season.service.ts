@@ -120,7 +120,7 @@ export class SeasonService {
           name: 'Refuge de Solaise',
           location: 'Val d\'Isère',
           type: 'Refuge d\'altitude',
-          image: 'assets/images/montagne_cover.jpg',
+          image: 'assets/images/photo_off/solaise_ete.jpg',
           description: 'Un refuge d\'exception à 2551m d\'altitude avec vue panoramique sur les Alpes.'
         },
         {
@@ -140,10 +140,10 @@ export class SeasonService {
           description: 'Séjournez au cœur des grands crus de Bourgogne dans un domaine d\'exception.'
         },
         {
-          id: 'palace-menthon',
-          name: 'Palace de Menthon',
+          id: 'auberge-sulpice',
+          name: 'Auberge de Sulpice',
           location: 'Annecy',
-          type: 'Palace 5 étoiles',
+          type: 'Hotel',
           image: 'assets/images/photo_off/palace_menthon.jpg',
           description: 'Luxe et raffinement sur les rives du lac d\'Annecy.'
         }
@@ -218,7 +218,7 @@ export class SeasonService {
           name: 'Solaise Refuge',
           location: 'Val d\'Isère',
           type: 'High altitude refuge',
-          image: 'assets/images/montagne_cover.jpg',
+          image: 'assets/images/photo_off/solaise_ete.jpg',
           description: 'An exceptional refuge at 2551m altitude with panoramic views of the Alps.'
         },
         {
@@ -238,10 +238,10 @@ export class SeasonService {
           description: 'Stay in the heart of Burgundy\'s grand crus in an exceptional estate.'
         },
         {
-          id: 'palace-menthon',
-          name: 'Palace de Menthon',
+          id: 'auberge-sulpice',
+          name: 'Auberge de Sulpice',
           location: 'Annecy',
-          type: '5-star Palace',
+          type: 'Hotel',
           image: 'assets/images/photo_off/palace_menthon.jpg',
           description: 'Luxury and refinement on the shores of Lake Annecy.'
         }

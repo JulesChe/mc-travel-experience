@@ -278,9 +278,27 @@
   }
 }
 
-// ===== SUPPORT TACTILE =====
+// ===== CLEAN INTERACTION PATTERNS =====
+
+// Desktop: Pure hover-based interaction
+@media (hover: hover) and (pointer: fine) {
+  .activity-card-wrapper {
+    .activity-overlay {
+      // Clean hover transition
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    // No mobile hints on desktop
+    .mobile-tap-hint {
+      display: none;
+    }
+  }
+}
+
+// Mobile/Touch: Clean tap-based interaction
 @media (hover: none) and (pointer: coarse) {
   .activity-card-wrapper {
+    // Disable hover effects completely
     &:hover {
       transform: none;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -294,18 +312,38 @@
       }
     }
     
-    // Activation au tap/touch
+    // Subtle touch feedback
     &:active {
       transform: scale(0.98);
-      
+      transition: transform 0.15s ease;
+    }
+    
+    // Clean overlay state for mobile
+    &.mobile-overlay-visible {
       .activity-overlay {
-        opacity: 1;
+        opacity: 1 !important;
+        backdrop-filter: blur(2px);
+        
+        .overlay-content {
+          transform: translateY(0) !important;
+          opacity: 1 !important;
+        }
       }
+    }
+  }
+  
+  // Clean mobile interaction without hints
+  .activity-card-wrapper.mobile-overlay-visible {
+    .activity-overlay {
+      opacity: 1 !important;
+      backdrop-filter: blur(2px);
       
       .overlay-content {
-        transform: translateY(0);
-        opacity: 1;
+        transform: translateY(0) !important;
+        opacity: 1 !important;
       }
     }
   }
 }
+
+// Fusionné avec la media query précédente, supprimé ici pour éviter la duplication

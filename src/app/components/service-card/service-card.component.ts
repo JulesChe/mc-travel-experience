@@ -74,14 +74,17 @@ export interface Activity {
     </div>
 
     <!-- Mode Activity (layout carte) -->
-    <div *ngIf="isActivityMode" class="activity-card-wrapper">
+    <div *ngIf="isActivityMode" 
+         class="activity-card-wrapper"
+         [class.mobile-overlay-visible]="isOverlayVisible"
+         (click)="onCardClick($event)">
       <div class="activity-image-container">
         <img 
           [src]="activity!.image" 
           [alt]="activity!.title"
           class="activity-image">
         
-        <!-- Hover Overlay -->
+        <!-- Hover/Tap Overlay -->
         <div class="activity-overlay">
           <div class="overlay-content">
             <p class="overlay-description">{{ activity!.description }}</p>
@@ -109,8 +112,23 @@ export class ServiceCardComponent {
   
   @Output() requestQuote = new EventEmitter<ServiceData | Activity>();
 
+  // Pour gérer l'état mobile
+  isOverlayVisible = false;
+
   get isActivityMode(): boolean {
     return !!this.activity && !this.service;
+  }
+
+  get isTouchDevice(): boolean {
+    return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  }
+
+  onCardClick(event: Event): void {
+    // Toggle overlay state for mobile interaction
+    // CSS media queries handle desktop vs mobile behavior
+    event.preventDefault();
+    event.stopPropagation();
+    this.isOverlayVisible = !this.isOverlayVisible;
   }
 
   onRequestQuote() {

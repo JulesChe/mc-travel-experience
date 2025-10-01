@@ -53,64 +53,61 @@
         <div class="decorative-line"></div>
       </div>
 
-      <!-- Cards Carousel Container -->
-      <div class="carousel-container" *ngIf="extendedActivities.length > 0">
+      <!-- Professional Modern Carousel -->
+      <div class="modern-carousel-wrapper" *ngIf="activities.length > 0">
         
-        <!-- Wrapper avec overflow pour masquer les débordements latéraux -->
-        <div class="carousel-wrapper">
-          <!-- Viewport -->
-          <div class="carousel-viewport">
-            <div class="carousel-track"
-                 [style.transform]="'translateX(' + translateX + 'px)'"
-                 [class.no-transition]="noTransition">
-              
-              <div *ngFor="let activity of extendedActivities; let i = index" 
-                   class="carousel-card">
-                
-                <!-- Service Card en mode Activity -->
+        <!-- Carousel Container with Arrows -->
+        <div class="carousel-main-container">
+          
+          <!-- Left Arrow - Desktop Only -->
+          <button 
+            (click)="scrollToPrevious()"
+            class="carousel-arrow carousel-arrow-left hidden lg:flex"
+            [disabled]="!canScrollLeft"
+            [attr.aria-label]="'Diapositive précédente'">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </button>
+
+          <!-- Carousel Content -->
+          <div class="carousel-content">
+            <!-- Mobile scroll indicator -->
+            <div class="mobile-scroll-hint lg:hidden">
+              <div class="scroll-hint-content">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
+                </svg>
+                <span class="text-sm text-gray-500">{{ languageService.currentLanguage === 'fr' ? 'Faites défiler pour voir plus' : 'Swipe to see more' }}</span>
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+              </div>
+            </div>
+            
+            <div class="carousel-track" #carouselTrack>
+              <div *ngFor="let activity of activities; let i = index; trackBy: trackByActivity" 
+                   class="carousel-slide">
                 <app-service-card 
                   [activity]="activity"
                   [showCTA]="false">
                 </app-service-card>
-
               </div>
-
             </div>
           </div>
-        </div>
 
-        <!-- Navigation Arrows -->
-        <button 
-          (click)="previousSlide()"
-          class="carousel-nav carousel-nav-prev"
-          [disabled]="isTransitioning"
-          [attr.aria-label]="'Diapositive précédente'">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-          </svg>
-        </button>
-
-        <button 
-          (click)="nextSlide()"
-          class="carousel-nav carousel-nav-next"
-          [disabled]="isTransitioning"
-          [attr.aria-label]="'Diapositive suivante'">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-          </svg>
-        </button>
-
-        <!-- Dots Navigation -->
-        <div class="carousel-dots">
+          <!-- Right Arrow - Desktop Only -->
           <button 
-            *ngFor="let dot of getDots(); let i = index"
-            (click)="goToSlide(i)"
-            class="carousel-dot"
-            [class.active]="isDotActive(i)"
-            [disabled]="isTransitioning"
-            [attr.aria-label]="'Aller à la diapositive ' + (i + 1)">
+            (click)="scrollToNext()"
+            class="carousel-arrow carousel-arrow-right hidden lg:flex"
+            [disabled]="!canScrollRight"
+            [attr.aria-label]="'Diapositive suivante'">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
           </button>
         </div>
+
 
       </div>
 

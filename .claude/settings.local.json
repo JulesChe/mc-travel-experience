@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm start)"
+      "Bash(npm start)",
+      "WebSearch",
+      "WebFetch(domain:css-tricks.com)"
     ],
     "deny": [],
     "ask": []

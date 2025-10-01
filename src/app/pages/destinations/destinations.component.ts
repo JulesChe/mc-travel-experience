@@ -245,7 +245,7 @@ export class DestinationsComponent implements OnInit, OnDestroy {
         description: isFr
           ? 'Val d\'Isère et Tignes forment l\'Espace Killy, un domaine légendaire qui a vu naître les plus grands champions. Entre tradition savoyarde et modernité, ces stations offrent des paysages à couper le souffle.'
           : 'Val d\'Isère and Tignes form the Espace Killy, a legendary domain that has seen the birth of the greatest champions. Between Savoyard tradition and modernity, these resorts offer breathtaking landscapes.',
-        image: 'assets/images/photo_off/espace_killy.jpg',
+        image: 'assets/images/pas libre de droit/espace_killy_2.jpg',
         altitude: '1 550m - 3 456m',
         skiArea: isFr ? '300 km de pistes' : '300 km of slopes',
         highlights: isFr ? [
