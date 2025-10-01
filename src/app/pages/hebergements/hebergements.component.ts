@@ -33,7 +33,7 @@ interface Accommodation {
       <section class="relative h-[80vh] overflow-hidden">
       <div class="absolute inset-0">
         <img 
-          src="assets/images/montagne_cover.jpg"
+          src="assets/images/pas libre de droit/espace_killy_2.jpg"
           alt="Chalets et hôtels de luxe en montagne"
           class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-black/50"></div>
@@ -105,7 +105,7 @@ interface Accommodation {
               <div class="animate-fade-in-left">
                 <div class="enhanced-image">
                   <img 
-                    src="assets/images/pas libre de droit/espace_killy_2.jpg"
+                    src="assets/images/photo_off/chalet.jpg"
                     alt="Chalet de luxe"
                     class="w-full h-96 lg:h-[500px] object-cover shadow-xl">
                 </div>
@@ -187,7 +187,7 @@ interface Accommodation {
               <div class="order-1 lg:order-2 animate-fade-in-right">
                 <div class="enhanced-image">
                   <img 
-                    src="assets/images/montagne_cover.jpg"
+                    src="assets/images/photo_off/solaise_ete.jpg"
                     alt="Hôtel de luxe en montagne"
                     class="w-full h-96 lg:h-[500px] object-cover shadow-xl">
                 </div>

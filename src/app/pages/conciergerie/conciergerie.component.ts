@@ -275,6 +275,13 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
         description: translations.conciergerieHelico?.description || 'Service de transport en hélicoptère',
         image: 'assets/images/helico.jpg'
       },
+            {
+        id: 's3v',
+        title: translations.conciergerieS3V?.title || 'Forfaits Ski S3V',
+        subtitle: translations.conciergerieS3V?.subtitle || 'Les 3 Vallées à prix préférentiel',
+        description: translations.conciergerieS3V?.description || 'Profitez de tarifs exclusifs sur les forfaits du plus grand domaine skiable du monde',
+        image: 'assets/images/photo_off/s3v.jpg'
+      },
       {
         id: 'chef',
         title: translations.conciergerieChef?.title || 'Chef privé',
@@ -310,13 +317,7 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
         description: translations.conciergerieYoga?.description || 'Séances de yoga en montagne',
         image: 'assets/images/photo_off/yoga.jpg'
       },
-      {
-        id: 's3v',
-        title: translations.conciergerieS3V?.title || 'Forfaits Ski S3V',
-        subtitle: translations.conciergerieS3V?.subtitle || 'Les 3 Vallées à prix préférentiel',
-        description: translations.conciergerieS3V?.description || 'Profitez de tarifs exclusifs sur les forfaits du plus grand domaine skiable du monde',
-        image: 'assets/images/photo_off/s3v.jpg'
-      },
+
     ].filter(activity => activity.title && activity.subtitle);
   }
 
