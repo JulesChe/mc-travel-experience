@@ -6,12 +6,14 @@ import { LanguageService } from '../../services/language.service';
   selector: 'app-hero-section',
   standalone: true,
   imports: [CommonModule],
+  styleUrls: ['./hero-section.component.scss'],
   template: `
     <section class="relative h-screen overflow-hidden flex items-center justify-center">
-      <!-- Vidéo de fond -->
+      <!-- Vidéo de fond responsive -->
       <video 
         #heroVideo
-        class="absolute inset-0 w-full h-full object-cover sm:object-center object-center-top"
+        class="absolute inset-0 w-full h-full object-cover"
+        [style.object-position]="getVideoPosition()"
         autoplay 
         muted 
         loop
@@ -32,16 +34,13 @@ import { LanguageService } from '../../services/language.service';
         aria-label="Contrôle du son">
         
         <!-- Icône son activé -->
-        <svg *ngIf="!isMuted" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.82L4.4 14H2a1 1 0 01-1-1V7a1 1 0 011-1h2.4l3.983-2.82a1 1 0 011.617-.18z" clip-rule="evenodd"/>
-          <path fill-rule="evenodd" d="M12.146 4.146a.5.5 0 01.708 0 4 4 0 010 5.708.5.5 0 01-.708-.708 3 3 0 000-4.292.5.5 0 010-.708z" clip-rule="evenodd"/>
-          <path fill-rule="evenodd" d="M14.146 2.146a.5.5 0 01.708 0 8 8 0 010 11.708.5.5 0 01-.708-.708 7 7 0 000-10.292.5.5 0 010-.708z" clip-rule="evenodd"/>
+        <svg *ngIf="!isMuted" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.59-.79-1.59-1.76V9.51c0-.97.71-1.76 1.59-1.76h2.24z"/>
         </svg>
         
         <!-- Icône son coupé -->
-        <svg *ngIf="isMuted" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.82L4.4 14H2a1 1 0 01-1-1V7a1 1 0 011-1h2.4l3.983-2.82a1 1 0 011.617-.18z" clip-rule="evenodd"/>
-          <path fill-rule="evenodd" d="M12.22 4.22a.75.75 0 011.06 0L15 5.94l1.72-1.72a.75.75 0 111.06 1.06L16.06 7l1.72 1.72a.75.75 0 01-1.06 1.06L15 8.06l-1.72 1.72a.75.75 0 01-1.06-1.06L13.94 7l-1.72-1.72a.75.75 0 010-1.06z" clip-rule="evenodd"/>
+        <svg *ngIf="isMuted" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.59-.79-1.59-1.76V9.51c0-.97.71-1.76 1.59-1.76h2.24z"/>
         </svg>
       </button>
       
@@ -90,6 +89,25 @@ export class HeroSectionComponent implements AfterViewInit {
     video.muted = this.isMuted;
     video.volume = this.isMuted ? 0 : 0.7;
     video.play().catch(err => console.log('Autoplay prevented:', err));
+  }
+
+  getVideoPosition(): string {
+    // Détecter si c'est un appareil mobile
+    const isMobile = window.innerWidth <= 768;
+    const isPortrait = window.innerHeight > window.innerWidth;
+    
+    if (isMobile) {
+      if (isPortrait) {
+        // Mobile en portrait : remonter la vidéo pour éviter la coupure
+        return 'center 25%';
+      } else {
+        // Mobile en paysage : centrer normalement
+        return 'center center';
+      }
+    }
+    
+    // Desktop : position normale
+    return 'center center';
   }
 
   toggleMute() {

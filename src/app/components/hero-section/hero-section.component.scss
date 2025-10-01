@@ -1,0 +1,122 @@
+// ===== RESPONSIVE VIDEO BACKGROUND =====
+
+.video-responsive {
+  // Base styles pour desktop
+  object-fit: cover;
+  object-position: center center;
+  
+  // Optimisation pour les écrans larges (desktop)
+  @media (min-aspect-ratio: 16/9) {
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+  }
+  
+  // Optimisation pour les écrans hauts (mobile portrait)
+  @media (max-aspect-ratio: 16/9) {
+    width: auto;
+    height: 100%;
+    min-width: 100%;
+    
+    // Centrer horizontalement pour mobile
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  // Ajustements spécifiques mobile
+  @media (max-width: 768px) {
+    // Pour les vidéos très larges, on privilégie la hauteur
+    object-fit: cover;
+    object-position: center center;
+    
+    // Écrans très petits (< 480px)
+    @media (max-width: 480px) {
+      // Position ajustée pour mobile très petit
+      object-position: center 40%;
+    }
+  }
+  
+  // Écrans très larges
+  @media (min-width: 1920px) {
+    object-position: center center;
+  }
+  
+  // Optimisation pour iPhone et écrans similaires
+  @media (max-width: 767px) and (orientation: portrait) {
+    width: auto;
+    height: 100vh;
+    min-width: 100vw;
+    object-fit: cover;
+    object-position: center 30%; // Légèrement vers le haut
+  }
+  
+  // Optimisation pour paysage mobile
+  @media (max-width: 767px) and (orientation: landscape) {
+    width: 100vw;
+    height: auto;
+    min-height: 100vh;
+    object-fit: cover;
+    object-position: center center;
+  }
+  
+  // Performance et accessibilité
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+// ===== ANIMATIONS =====
+.decorative-line {
+  width: 60px;
+  height: 2px;
+  background: white;
+  margin: 1.5rem auto;
+  opacity: 0.8;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1s ease-out forwards;
+  opacity: 0;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ===== FALLBACK FOR REDUCED MOTION =====
+@media (prefers-reduced-motion: reduce) {
+  .video-responsive {
+    will-change: auto;
+    transform: none;
+  }
+  
+  .animate-fade-in-up {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+// ===== LOW PERFORMANCE DEVICE FALLBACK =====
+@media (max-width: 480px) and (max-height: 800px) {
+  .video-responsive {
+    // Pour les très petits appareils, on peut optimiser davantage
+    object-fit: cover;
+    object-position: center 35%;
+  }
+}
