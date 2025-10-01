@@ -144,7 +144,7 @@ export class SeasonService {
           name: 'Auberge de Sulpice',
           location: 'Annecy',
           type: 'Hotel',
-          image: 'assets/images/photo_off/palace_menthon.jpg',
+          image: 'assets/images/photo_off/auberge_sulpice.png',
           description: 'Luxe et raffinement sur les rives du lac d\'Annecy.'
         }
       ],
@@ -242,7 +242,7 @@ export class SeasonService {
           name: 'Auberge de Sulpice',
           location: 'Annecy',
           type: 'Hotel',
-          image: 'assets/images/photo_off/palace_menthon.jpg',
+          image: 'assets/images/photo_off/auberge_sulpice.png',
           description: 'Luxury and refinement on the shores of Lake Annecy.'
         }
       ],
