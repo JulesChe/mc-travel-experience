@@ -7,52 +7,44 @@ import { LanguageService } from '../../services/language.service';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <section id="excellence" class="py-24 bg-white relative overflow-hidden">
+    <section id="excellence" class="py-32 bg-white relative">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
 
-      <!-- Éléments décoratifs de fond -->
-      <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-50 to-transparent rounded-full -translate-y-48 translate-x-48 opacity-50"></div>
-      <div class="absolute bottom-0 left-0 w-72 h-72 bg-gradient-to-tr from-yellow-50 to-transparent rounded-full translate-y-36 -translate-x-36 opacity-50"></div>
-
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
-        <!-- En-tête de section -->
-        <div class="text-center mb-16 animate-fade-in-up">
-          <h2 class="text-4xl md:text-5xl font-light text-gray-900 mb-6 tracking-wide">
+        <div class="text-center mb-24 animate-fade-in-up">
+          <span class="text-xs uppercase tracking-[0.2em] text-[#a8a29e] mb-4 block">Since 2003</span>
+          <h2 class="text-4xl md:text-6xl font-serif text-[#1c1c1c] mb-8">
             {{ languageService.currentTranslations.section1Title }}
           </h2>
-          <div class="decorative-line"></div>
         </div>
 
-        <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div class="grid lg:grid-cols-2 gap-20 items-center">
 
-          <!-- Photo avec effets et bandeau -->
           <div class="order-2 lg:order-1 animate-fade-in-left delay-200">
-            <div class="enhanced-image relative group">
-              <img
+            <div class="relative overflow-hidden">
+               <img
                 src="assets/images/photo_mc.JPG"
                 alt="Fondateur MC Travel"
-                class="w-full h-96 object-cover shadow-2xl">
-
-
-              <!-- Effet de lueur -->
-              <div class="absolute inset-0 bg-gradient-to-tr from-blue-500/10 via-transparent to-yellow-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                class="w-full h-[600px] object-cover hover:grayscale-0 transition-all duration-[1.5s] ease-out">
+            </div>
+            <div class="mt-4 text-xs uppercase tracking-widest text-[#a8a29e] text-right">
+              Morgan & Charlotte - Founders
             </div>
           </div>
 
-          <!-- Contenu texte amélioré -->
           <div class="order-1 lg:order-2 animate-fade-in-right delay-300">
-
-
-            <!-- Texte principal avec animations échelonnées -->
-            <div class="prose prose-lg text-gray-600 leading-relaxed space-y-6">
-              <div class="animate-slide-in-scale delay-400">
-                <p class="text-lg">{{ languageService.currentTranslations.section1Text1 }}</p>
-              </div>
-              <div class="animate-slide-in-scale delay-500">
-                <p class="text-lg">{{ languageService.currentTranslations.section1Text2 }}</p>
-              </div>
+            <div class="flex items-center gap-4 mb-10">
+               <span class="w-16 h-[1px] bg-[#1c1c1c]"></span>
+               <span class="text-sm uppercase tracking-widest text-[#1c1c1c]">Notre Philosophie</span>
             </div>
 
+            <div class="space-y-8 text-[#57534e] font-light text-lg leading-loose">
+              <p class="first-letter:text-5xl first-letter:font-serif first-letter:mr-3 first-letter:float-left first-letter:text-[#1c1c1c]">
+                {{ languageService.currentTranslations.section1Text1 }}
+              </p>
+              <p>
+                {{ languageService.currentTranslations.section1Text2 }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -61,5 +53,4 @@ import { LanguageService } from '../../services/language.service';
 })
 export class ExcellenceSectionComponent {
   constructor(public languageService: LanguageService) {}
-
 }

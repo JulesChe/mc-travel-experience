@@ -12,232 +12,153 @@ import { filter } from 'rxjs/operators';
   standalone: true,
   imports: [CommonModule, RouterModule],
   template: `
-    <!-- Barre de contact simple -->
-    <div class="bg-gray-900 text-white py-2 text-center text-sm animate-fade-in-up">
-      <div class="max-w-7xl mx-auto px-4">
-        <span class="font-medium">{{ languageService.currentTranslations.contactBar || 'Pour toute demande :' }} </span>
-        <a href="tel:+33620524796" class="text-white hover:text-gray-300 transition-colors font-semibold underline">
+    <div class="h-[36px] bg-[#1c1c1c] text-stone-300 flex items-center justify-center text-[11px] uppercase tracking-[0.15em] animate-fade-in-up border-b border-white/5 relative z-50">
+      <div class="max-w-7xl mx-auto px-4 flex justify-center items-center gap-4">
+        <span class="opacity-80 hidden sm:inline">{{ languageService.currentTranslations.contactBar || 'Demandes & Réservations :' }} </span>
+        <a href="tel:+33620524796" class="text-white hover:text-stone-400 transition-colors duration-300">
           +33 6 20 52 47 96
         </a>
       </div>
     </div>
 
-    <!-- Header principal épuré -->
-    <header [class]="'clean-header sticky top-0 z-40' + (isScrolled ? ' scrolled' : '')">
+    <header
+      [class]="'fixed w-full z-40 transition-all duration-500 ease-in-out ' +
+      (isScrolled
+        ? 'top-0 bg-white/95 backdrop-blur-md shadow-sm border-b border-[#1c1c1c]/5 py-2'
+        : 'top-[36px] bg-transparent py-6')"
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between py-6">
-          
-          <!-- Bouton saison (gauche) - Affiché seulement sur la home page -->
-          <div class="flex justify-start animate-fade-in-left">
-            <button 
+        <div class="flex items-center justify-between">
+
+          <div class="w-1/3 flex justify-start">
+            <button
               *ngIf="isHomePage"
-              class="season-toggle text-sm px-3 py-1.5 font-medium transition-all duration-300 hover:scale-105"
-              [class.winter-active]="currentSeason === 'summer'"
-              [class.summer-active]="currentSeason === 'winter'"
+              class="group flex items-center gap-2 px-4 py-2 border border-[#1c1c1c]/20 rounded-full transition-all duration-500 hover:border-[#1c1c1c] hover:bg-[#1c1c1c] hover:text-white bg-white/50 backdrop-blur-sm"
               (click)="toggleSeason()">
-              <span class="flex items-center space-x-2">
-                <!-- Icône Hiver (affiché quand on est en mode été pour basculer vers hiver) -->
-                <svg *ngIf="currentSeason === 'summer'" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 2l1.5 1.5L10 5 8.5 3.5 10 2zm0 16l1.5-1.5L10 15l-1.5 1.5L10 18zM2 10l1.5 1.5L5 10 3.5 8.5 2 10zm16 0l-1.5 1.5L15 10l1.5-1.5L18 10zM5.636 5.636l1.06-1.06L8.11 6.05 7.05 7.11 5.636 5.636zm8.728 8.728l1.06-1.06-1.414-1.415-1.06 1.06 1.414 1.415zM14.364 5.636l-1.06-1.06L11.89 6.05l1.06 1.06 1.414-1.424zm-8.728 8.728l-1.06-1.06 1.414-1.415 1.06 1.06-1.414 1.415z"/>
-                </svg>
-                <!-- Icône Été (affiché quand on est en mode hiver pour basculer vers été) -->
-                <svg *ngIf="currentSeason === 'winter'" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
-                </svg>
-                <span>
-                  {{ currentSeason === 'summer' ? 
-                    (languageService.currentTranslations.seasonWinter || 'HIVER') : 
-                    (languageService.currentTranslations.seasonSummer || 'ÉTÉ') }}
-                </span>
+
+              <span class="relative w-4 h-4 overflow-hidden">
+                <svg *ngIf="currentSeason === 'summer'" class="w-4 h-4 animate-spin-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                <svg *ngIf="currentSeason === 'winter'" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+              </span>
+
+              <span class="text-[10px] uppercase tracking-[0.2em] font-medium hidden sm:block">
+                 {{ currentSeason === 'summer' ?
+                   (languageService.currentTranslations.seasonWinter || 'Mode Hiver') :
+                   (languageService.currentTranslations.seasonSummer || 'Mode Été') }}
               </span>
             </button>
           </div>
-          
-          <!-- Logo central parfaitement centré -->
-          <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-fade-in-up delay-200">
-            <a routerLink="/" class="block">
-              <img 
-                src="assets/images/icones/Logo_finaux_Plan_de_travail_1_copie_5.png" 
-                alt="Logo MC Travel" 
-                class="h-20 md:h-24 lg:h-28 transition-transform duration-300 hover:scale-105">
+
+          <div class="w-1/3 flex justify-center">
+            <a routerLink="/" class="block relative z-50">
+              <img
+                src="assets/images/icones/Logo_finaux_Plan_de_travail_1_copie_5.png"
+                alt="Logo MC Travel"
+                class="h-16 md:h-20 transition-all duration-500 hover:opacity-80">
             </a>
           </div>
-          
-          <!-- Section droite -->
-          <div class="flex justify-end items-center space-x-4 animate-fade-in-right delay-300">
-            
-            <!-- Langues épurées -->
-            <div class="flex items-center space-x-2">
-              <button 
+
+          <div class="w-1/3 flex justify-end items-center gap-6 md:gap-8">
+
+            <div class="hidden md:flex items-center gap-4 text-[10px] font-medium tracking-widest text-[#1c1c1c]">
+              <button
                 (click)="languageService.switchLanguage('fr')"
-                [class]="'language-btn ' + (languageService.currentLanguage === 'fr' ? 'active' : 'inactive')">
-                FR
-              </button>
-              <button 
+                [class.opacity-40]="languageService.currentLanguage !== 'fr'"
+                class="hover:opacity-100 transition-opacity uppercase">FR</button>
+              <span class="opacity-30">|</span>
+              <button
                 (click)="languageService.switchLanguage('en')"
-                [class]="'language-btn ' + (languageService.currentLanguage === 'en' ? 'active' : 'inactive')">
-                EN
-              </button>
+                [class.opacity-40]="languageService.currentLanguage !== 'en'"
+                class="hover:opacity-100 transition-opacity uppercase">EN</button>
             </div>
-            
-            <!-- Menu burger élégant -->
-            <button 
-              class="menu-burger"
+
+            <button
+              class="group flex flex-col justify-center items-end gap-[5px] w-8 h-8 cursor-pointer z-50"
               (click)="toggleSideMenu()"
-              [class.active]="isSideMenuOpen">
-              <span class="burger-line"></span>
-              <span class="burger-line"></span>
-              <span class="burger-line"></span>
+              [class.active]="isSideMenuOpen"
+              aria-label="Menu">
+              <span class="w-8 h-[1px] bg-[#1c1c1c] transition-all duration-300 group-hover:w-6" [class.bg-white]="isSideMenuOpen"></span>
+              <span class="w-5 h-[1px] bg-[#1c1c1c] transition-all duration-300 group-hover:w-8" [class.bg-white]="isSideMenuOpen"></span>
+              <span class="w-8 h-[1px] bg-[#1c1c1c] transition-all duration-300 group-hover:w-6" [class.bg-white]="isSideMenuOpen"></span>
             </button>
           </div>
         </div>
       </div>
     </header>
 
-    <!-- Overlay pour fermer le menu -->
-    <div 
-      [class]="'menu-overlay' + (isSideMenuOpen ? ' active' : '')"
+    <div
+      [class]="'fixed inset-0 bg-[#1c1c1c]/20 backdrop-blur-sm z-40 transition-opacity duration-500 ' + (isSideMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible')"
       (click)="closeSideMenu()">
     </div>
 
-    <!-- Menu latéral coulissant -->
-    <nav [class]="'side-menu' + (isSideMenuOpen ? ' open' : '')">
-      
-      <!-- En-tête du menu -->
-      <div class="side-menu-header">
-        <div class="flex items-center justify-between">
-          <img 
-            src="assets/images/icones/Logo_finaux_Plan_de_travail_1_copie_5.png" 
-            alt="Logo MC Travel" 
-            class="h-16 md:h-18">
-          <button 
-            class="close-menu-btn"
-            (click)="closeSideMenu()">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-          </button>
-        </div>
+    <nav [class]="'fixed top-0 right-0 h-full w-full md:w-[450px] bg-white z-50 shadow-2xl transition-transform duration-700 cubic-bezier(0.22, 1, 0.36, 1) ' + (isSideMenuOpen ? 'translate-x-0' : 'translate-x-full')">
+
+      <div class="p-8 md:p-12 flex justify-between items-center">
+        <span class="text-xs uppercase tracking-[0.2em] text-[#a8a29e]">Menu</span>
+        <button (click)="closeSideMenu()" class="group p-2">
+          <svg class="w-6 h-6 text-[#1c1c1c] transition-transform duration-500 group-hover:rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
       </div>
 
-      <!-- Navigation principale -->
-      <div class="side-menu-content">
-        <div class="menu-section">
-          <h3 class="menu-section-title">{{ languageService.currentTranslations.navigationSection || 'Navigation' }}</h3>
-          <ul class="menu-items">
+      <div class="px-8 md:px-12 h-[calc(100%-200px)] overflow-y-auto">
+        <div class="mb-16">
+          <h3 class="font-serif italic text-2xl text-[#1c1c1c] mb-8 opacity-50">Navigation</h3>
+          <ul class="space-y-6">
             <li>
-              <a routerLink="/" 
-                 routerLinkActive="active" 
-                 [routerLinkActiveOptions]="{exact: true}"
-                 class="menu-item" 
-                 (click)="closeSideMenu()">
-                <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                </svg>
-                {{ languageService.currentTranslations.menuHome }}
+              <a routerLink="/" (click)="closeSideMenu()" class="menu-link block text-4xl font-serif text-[#1c1c1c] hover:italic hover:pl-4 transition-all duration-500">
+                {{ languageService.currentTranslations.menuHome || 'Accueil' }}
               </a>
             </li>
             <li>
-              <a routerLink="/destinations" 
-                 routerLinkActive="active"
-                 class="menu-item" 
-                 (click)="closeSideMenu()">
-                <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                </svg>
-                {{ languageService.currentTranslations.menuDestinations }}
+              <a routerLink="/destinations" (click)="closeSideMenu()" class="menu-link block text-4xl font-serif text-[#1c1c1c] hover:italic hover:pl-4 transition-all duration-500">
+                {{ languageService.currentTranslations.menuDestinations || 'Destinations' }}
               </a>
             </li>
             <li>
-              <a routerLink="/conciergerie" 
-                 routerLinkActive="active"
-                 class="menu-item" 
-                 (click)="closeSideMenu()">
-                <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                </svg>
-                {{ languageService.currentTranslations.menuConciergerie }}
+              <a routerLink="/hebergements" (click)="closeSideMenu()" class="menu-link block text-4xl font-serif text-[#1c1c1c] hover:italic hover:pl-4 transition-all duration-500">
+                {{ languageService.currentTranslations.menuAccommodations || 'Hébergements' }}
               </a>
             </li>
             <li>
-              <a routerLink="/hebergements" 
-                 routerLinkActive="active"
-                 class="menu-item" 
-                 (click)="closeSideMenu()">
-                <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                </svg>
-                {{ languageService.currentTranslations.menuAccommodations }}
+              <a routerLink="/conciergerie" (click)="closeSideMenu()" class="menu-link block text-4xl font-serif text-[#1c1c1c] hover:italic hover:pl-4 transition-all duration-500">
+                {{ languageService.currentTranslations.menuConciergerie || 'Conciergerie' }}
               </a>
             </li>
           </ul>
         </div>
 
-        <!-- Section contact -->
-        <div class="menu-section">
-          <h3 class="menu-section-title">{{ languageService.currentTranslations.contactSection || 'Contact' }}</h3>
-          <ul class="menu-items">
-            <li>
-              <a routerLink="/contact" 
-                 routerLinkActive="active"
-                 class="menu-item" 
-                 (click)="closeSideMenu()">
-                <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                </svg>
-                {{ languageService.currentTranslations.menuContact }}
-              </a>
-            </li>
-            
-            <!-- Section des numéros de téléphone -->
-            <li class="menu-contact-info">
-              <div class="text-sm text-gray-500 px-4 py-2 space-y-3">
-                <div>
-                  <p class="font-medium text-gray-700 mb-1">Charlotte</p>
-                  <a href="tel:+33603316762" class="text-blue-600 hover:text-blue-800 block">
-                    +33 6 03 31 67 62
-                  </a>
-                </div>
-                <div>
-                  <p class="font-medium text-gray-700 mb-1">Morgan</p>
-                  <a href="tel:+33620524796" class="text-blue-600 hover:text-blue-800 block">
-                    +33 6 20 52 47 96
-                  </a>
-                </div>
-              </div>
-            </li>
-          </ul>
+        <div>
+          <h3 class="font-serif italic text-2xl text-[#1c1c1c] mb-8 opacity-50">Contact</h3>
+          <div class="space-y-4 text-[#57534e] font-light">
+            <a href="tel:+33603316762" class="block hover:text-[#1c1c1c] transition-colors">Charlotte: +33 6 03 31 67 62</a>
+            <a href="tel:+33620524796" class="block hover:text-[#1c1c1c] transition-colors">Morgan: +33 6 20 52 47 96</a>
+            <a routerLink="/contact" (click)="closeSideMenu()" class="inline-block mt-4 text-xs uppercase tracking-[0.2em] border-b border-[#1c1c1c] pb-1 text-[#1c1c1c]">
+              {{ languageService.currentTranslations.menuContact || 'Formulaire de contact' }}
+            </a>
+          </div>
         </div>
+
+        <div class="md:hidden mt-12 pt-12 border-t border-[#1c1c1c]/10 flex gap-6">
+           <button (click)="languageService.switchLanguage('fr')" [class.font-bold]="languageService.currentLanguage === 'fr'">FR</button>
+           <button (click)="languageService.switchLanguage('en')" [class.font-bold]="languageService.currentLanguage === 'en'">EN</button>
+        </div>
+
       </div>
     </nav>
   `,
   styles: [`
-    /* Styles du bouton saison améliorés */
-    .season-toggle {
-      background: white;
-      border: 2px solid #d1d5db;
-      border-radius: 9999px;
-    }
-    
-    .season-toggle.winter-active {
-      background: #dbeafe;
-      border-color: #3b82f6;
-      color: #1d4ed8;
-    }
-    
-    .season-toggle.summer-active {
-      background: #fef3c7;
-      border-color: #eab308;
-      color: #a16207;
-    }
+    .cubic-bezier { transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+    .animate-spin-slow { animation: spin 3s linear infinite; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   `]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   currentSeason: Season = 'winter';
   isScrolled = false;
   isSideMenuOpen = false;
-  isHomePage = true; // Par défaut sur la home page
+  isHomePage = true;
   private seasonSubscription?: Subscription;
   private routerSubscription?: Subscription;
 
@@ -248,41 +169,29 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // S'abonner aux changements de saison
     this.seasonSubscription = this.seasonService.currentSeason$.subscribe(season => {
       this.currentSeason = season;
     });
-    
-    // S'abonner aux changements de route pour détecter la home page
+
     this.routerSubscription = this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.isHomePage = event.url === '/' || event.url === '';
+        this.closeSideMenu();
       });
-    
-    // Vérifier la route initiale
+
     this.isHomePage = this.router.url === '/' || this.router.url === '';
   }
 
   ngOnDestroy() {
-    if (this.seasonSubscription) {
-      this.seasonSubscription.unsubscribe();
-    }
-    if (this.routerSubscription) {
-      this.routerSubscription.unsubscribe();
-    }
+    if (this.seasonSubscription) this.seasonSubscription.unsubscribe();
+    if (this.routerSubscription) this.routerSubscription.unsubscribe();
   }
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
-    this.isScrolled = window.pageYOffset > 50;
-  }
-
-  @HostListener('document:keydown.escape', ['$event'])
-  onEscapeKey() {
-    if (this.isSideMenuOpen) {
-      this.closeSideMenu();
-    }
+    // Scroll détecté plus tôt pour une meilleure réactivité
+    this.isScrolled = window.pageYOffset > 20;
   }
 
   toggleSeason() {

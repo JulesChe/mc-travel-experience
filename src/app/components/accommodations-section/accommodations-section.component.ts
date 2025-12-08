@@ -7,52 +7,54 @@ import { LanguageService } from '../../services/language.service';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <section class="py-24 bg-[#fff0cf]">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="py-32 bg-white text-[#1c1c1c]">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
 
-        <!-- En-tête de section -->
-        <div class="text-center mb-16 animate-fade-in-up">
-          <h2 class="text-4xl md:text-5xl font-light text-gray-900 mb-6">
+        <div class="text-center mb-24 animate-fade-in-up">
+           <span class="text-xs uppercase tracking-[0.2em] text-[#a8a29e] mb-4 block">
+             Art de vivre
+           </span>
+          <h2 class="text-4xl md:text-6xl font-serif text-[#1c1c1c] mb-6">
             {{ languageService.currentTranslations.section4Title }}
           </h2>
-          <div class="decorative-line"></div>
         </div>
 
-        <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div class="grid lg:grid-cols-2 gap-20 items-center">
 
-          <!-- Contenu texte épuré -->
           <div class="animate-fade-in-left delay-200">
-            <div class="prose prose-lg text-gray-600 leading-relaxed space-y-6">
-              <div class="animate-fade-in-up delay-300">
-                <p class="text-lg">{{ languageService.currentTranslations.section4Text1 }}</p>
-              </div>
-              <div class="animate-fade-in-up delay-400">
-                <p class="text-lg">{{ languageService.currentTranslations.section4Text2 }}</p>
-              </div>
-              <div class="animate-fade-in-up delay-500">
-                <p class="text-lg">{{ languageService.currentTranslations.section4Text3 }}</p>
+            <div class="prose prose-lg text-[#57534e] font-light leading-loose space-y-8">
+
+              <div class="animate-fade-in-up delay-300 border-l border-[#1c1c1c]/20 pl-6">
+                <p class="text-xl italic font-serif text-[#1c1c1c]">
+                  {{ languageService.currentTranslations.section4Text1 }}
+                </p>
               </div>
 
-              <!-- Call-to-action mis en valeur -->
-              <div class="animate-fade-in-up delay-600">
-                <p class="text-xl font-medium text-[#151c32] mt-8">
+              <div class="animate-fade-in-up delay-400">
+                <p>{{ languageService.currentTranslations.section4Text2 }}</p>
+              </div>
+
+              <div class="animate-fade-in-up delay-500">
+                <p>{{ languageService.currentTranslations.section4Text3 }}</p>
+              </div>
+
+              <div class="animate-fade-in-up delay-600 pt-8">
+                <p class="text-2xl font-serif italic text-[#1c1c1c]">
                   {{ languageService.currentTranslations.section4Cta }}
                 </p>
               </div>
             </div>
-
-
           </div>
 
-          <!-- Image simple -->
           <div class="animate-fade-in-right delay-400">
-            <div class="enhanced-image">
+            <div class="relative overflow-hidden aspect-square md:aspect-[4/5]">
               <img
                 src="assets/images/photo_off/lac_montagne.jpg"
                 alt="Vue générale de Courchevel"
-                class="w-full h-96 object-cover shadow-xl">
+                class="w-full h-full object-cover transition-transform duration-[2s] ease-out hover:scale-105 filter saturate-50 hover:saturate-100">
             </div>
           </div>
+
         </div>
       </div>
     </section>
