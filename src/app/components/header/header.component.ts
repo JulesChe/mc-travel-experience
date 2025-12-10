@@ -33,12 +33,28 @@ import { filter } from 'rxjs/operators';
           <div class="w-1/3 flex justify-start">
             <button
               *ngIf="isHomePage"
-              class="group flex items-center gap-2 px-4 py-2 border border-[#1c1c1c]/20 rounded-full transition-all duration-500 hover:border-[#1c1c1c] hover:bg-[#1c1c1c] hover:text-white bg-white/50 backdrop-blur-sm"
+              class="group flex items-center gap-2 px-3 py-2 md:px-4 rounded-full transition-all duration-500 backdrop-blur-sm"
+              [ngClass]="isScrolled
+                ? 'border border-[#1c1c1c]/20 hover:border-[#1c1c1c] hover:bg-[#1c1c1c] hover:text-white text-[#1c1c1c] bg-white/50'
+                : 'border border-white/30 hover:bg-white hover:text-[#1c1c1c] text-white bg-white/10'"
               (click)="toggleSeason()">
 
-              <span class="relative w-4 h-4 overflow-hidden">
-                <svg *ngIf="currentSeason === 'summer'" class="w-4 h-4 animate-spin-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                <svg *ngIf="currentSeason === 'winter'" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+              <span class="relative w-4 h-4 overflow-hidden flex items-center justify-center">
+
+                <svg *ngIf="currentSeason === 'winter'" class="w-4 h-4 animate-spin-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+
+                <svg *ngIf="currentSeason === 'summer'" class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2.5V21.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                  <path d="M3.77271 7.25L20.2273 16.75" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                  <path d="M3.77271 16.75L20.2273 7.25" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                  <path d="M8 12L10 10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                  <path d="M16 12L14 10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                  <path d="M12 16V14" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                  <path d="M12 8V10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                  <path d="M8.5 6.5L10.5 8.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                  <path d="M15.5 6.5L13.5 8.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                  <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+                </svg>
               </span>
 
               <span class="text-[10px] uppercase tracking-[0.2em] font-medium hidden sm:block">
@@ -54,22 +70,24 @@ import { filter } from 'rxjs/operators';
               <img
                 src="assets/images/icones/Logo_finaux_Plan_de_travail_1_copie_5.png"
                 alt="Logo MC Travel"
-                class="h-16 md:h-20 transition-all duration-500 hover:opacity-80">
+                class="h-12 md:h-20 transition-all duration-500 hover:opacity-80"
+                [style.filter]="isScrolled ? 'none' : 'brightness(0) invert(1)'">
             </a>
           </div>
 
-          <div class="w-1/3 flex justify-end items-center gap-6 md:gap-8">
+          <div class="w-1/3 flex justify-end items-center gap-4 md:gap-8">
 
-            <div class="hidden md:flex items-center gap-4 text-[10px] font-medium tracking-widest text-[#1c1c1c]">
+            <div class="flex items-center gap-2 md:gap-4 text-[9px] md:text-[10px] font-medium tracking-widest transition-colors duration-500"
+                 [ngClass]="isScrolled ? 'text-[#1c1c1c]' : 'text-white'">
               <button
                 (click)="languageService.switchLanguage('fr')"
                 [class.opacity-40]="languageService.currentLanguage !== 'fr'"
-                class="hover:opacity-100 transition-opacity uppercase">FR</button>
+                class="hover:opacity-100 transition-opacity uppercase p-1">FR</button>
               <span class="opacity-30">|</span>
               <button
                 (click)="languageService.switchLanguage('en')"
                 [class.opacity-40]="languageService.currentLanguage !== 'en'"
-                class="hover:opacity-100 transition-opacity uppercase">EN</button>
+                class="hover:opacity-100 transition-opacity uppercase p-1">EN</button>
             </div>
 
             <button
@@ -77,9 +95,12 @@ import { filter } from 'rxjs/operators';
               (click)="toggleSideMenu()"
               [class.active]="isSideMenuOpen"
               aria-label="Menu">
-              <span class="w-8 h-[1px] bg-[#1c1c1c] transition-all duration-300 group-hover:w-6" [class.bg-white]="isSideMenuOpen"></span>
-              <span class="w-5 h-[1px] bg-[#1c1c1c] transition-all duration-300 group-hover:w-8" [class.bg-white]="isSideMenuOpen"></span>
-              <span class="w-8 h-[1px] bg-[#1c1c1c] transition-all duration-300 group-hover:w-6" [class.bg-white]="isSideMenuOpen"></span>
+              <span class="w-8 h-[1px] transition-all duration-300 group-hover:w-6"
+                    [ngClass]="(isScrolled || isSideMenuOpen) ? 'bg-[#1c1c1c]' : 'bg-white'"></span>
+              <span class="w-5 h-[1px] transition-all duration-300 group-hover:w-8"
+                    [ngClass]="(isScrolled || isSideMenuOpen) ? 'bg-[#1c1c1c]' : 'bg-white'"></span>
+              <span class="w-8 h-[1px] transition-all duration-300 group-hover:w-6"
+                    [ngClass]="(isScrolled || isSideMenuOpen) ? 'bg-[#1c1c1c]' : 'bg-white'"></span>
             </button>
           </div>
         </div>
@@ -140,11 +161,6 @@ import { filter } from 'rxjs/operators';
           </div>
         </div>
 
-        <div class="md:hidden mt-12 pt-12 border-t border-[#1c1c1c]/10 flex gap-6">
-           <button (click)="languageService.switchLanguage('fr')" [class.font-bold]="languageService.currentLanguage === 'fr'">FR</button>
-           <button (click)="languageService.switchLanguage('en')" [class.font-bold]="languageService.currentLanguage === 'en'">EN</button>
-        </div>
-
       </div>
     </nav>
   `,
@@ -152,9 +168,14 @@ import { filter } from 'rxjs/operators';
     .cubic-bezier { transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
     .animate-spin-slow { animation: spin 3s linear infinite; }
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    .menu-link {
+      position: relative;
+    }
   `]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  // Le code TypeScript reste identique
   currentSeason: Season = 'winter';
   isScrolled = false;
   isSideMenuOpen = false;
@@ -190,7 +211,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
-    // Scroll détecté plus tôt pour une meilleure réactivité
     this.isScrolled = window.pageYOffset > 20;
   }
 

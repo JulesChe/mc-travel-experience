@@ -53,8 +53,9 @@ import { LanguageService } from '../../services/language.service';
 
         <button
           (click)="toggleMute()"
-          class="absolute top-6 right-6 z-20 text-white p-2 group">
-          <div class="p-3 border border-white/30 rounded-full group-hover:border-white transition-colors">
+          class="absolute top-32 right-4 md:top-6 md:right-6 z-20 text-white p-2 group"
+          [title]="isMuted ? 'Activer le son' : 'Couper le son'">
+          <div class="p-3 border border-white/30 rounded-full group-hover:border-white transition-colors backdrop-blur-sm bg-white/5">
              <svg *ngIf="!isMuted" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.59-.79-1.59-1.76V9.51c0-.97.71-1.76 1.59-1.76h2.24z"/></svg>
              <svg *ngIf="isMuted" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.59-.79-1.59-1.76V9.51c0-.97.71-1.76 1.59-1.76h2.24z"/></svg>
           </div>
@@ -74,17 +75,24 @@ import { LanguageService } from '../../services/language.service';
           </div>
         </div>
 
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
-           <div class="w-[1px] h-12 bg-white/30"></div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white z-20">
+           <div class="flex flex-col items-center gap-3">
+             <span class="text-[10px] uppercase tracking-[0.3em] opacity-80">
+               {{ languageService.currentTranslations.discoverScroll }}
+             </span>
+             <svg class="w-6 h-6 animate-bounce opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+             </svg>
+           </div>
         </div>
       </section>
 
       <nav class="bg-[#F5F4F0] sticky top-0 z-30 border-b border-[#1c1c1c]/5">
-        <div class="max-w-7xl mx-auto px-4">
-          <div class="flex justify-center items-center space-x-8 md:space-x-16 py-6 overflow-x-auto">
+        <div class="max-w-7xl mx-auto w-full">
+          <div class="flex justify-start md:justify-center items-center gap-8 md:gap-16 py-6 px-6 overflow-x-auto scrollbar-hide">
             <button *ngFor="let section of ['destinations', 'hebergements', 'activites']"
               (click)="scrollToSection(section)"
-              class="text-xs uppercase tracking-[0.2em] text-[#57534e] hover:text-[#1c1c1c] transition-colors whitespace-nowrap">
+              class="text-xs uppercase tracking-[0.2em] text-[#57534e] hover:text-[#1c1c1c] transition-colors whitespace-nowrap flex-shrink-0">
               {{ section === 'destinations' ? languageService.currentTranslations.summerNavDestinations :
                  section === 'hebergements' ? languageService.currentTranslations.summerNavAccommodations :
                  languageService.currentTranslations.summerNavActivities }}
@@ -169,13 +177,20 @@ import { LanguageService } from '../../services/language.service';
               <img [src]="activity.image" [alt]="activity.name"
                    class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105">
 
-              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
 
-              <div class="absolute bottom-0 left-0 p-10 text-white z-10 w-full">
-                <h3 class="text-3xl font-serif italic mb-2 transform transition-transform duration-500 group-hover:-translate-y-2">{{ activity.name }}</h3>
-                <p class="text-xs uppercase tracking-[0.2em] opacity-80 mb-4">{{ activity.subtitle }}</p>
+              <div class="absolute bottom-0 left-0 p-10 z-10 w-full">
+
+                <h3 class="text-3xl font-serif italic mb-2 transform transition-transform duration-500 group-hover:-translate-y-2 !text-white drop-shadow-md">
+                  {{ activity.name }}
+                </h3>
+
+                <p class="text-xs uppercase tracking-[0.2em] opacity-90 mb-4 !text-white drop-shadow-sm">
+                  {{ activity.subtitle }}
+                </p>
+
                 <div class="h-0 overflow-hidden group-hover:h-auto transition-all duration-500">
-                  <p class="text-sm font-light opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 border-l border-white/50 pl-4">
+                  <p class="text-sm font-light opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 border-l border-white/50 pl-4 !text-white">
                     {{ activity.description }}
                   </p>
                 </div>
@@ -187,7 +202,12 @@ import { LanguageService } from '../../services/language.service';
 
       <app-contact-section></app-contact-section>
     </div>
-  `
+  `,
+  styles: [`
+    /* Utilitaire pour cacher la scrollbar horizontalement mais garder le scroll */
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  `]
 })
 export class HomePageComponent implements OnInit, OnDestroy, AfterViewInit {
   currentSeason: Season = 'winter';

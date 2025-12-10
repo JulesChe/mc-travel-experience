@@ -25,21 +25,16 @@ import { LanguageService } from '../../services/language.service';
 
       <button
         (click)="toggleMute()"
-        class="absolute top-6 right-6 z-20 text-white p-2 transition-all duration-300 hover:opacity-70 group"
+        class="absolute top-32 right-4 md:top-6 md:right-6 z-20 text-white p-2 transition-all duration-300 hover:opacity-70 group"
         [title]="isMuted ? 'Activer le son' : 'Couper le son'">
 
-        <div class="p-3 border border-white/30 rounded-full group-hover:border-white transition-colors">
-            <svg *ngIf="!isMuted" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.59-.79-1.59-1.76V9.51c0-.97.71-1.76 1.59-1.76h2.24z"/>
-            </svg>
-            <svg *ngIf="isMuted" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.59-.79-1.59-1.76V9.51c0-.97.71-1.76 1.59-1.76h2.24z"/>
-            </svg>
+        <div class="p-3 border border-white/30 rounded-full group-hover:border-white transition-colors backdrop-blur-sm bg-white/5">
+            <svg *ngIf="!isMuted" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.59-.79-1.59-1.76V9.51c0-.97.71-1.76 1.59-1.76h2.24z"/></svg>
+            <svg *ngIf="isMuted" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.59-.79-1.59-1.76V9.51c0-.97.71-1.76 1.59-1.76h2.24z"/></svg>
         </div>
       </button>
 
       <div class="relative z-10 text-center text-white px-4 max-w-5xl mx-auto">
-
         <div class="animate-fade-in-up">
           <h1 class="text-5xl md:text-8xl font-serif italic mb-8 tracking-wide leading-tight drop-shadow-lg">
             {{ languageService.currentTranslations.heroTitle }}
@@ -55,14 +50,17 @@ import { LanguageService } from '../../services/language.service';
         </div>
       </div>
 
-      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
-        <div class="flex flex-col items-center gap-4">
-          <span class="text-[10px] uppercase tracking-[0.3em] opacity-70">
+      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white z-20">
+        <div class="flex flex-col items-center gap-3">
+          <span class="text-[10px] uppercase tracking-[0.3em] opacity-80">
             {{ languageService.currentTranslations.discoverScroll }}
           </span>
-          <div class="w-[1px] h-12 bg-white/30"></div>
+          <svg class="w-6 h-6 animate-bounce opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+          </svg>
         </div>
       </div>
+
     </section>
   `
 })

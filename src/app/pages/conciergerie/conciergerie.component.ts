@@ -182,13 +182,6 @@ export class ConciergerieComponent implements OnInit, OnDestroy {
         image: 'assets/images/helico.jpg'
       },
       {
-        id: 's3v',
-        title: translations.conciergerieS3V?.title || 'Forfaits Ski S3V',
-        subtitle: translations.conciergerieS3V?.subtitle || 'Les 3 Vallées à prix préférentiel',
-        description: translations.conciergerieS3V?.description || 'Profitez de tarifs exclusifs sur les forfaits du plus grand domaine skiable du monde',
-        image: 'assets/images/photo_off/s3v.jpg'
-      },
-      {
         id: 'chef',
         title: translations.conciergerieChef?.title || 'Chef privé',
         subtitle: translations.conciergerieChef?.subtitle || 'Cuisine gastronomique',
