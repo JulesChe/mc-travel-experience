@@ -18,7 +18,7 @@ import { LanguageService } from '../../services/language.service';
         playsinline
         preload="metadata"
         [poster]="'assets/images/photo_mc.JPG'">
-        <source src="https://pub-3255f12a5223472980a97fe319ca6482.r2.dev/BASE M 2K.mov" type="video/mp4">
+        <source src="https://pub-3255f12a5223472980a97fe319ca6482.r2.dev/BASE%20M%202K.mp4" type="video/mp4">
       </video>
 
       <div class="absolute inset-0 bg-black/30"></div>
