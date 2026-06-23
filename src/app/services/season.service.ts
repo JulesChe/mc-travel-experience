@@ -111,6 +111,14 @@ export class SeasonService {
           description: 'Explorez la Bourgogne en VTT à travers vignes et villages, avant de savourer ses Grands Crus et sa gastronomie authentique. Sport, plaisir et art de vivre pour une expérience inoubliable.',
           image: 'assets/images/photo_off/bourgogne.jpg',
           highlights: ['VTT dans les vignes', 'Grands Crus', 'Gastronomie authentique', 'Villages bourguignons', 'Art de vivre']
+        },
+        {
+          id: 'zermatt',
+          name: 'Zermatt',
+          subtitle: 'Au pied du Cervin',
+          description: 'Explorez les sentiers mythiques au pied du Cervin, entre lacs d\'altitude et glaciers éternels. Le soir venu, laissez-vous séduire par le charme de ce village sans voiture, ses hôtels d\'exception et sa gastronomie alpine raffinée.',
+          image: 'assets/images/photo_off/zermatt.webp',
+          highlights: ['Cervin / Matterhorn', 'Gornergrat', 'Lacs d\'altitude', 'Village sans voiture', 'Gastronomie alpine']
         }
       ],
 
@@ -146,6 +154,14 @@ export class SeasonService {
           type: 'Hotel',
           image: 'assets/images/photo_off/auberge_sulpice.png',
           description: 'Luxe et raffinement sur les rives du lac d\'Annecy.'
+        },
+        {
+          id: 'hotel-welschen',
+          name: 'Hôtel Welschen',
+          location: 'Zermatt',
+          type: 'Hôtel d\'exception',
+          image: 'assets/images/photo_off/lounge_welschen.webp',
+          description: 'Élégance alpine au pied du Cervin, où luxe contemporain et panoramas d\'exception se rencontrent.'
         }
       ],
 
@@ -209,6 +225,14 @@ export class SeasonService {
           description: 'Ride through Burgundy\'s vineyards and villages by MTB, then indulge in its finest wines and authentic cuisine. Adventure, pleasure, and art de vivre await you in this new experience!',
           image: 'assets/images/photo_off/bourgogne.jpg',
           highlights: ['MTB through vineyards', 'Grand Cru wines', 'Authentic gastronomy', 'Burgundy villages', 'Art de vivre']
+        },
+        {
+          id: 'zermatt',
+          name: 'Zermatt',
+          subtitle: 'At the foot of the Matterhorn',
+          description: 'Explore legendary trails at the foot of the Matterhorn, between high-altitude lakes and eternal glaciers. As evening falls, let yourself be charmed by this car-free village, its exceptional hotels, and refined alpine gastronomy.',
+          image: 'assets/images/photo_off/zermatt.webp',
+          highlights: ['Matterhorn', 'Gornergrat', 'Alpine lakes', 'Car-free village', 'Alpine gastronomy']
         }
       ],
 
@@ -244,6 +268,14 @@ export class SeasonService {
           type: 'Hotel',
           image: 'assets/images/photo_off/auberge_sulpice.png',
           description: 'Luxury and refinement on the shores of Lake Annecy.'
+        },
+        {
+          id: 'hotel-welschen',
+          name: 'Hôtel Welschen',
+          location: 'Zermatt',
+          type: 'Luxury hotel',
+          image: 'assets/images/photo_off/lounge_welschen.webp',
+          description: 'Alpine elegance at the foot of the Matterhorn, where contemporary luxury meets exceptional panoramas.'
         }
       ],
 

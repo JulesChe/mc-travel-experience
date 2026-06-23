@@ -108,7 +108,7 @@ import { LanguageService } from '../../services/language.service';
             <p class="text-lg text-[#57534e] font-light max-w-2xl mx-auto italic font-serif">{{ languageService.currentTranslations.summerDestinationsSubtitle }}</p>
           </div>
 
-          <div class="grid md:grid-cols-2 gap-12 lg:gap-24">
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
             <div *ngFor="let destination of seasonContent.destinations; let i = index"
                  class="group cursor-pointer animate-fade-in-up"
                  [style.animation-delay]="(i * 100) + 'ms'">
@@ -140,7 +140,7 @@ import { LanguageService } from '../../services/language.service';
             <p class="text-lg text-[#57534e] font-light max-w-2xl mx-auto italic font-serif">{{ languageService.currentTranslations.summerAccommodationsSubtitle }}</p>
           </div>
 
-          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
             <div *ngFor="let accommodation of seasonContent.accommodations; let i = index"
                  class="group animate-fade-in-up" [style.animation-delay]="(i * 100) + 'ms'">
 
