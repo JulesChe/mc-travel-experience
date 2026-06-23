@@ -250,7 +250,7 @@ export class SeasonService {
           name: 'La Traye Refuge',
           location: 'Méribel',
           type: 'Traditional refuge',
-          image: 'assets/images/photo_off/refuge_traye.jpg',
+          image: 'assets/images/photo_off/refuge_traye.png',
           description: 'Authenticity and Savoyard charm in the heart of the 3 Valleys.'
         },
         {
